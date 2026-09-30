@@ -62,7 +62,7 @@ The ceiling is open.
 
 The confirmed technical decisions, recorded in the handoff's Project Foundation
 (`foundation-format.md`, "technical decisions" section) — only decisions the user confirmed. `go`
-uses them as design context while implementing, and later turns them into `architecture.md` +
+uses them as design context while implementing, and later turns them into `stakeholders.md` +
 `security.md` + `standards.md` + `operations.md`.
 
 ## Universality guard

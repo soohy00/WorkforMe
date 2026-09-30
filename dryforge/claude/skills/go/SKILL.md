@@ -266,7 +266,7 @@ when a lightweight fix would take seconds.
    force-load). After the completion gate, before the final review: **re-read the 3-doc** (mandatory —
    the session is now code-biased), then act on the local marker `.dryforge/status.json`:
    - **First cycle** (marker absent): create the whole harness — CLAUDE.md / AGENTS.md + `docs/` +
-     module AGENTS.md — from the handoff's Project Foundation + spec + code. The Foundation is a
+     series AGENTS.md — from the handoff's Project Foundation + spec + the finished document. The Foundation is a
      **first-cycle invariant** (`ready` always writes it); if a first-cycle handoff has **no
      Foundation section**, do **not** guess one from spec + code — **stop and ask the user to
      regenerate the 3-doc via `ready`** (`harness-lifecycle.md`, fail-fast precondition). Back up +

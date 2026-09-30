@@ -53,8 +53,8 @@ Foundation is a **conditional expansion inside the handoff's "supplement" role**
   spec's task *with* project context. (E.g. a Foundation that records a role-based permission model
   makes `go` design the spec's "auth implementation" with role support in mind.)
 - **At harness creation.** Each Foundation area maps to `docs/` files per `go`'s `harness-format.md`:
-  domain model → business-rules.md; technical decisions → architecture.md + security.md +
-  standards.md + operations.md; identity → the entry-point overview; future scope → status.md's
+  business and stakeholder model → business-rules.md + stakeholders.md + audiences.md; working
+  decisions → security.md + standards.md + operations.md; identity → the entry-point overview; future scope → status.md's
   "remaining."
 
 ## Lifetime

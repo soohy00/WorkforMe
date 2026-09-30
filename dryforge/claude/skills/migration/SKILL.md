@@ -19,7 +19,7 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Agent, AskUserQuestion
 Convert an existing project into the dryforge **project harness** — the durable documentation layer
 that every later agent (dryforge or not) works inside. migration reads the codebase, elicits the
 intent/constraints/decisions that code cannot express, and generates the whole harness:
-`CLAUDE.md` / `AGENTS.md`, the `docs/` set, and a per-module `AGENTS.md`. The harness spec is in
+`CLAUDE.md` / `AGENTS.md`, the `docs/` set, and a per-series `AGENTS.md`. The harness spec is in
 `references/harness-format.md`.
 
 migration is a **one-time conversion**, not a task runner. It writes documentation only — it does
@@ -51,7 +51,7 @@ migration is an independent piece of work, and a fresh session keeps the task-le
   invent a domain rule, a policy, or a rationale.
 - **Match the user's language (language-agnostic).** Like stack-agnosticism, the *method* is fixed
   and the *specific language* is discovered at runtime, never assumed: produce every user-facing
-  output — the dialogue **and the whole harness** (CLAUDE.md / AGENTS.md, docs/, module AGENTS.md) —
+  output — the dialogue **and the whole harness** (CLAUDE.md / AGENTS.md, docs/, series AGENTS.md) —
   in the language the user communicates in, written **natively** (as a fluent speaker of that language
   would, never translationese). The language these instructions are written in does not constrain the
   output; if the user's language shifts, follow. **Hold it from the very first line, continuously** —
@@ -134,7 +134,7 @@ what to improve — then present the review to the user, explain it, and get app
    in harness-format).
 3. Create `docs/` and every file in it (harness-format spec).
 4. Create CLAUDE.md / AGENTS.md (identical content).
-5. Create a module AGENTS.md per module identified in SCAN.
+5. Create a series AGENTS.md per document series identified in SCAN.
 6. Record the current state in `docs/tracking/status.md` (done vs. remaining, against full scope).
 
 Explore sources fully before writing; verify each file against the code both ways (omission /
