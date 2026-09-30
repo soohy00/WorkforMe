@@ -19,18 +19,21 @@ means"); conflict-resolution and gap-scoring are not.
 
 | INPUT content | → |
 |---|---|
-| domain / behavior | EXTRACT track → spec behavior + foundation domain |
-| technical | PRESENT track → foundation technical decisions + spec API |
-| work objective / scope | spec objective / scope |
-| invariants / hard constraints | spec invariants + handoff hard gates |
+| content — claims, facts and figures, commitments, requests, the reader's situation | EXTRACT track → spec content + foundation domain |
+| form — kind, structure, visuals, channel, length, tone | PRESENT track → spec form + foundation working decisions |
+| purpose / reader / outcome / scope | spec objective / reader / outcome / scope |
+| hard constraints (must-not-say, classification, fixed dates, promised wording) | spec invariants + handoff hard gates |
+| every figure, date, name, quotation | **fact ledger** (with its source) |
 | non-derivable form (wire format, a specific predicate, a data structure) | **preserve** (code/data block) |
 | finished prose / slide text / layout from another tool · section order or outline supplied by the input · noise | **discard** (lift the content first — see below) |
 
 **Classification is not partition — file under every axis a fragment informs.** Much real content is
-dual-natured: a technical choice carries a *domain consequence* (e.g. "eventual consistency" is
-technical, but it triggers the domain question "during the inconsistency window, how does X behave?");
-an invariant ("an order's total = sum of line items") is both an *invariant* (handoff hard gate) and a
-*behavior rule*. **File it under each axis it informs; when unsure which axis owns it, duplicate rather
+dual-natured: a form choice carries a *content consequence* (e.g. "one page only" is form, but it
+triggers the content question "which claims are cut, and does the reader still get the evidence they
+need to decide?");
+a constraint ("never show per-customer revenue to investors") is both an *invariant* (handoff hard
+gate) and a *content rule*; a date ("launch on the 20th") is both a *fact* (ledger) and a *scope*
+edge. **File it under each axis it informs; when unsure which axis owns it, duplicate rather
 than choose.** Mis-filing hides a gap (the owning axis shows no coverage); over-filing costs only an
 extra sweep. (Keep-biased default, applied to classification.)
 

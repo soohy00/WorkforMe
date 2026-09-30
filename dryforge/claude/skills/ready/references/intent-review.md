@@ -20,30 +20,29 @@ what is actually at risk in *this* intent decide where to push.
 
 Pressing the whole intent inflates cost for little gain. Aim where the risk lives:
 
-- **Press the assumptions and the non-derivable decisions** — the things the code/material did not
-  settle. Code-derived, already-grounded content is low risk — skip it.
-- **Confirm the load-bearing technical shape was surfaced.** For greenfield (or any intent the code
-  did not pin), the persistence approach, interface/delivery form, and any plan-defining technical
-  choice must actually have been surfaced and settled. An un-surfaced shape is a material gap (only the
-  user can fill it). (Functional completeness is easy to over-focus on while the whole stack goes
-  unstated; this is the guard against that.)
-- **Probe the output / interface contract for completeness.** Where the intent defines an output, API,
-  schema, or data model, the *shape downstream consumers (and the executor) depend on* is a recurring
-  source of late-caught gaps: the entities/fields and their constraints, the exact response/output
-  keys, the status/enum value sets (and whether two conceptually distinct fields were collapsed into
-  one), uniqueness/identity rules. A half-pinned contract derails downstream work even when the
-  behavior reads clear — so check the contract is fully specified, not just the behavior. Whether a
-  given intent even *has* such a contract is judged at runtime (a pure-CLI tool's output format, a
-  service's response schema, a library's return type — or nothing). Not a fixed field checklist.
+- **Press the assumptions and the non-derivable decisions** — the things the material did not
+  settle. Material-derived, already-grounded content is low risk — skip it.
+- **Confirm the load-bearing document shape was surfaced.** The primary reader, the outcome, the
+  kind and channel, the classification level and recipients, and the visuals must actually have been
+  surfaced and settled. An un-surfaced shape is a material gap (only the user can fill it). (Content
+  completeness is easy to over-focus on while the reader goes unstated; this is the guard against
+  that.)
+- **Probe what the reader will act on for completeness.** Where the document asks the reader to act
+  — approve, build, decide, fund — the *exact thing they act on* is a recurring source of late-caught
+  gaps: the precise request (what, how much, by when), each figure with its unit, date, and source,
+  the committed scope and what is explicitly out, the owners and dates of open items, acceptance
+  criteria a builder can check. A half-pinned request derails the reader even when the prose reads
+  clear — so check the request is fully specified, not just the story. Whether a given document even
+  *has* such a request is judged at runtime (a pure explainer may not). Not a fixed field checklist.
 
 ## The three lenses (scale to stakes)
 
 A small, low-blast goal gets one quick pass; a complex, high-blast goal gets these diverse lenses,
 pressed harder:
 
-- **Implementer lens** — *what can't I build from this?*
+- **Writer lens** — *what can't I write from this without deciding content myself?*
 - **User-intent lens** — *what did they likely mean that's unstated?*
-- **Edge lens** — *what breaks?*
+- **Reader lens** — *where will this reader misread, push back, or ask "who decided this?"*
 
 No fixed number of passes — judgment, not a checklist. These lenses are the *qualitative* companion to
 `gap-analysis.md`'s mechanical probes: the probes detect silences from the domain's type; these
@@ -57,5 +56,5 @@ any other ELICIT candidate. A lens that cannot ground its finding drops it.
 
 ## Universality guard
 
-No concrete stack, framework, library, or tool name appears here. The lenses and criteria are
-stack-agnostic; what is actually at risk is judged at runtime from the intent and the code.
+No concrete stack, framework, library, or tool name — and no company or industry name — appears
+here. What is actually at risk is judged at runtime from the intent, the reader, and the material.

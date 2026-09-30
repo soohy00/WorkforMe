@@ -139,7 +139,7 @@ Core principles  inline (subagents only at intent-completeness + 3-doc-gate) · 
                  stack/language-agnostic · conflict→ELICIT · floor not ceiling · user-language native
 ORIENT           absorb input + ground material/harness · branch on status.json (no refs)
 DECOMPOSE        decompose.md · grounds-gate.md
-ELICIT           elicitation.md · gap-analysis.md · intent-review.md · grounds-gate.md
+ELICIT           elicitation.md · doc-types.md · gap-analysis.md · intent-review.md · grounds-gate.md
        [first]+  project-scoping.md · project-design-domain.md · project-design-technical.md ·
                  first-cycle-review.md · foundation-format.md
 intent-completeness  intent-completeness.md  ← independent guess-hunt → loop to user (subagent)
@@ -220,8 +220,8 @@ is written fresh from the dialogue, not from the input.
 
 ## ELICIT — realize the user's intent — `references/elicitation.md`
 
-Force-load `references/elicitation.md`, `references/gap-analysis.md`, `references/intent-review.md`,
-`references/grounds-gate.md`. **First cycle additionally:** `references/project-scoping.md`,
+Force-load `references/elicitation.md`, `references/doc-types.md`, `references/gap-analysis.md`,
+`references/intent-review.md`, `references/grounds-gate.md`. **First cycle additionally:** `references/project-scoping.md`,
 `references/project-design-domain.md`, `references/project-design-technical.md`,
 `references/first-cycle-review.md`, `references/foundation-format.md`.
 
@@ -233,11 +233,13 @@ or it is a **stranger's guess** → forbidden, close it. **There is no "pick a r
 move on" for a load-bearing decision** — that is the failure that detonates downstream (the agent
 deciding what the user would have decided differently).
 
-**Method by knowledge location** (two ways to *not-guess*, interleaved): **domain/behavior → EXTRACT**
-(the user knows; draw it out, never invent); **technical → PRESENT** (the agent knows; options +
-trade-offs + recommendation, grounded in the extracted domain; the user decides — never silent).
-Build and maintain a **model of the user** (goal / values / constraints / domain facts) and test each
-load-bearing decision against it: grounded → realize; model-silent → that *is* the gap, close it.
+**Method by knowledge location** (two ways to *not-guess*, interleaved): **content → EXTRACT**
+(claims, facts, commitments, requests, the reader's situation — the user knows; draw it out, never
+invent); **form → PRESENT** (kind, structure, visuals, channel — the agent knows; options +
+trade-offs + recommendation, grounded in the extracted content; the user decides — never silent).
+Build and maintain a **model of the user** (goal / values / constraints / domain facts) and a **model
+of each reader**, and test each load-bearing decision against them: grounded → realize; model-silent →
+that *is* the gap, close it.
 
 **Scope by cycle — first establishes the foundation, delta works within it; both EQUALLY rigorous
 (delta is not "lighter").**
@@ -253,18 +255,21 @@ load-bearing decision against it: grounded → realize; model-silent → that *i
   guess survives" discipline. Scope = this task; rigor = full.
 
 **Account the decision surface — enumerate, don't wait to be told** (`elicitation.md`). Name the
-entities (a manifest), then walk four lenses over each entity and colliding pair to enumerate the
-load-bearing decisions the design is *obligated to answer*: **STRUCTURAL** (cardinality/composition/
-identity), **BEHAVIORAL** (lifecycle/concurrency/policy/edges — name the kind first), **TECHNICAL**
-(persistence/interface/consistency), **CONTRACT** (status·enum *sets*/uniqueness/output keys). Lenses
-are accelerators, not a fixed catalog. **Enumerate ≠ ask:** resolve each slot in order — user-model
+entities (a manifest: readers, stakeholders, and every thing the document talks about), then walk five
+lenses over each entity and colliding pair to enumerate the load-bearing decisions the document is
+*obligated to answer*: **READER** (the one primary reader; what each reader knows · worries about ·
+decides), **OUTCOME** (the one action after reading — name the kind first), **CLAIM** (key message ·
+evidence with source · what is and is not committed · objections), **FORM** (kind · channel · length ·
+visuals · tone · classification), **ALIGNMENT** (settled / open / to decide · owners · states · edge
+cases · acceptance criteria). Load `references/doc-types.md` for the floor of the document's kind.
+Lenses are accelerators, not a fixed catalog. **Enumerate ≠ ask:** resolve each slot in order — user-model
 grounds it → realize (don't ask); tuning value inside a settled mechanism → default *marked tunable*
 (don't ask); else **`assumed`** → ask (extract/present). So enumerate *exhaustively* but ask
 *minimally* (≤4 questions·options per structured prompt, lead with a recommendation, `grounds-gate.md`
 filters; never skip a load-bearing one; **if the structured tool fails, re-ask as plain text — never
-dead-end**). First cycle / unfixed stack: you MUST have **presented** the load-bearing technical shape
-(persistence, interface, **and the concurrency/consistency model when the domain has shared state**) —
-a stack pick alone does not settle it.
+dead-end**). You MUST have **settled** the load-bearing document shape (primary reader, outcome,
+kind and channel, classification level and recipients, visuals) — a kind alone ("a proposal") does
+not settle it.
 
 **Exit bar (observable) — write the spec only when no `assumed` slot survives** (full bar in
 `elicitation.md`): the surface is accounted — every load-bearing slot is `grounded`, `deferred-tunable`,
