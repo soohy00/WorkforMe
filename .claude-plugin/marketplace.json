@@ -7,7 +7,7 @@
       "name": "dryforge-docs",
       "description": "Intent to document: ready, then go.",
       "author": { "name": "soohy00" },
-      "source": "./claude",
+      "source": "./dryforge/claude",
       "homepage": "https://github.com/soohy00/WorkforMe",
       "keywords": ["documents", "planning", "proposal", "meeting", "report", "intent", "elicitation", "spec", "verification", "dryforge"]
     }

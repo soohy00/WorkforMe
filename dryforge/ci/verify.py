@@ -119,7 +119,7 @@ def validate_marketplaces(root: Path) -> None:
         if not isinstance(plugins, list) or len(plugins) != 1 or not isinstance(plugins[0], dict):
             raise VerificationError(f"expected one plugin entry: {manifest}")
         entry = plugins[0]
-        if entry.get("name") != "dryforge":
+        if entry.get("name") != "dryforge-docs":  # WorkforMe fork (CHANGES.md CH-02)
             raise VerificationError(f"unexpected plugin name: {manifest}")
         entry_version = entry.get("version")
         if entry_version is not None and entry_version != version:

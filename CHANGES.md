@@ -5,7 +5,7 @@ git subtree로 가져온 것이에요. 가져온 커밋에서는 아무것도 �
 그 뒤의 변경은 **한 번에 하나씩** 커밋하고, 여기에 무엇을·왜 바꾸었는지 적어요.
 
 - 원본과 비교하기: `git diff <가져온 커밋> HEAD -- dryforge/`
-- 변경 하나만 보기: 아래 표의 커밋을 `git show <커밋>`으로 봐요.
+- 변경 하나만 보기: `git log --grep "CH-01"`처럼 번호로 커밋을 찾아 `git show`로 봐요.
 - 원본 새 버전 받기: `git subtree pull --prefix=dryforge https://github.com/prekuter/dryforge <태그> --squash`
 
 ## 사용자가 정한 것 (변경의 근거)
@@ -30,3 +30,4 @@ git subtree로 가져온 것이에요. 가져온 커밋에서는 아무것도 �
 | 번호 | 무엇을 바꾸었나 | 왜 | 근거 |
 |---|---|---|---|
 | CH-01 | 빌드를 Claude 패키지만 만들도록 줄임. Codex·Grok·Agent Plugin·Antigravity 패키지와 그 입력 폴더, 마켓플레이스 파일을 지움. `verify.py`의 다른 패키지 검사는 같은 강도의 Claude 검사(`validate_claude_package`)로 바꿈 | 쓰는 도구가 Claude Code뿐이에요. 원본은 변경 하나가 패키지 6곳에 복사되어 diff에 6번 보여요. 한 곳만 남기면 "무엇을 바꾸었나"가 한 번만 보여요 | U7 |
+| CH-02 | 플러그인 이름을 `dryforge` → `dryforge-docs`로, 마켓플레이스 이름을 `workforme`로 바꿈. WorkforMe 루트에 마켓플레이스(`.claude-plugin/marketplace.json` → `./dryforge/claude`)를 둠. 루트 `NOTICE` 추가 | 원본 dryforge를 따로 설치해도 이름이 겹치지 않게 해요. 루트 마켓플레이스가 있어야 `/plugin marketplace add soohy00/WorkforMe`로 바로 설치돼요. Apache-2.0은 바꾼 파일에 "바꾸었다"는 표시를 요구해요 | U1, U7 |

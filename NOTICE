@@ -1,0 +1,11 @@
+WorkforMe
+
+This repository contains a modified copy of Dryforge in dryforge/.
+
+  Dryforge — https://github.com/prekuter/dryforge
+  Copyright 2026 prekuter
+  Licensed under the Apache License, Version 2.0 (see dryforge/LICENSE)
+
+The copy was imported unchanged from Dryforge v1.3.7 (commit 904f257) and then
+modified. Every modification, its reason, and the commit that made it are listed
+in CHANGES.md at the repository root.
