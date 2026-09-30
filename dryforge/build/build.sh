@@ -107,42 +107,25 @@ if [ "$UNIQ" != "$CL_VER" ]; then
 fi
 echo "✓ version OK: v$UNIQ (2 manifests + CHANGELOG)"
 
-# Publish only after every generated package and guard has succeeded. Existing outputs are
-# retained inside BUILD_TMP until the full swap completes, so a failed move can be rolled back.
+# Publish only after every generated package and guard has succeeded. The existing output is
+# retained inside BUILD_TMP until the swap completes, so a failed move can be rolled back.
+# (WorkforMe fork: one target, so the upstream per-target loops are a single swap — CH-01.)
 BACKUP="$BUILD_TMP/previous"
 mkdir -p "$BACKUP"
-MOVED_OLD=""
-for rel in claude; do
-  if [ -e "$ROOT/$rel" ]; then
-    mkdir -p "$(dirname "$BACKUP/$rel")"
-    if ! mv "$ROOT/$rel" "$BACKUP/$rel"; then
-      for restore in $MOVED_OLD; do
-        mkdir -p "$(dirname "$ROOT/$restore")"
-        mv "$BACKUP/$restore" "$ROOT/$restore"
-      done
-      echo "FAILED: could not stage existing output: $rel" >&2
-      exit 1
-    fi
-    MOVED_OLD="$rel $MOVED_OLD"
-  fi
-done
-
-MOVED_NEW=""
-for rel in claude; do
-  mkdir -p "$(dirname "$ROOT/$rel")"
-  if ! mv "$OUT/$rel" "$ROOT/$rel"; then
-    for rollback in $MOVED_NEW; do
-      mkdir -p "$(dirname "$OUT/$rollback")"
-      mv "$ROOT/$rollback" "$OUT/$rollback"
-    done
-    for restore in $MOVED_OLD; do
-      mkdir -p "$(dirname "$ROOT/$restore")"
-      mv "$BACKUP/$restore" "$ROOT/$restore"
-    done
-    echo "FAILED: could not publish generated output: $rel" >&2
+HAD_OLD=""
+if [ -e "$ROOT/claude" ]; then
+  if ! mv "$ROOT/claude" "$BACKUP/claude"; then
+    echo "FAILED: could not stage existing output: claude" >&2
     exit 1
   fi
-  MOVED_NEW="$rel $MOVED_NEW"
-done
+  HAD_OLD=1
+fi
+if ! mv "$OUT/claude" "$ROOT/claude"; then
+  if [ -n "$HAD_OLD" ]; then
+    mv "$BACKUP/claude" "$ROOT/claude"
+  fi
+  echo "FAILED: could not publish generated output: claude" >&2
+  exit 1
+fi
 
 echo "=== done → ./claude ==="
