@@ -3,16 +3,11 @@
 #
 #   src/skills/        canonical, platform-neutral skills (single source of truth)
 #   platform/claude/   claude-only frontmatter values + plugin.json + LICENSE
-#   platform/codex/    codex-only openai.yaml + plugin.json + LICENSE
-#   platform/grok/     grok-only plugin.json + LICENSE
-#   platform/agent-plugin/  Agent Plugins 1.0 plugin.json + LICENSE
-#   platform/antigravity/   Antigravity plugin.json + rules + LICENSE
 #   README.md          repo-root README (+ README_{ko,zh,ja}.md) — GitHub landing only, NOT bundled into plugins
 #   claude/            generated Claude plugin   (committed; Claude installs this)
-#   codex/plugin/      generated Codex plugin    (committed; Codex installs this)
-#   grok/              generated Grok plugin     (committed; Grok installs this)
-#   agent-plugin/      generated Agent Plugin    (committed; Copilot installs this)
-#   antigravity/       generated Antigravity plugin (committed; Antigravity installs this)
+#
+# WorkforMe fork: only the Claude package is built (the Codex / Grok / Agent Plugin /
+# Antigravity targets were removed — see CHANGES.md CH-01 at the WorkforMe repo root).
 #
 # Root marketplace manifests are committed repo files, not build outputs.
 #
@@ -20,7 +15,7 @@
 #   ① shared references byte-identical (3 pairs)
 #   ② frontmatter injection post-verified (a silent perl no-op must not ship)
 #   ③ skill list discovered dynamically from src/skills/*/ (a 4th skill without
-#     its claude_tools mapping or codex openai.yaml overlay fails the build)
+#     its claude_tools mapping fails the build)
 #   ④ all plugin.json versions non-empty + identical + match CHANGELOG top
 
 set -euo pipefail
@@ -83,80 +78,16 @@ done
 cp "$PLAT/claude/plugin.json" "$OUT/claude/.claude-plugin/plugin.json"
 cp "$PLAT/claude/LICENSE" "$OUT/claude/"
 
-# ── Codex → ./codex/plugin ──────────────────────────────────────────────────
-echo "=== build: codex ==="
-mkdir -p "$OUT/codex/plugin/.codex-plugin"
-cp -R "$SRC" "$OUT/codex/plugin/skills"
-cp -R "$PLAT/codex/skills/." "$OUT/codex/plugin/skills/"   # agents/openai.yaml overlay
-# guard ③ (codex leg): every skill must carry its openai.yaml overlay
-for s in $SKILLS; do
-  [ -f "$OUT/codex/plugin/skills/$s/agents/openai.yaml" ] \
-    || { echo "FAILED: missing Codex openai.yaml overlay for skill: $s" >&2; exit 1; }
-done
-cp "$PLAT/codex/plugin.json" "$OUT/codex/plugin/.codex-plugin/plugin.json"
-cp "$PLAT/codex/LICENSE" "$OUT/codex/plugin/"
-
-# ── Grok → ./grok ──────────────────────────────────────────────────────────
-echo "=== build: grok ==="
-mkdir -p "$OUT/grok"
-cp -R "$SRC" "$OUT/grok/skills"
-for s in $SKILLS; do
-  INJECT=$'disable-model-invocation: true' \
-    perl -0777 -i -pe 'BEGIN{$j=$ENV{INJECT}} s/\A(---\n.*?\n)---\n/$1$j\n---\n/s' \
-    "$OUT/grok/skills/$s/SKILL.md"
-done
-cp "$PLAT/grok/plugin.json" "$OUT/grok/plugin.json"
-cp "$PLAT/grok/LICENSE" "$OUT/grok/"
-
-# ── Agent Plugins 1.0 → ./agent-plugin ─────────────────────────────────────
-echo "=== build: agent-plugin ==="
-mkdir -p "$OUT/agent-plugin"
-cp -R "$SRC" "$OUT/agent-plugin/skills"
-for s in $SKILLS; do
-  INJECT=$'disable-model-invocation: true' \
-    perl -0777 -i -pe 'BEGIN{$j=$ENV{INJECT}} s/\A(---\n.*?\n)---\n/$1$j\n---\n/s' \
-    "$OUT/agent-plugin/skills/$s/SKILL.md"
-done
-cp "$PLAT/agent-plugin/plugin.json" "$OUT/agent-plugin/plugin.json"
-cp "$PLAT/agent-plugin/LICENSE" "$OUT/agent-plugin/"
-
-# ── Antigravity → ./antigravity ────────────────────────────────────────────
-echo "=== build: antigravity ==="
-mkdir -p "$OUT/antigravity"
-cp -R "$SRC" "$OUT/antigravity/skills"
-cp "$PLAT/antigravity/plugin.json" "$OUT/antigravity/plugin.json"
-cp "$PLAT/antigravity/LICENSE" "$OUT/antigravity/"
-cp -R "$PLAT/antigravity/rules" "$OUT/antigravity/rules"
-
-# guard ②: manual-only injection must land once in every Grok and Agent Plugin skill.
-for target in grok agent-plugin; do
-  for s in $SKILLS; do
-    f="$OUT/$target/skills/$s/SKILL.md"
-    if [ "$(grep -c '^disable-model-invocation: true$' "$f")" -ne 1 ]; then
-      echo "FAILED: $target invocation policy injection failed for skill: $s" >&2
-      exit 1
-    fi
-    if grep -q '^allowed-tools:' "$f"; then
-      echo "FAILED: Claude allowed-tools leaked into $target skill: $s" >&2
-      exit 1
-    fi
-  done
-done
-
-find "$OUT/claude" "$OUT/codex" "$OUT/grok" "$OUT/agent-plugin" "$OUT/antigravity" \
-  -name ".DS_Store" -delete 2>/dev/null || true
+find "$OUT/claude" -name ".DS_Store" -delete 2>/dev/null || true
 
 # ── guard ④: version consistency ────────────────────────────────────────────
-# All 8 plugin.json (4 platform inputs + 4 generated) carry the same non-empty
+# Both plugin.json (platform input + generated) carry the same non-empty
 # version AND it matches the CHANGELOG top entry. Catches manual-edit skew at build time instead of leaving it for a
 # human (or another agent) to spot. Release tags are validated separately so
 # the build remains independent of Git state.
 pj_ver() { perl -ne 'if(/"version"\s*:\s*"([^"]+)"/){print $1; last}' "$1"; }
 VERS=""
-for pj in "$PLAT/claude/plugin.json" "$PLAT/codex/plugin.json" \
-          "$PLAT/grok/plugin.json" "$PLAT/agent-plugin/plugin.json" \
-          "$OUT/claude/.claude-plugin/plugin.json" "$OUT/codex/plugin/.codex-plugin/plugin.json" \
-          "$OUT/grok/plugin.json" "$OUT/agent-plugin/plugin.json"; do
+for pj in "$PLAT/claude/plugin.json" "$OUT/claude/.claude-plugin/plugin.json"; do
   v="$(pj_ver "$pj")"
   [ -n "$v" ] || { echo "FAILED: empty version: $pj" >&2; exit 1; }
   VERS="$VERS$v"$'\n'
@@ -172,14 +103,14 @@ if [ "$UNIQ" != "$CL_VER" ]; then
   echo "✗ plugin.json=v$UNIQ but CHANGELOG top=v$CL_VER" >&2
   exit 1
 fi
-echo "✓ version OK: v$UNIQ (8 manifests + CHANGELOG)"
+echo "✓ version OK: v$UNIQ (2 manifests + CHANGELOG)"
 
 # Publish only after every generated package and guard has succeeded. Existing outputs are
 # retained inside BUILD_TMP until the full swap completes, so a failed move can be rolled back.
 BACKUP="$BUILD_TMP/previous"
-mkdir -p "$BACKUP/codex"
+mkdir -p "$BACKUP"
 MOVED_OLD=""
-for rel in claude codex/plugin grok agent-plugin antigravity; do
+for rel in claude; do
   if [ -e "$ROOT/$rel" ]; then
     mkdir -p "$(dirname "$BACKUP/$rel")"
     if ! mv "$ROOT/$rel" "$BACKUP/$rel"; then
@@ -195,7 +126,7 @@ for rel in claude codex/plugin grok agent-plugin antigravity; do
 done
 
 MOVED_NEW=""
-for rel in claude codex/plugin grok agent-plugin antigravity; do
+for rel in claude; do
   mkdir -p "$(dirname "$ROOT/$rel")"
   if ! mv "$OUT/$rel" "$ROOT/$rel"; then
     for rollback in $MOVED_NEW; do
@@ -212,4 +143,4 @@ for rel in claude codex/plugin grok agent-plugin antigravity; do
   MOVED_NEW="$rel $MOVED_NEW"
 done
 
-echo "=== done → ./claude  ./codex/plugin  ./grok  ./agent-plugin  ./antigravity ==="
+echo "=== done → ./claude ==="

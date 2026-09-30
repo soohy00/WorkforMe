@@ -11,45 +11,13 @@ import sys
 from pathlib import Path
 
 
-AGENT_PLUGIN_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
-ANTIGRAVITY_SCHEMA = "https://antigravity.google/schemas/v1/plugin.json"
-ANTIGRAVITY_FIELDS = {"$schema", "name", "description"}
+# WorkforMe fork: only the Claude package is built and verified (CHANGES.md CH-01).
 VERSIONED_MANIFESTS = (
     Path("platform/claude/plugin.json"),
-    Path("platform/codex/plugin.json"),
-    Path("platform/grok/plugin.json"),
-    Path("platform/agent-plugin/plugin.json"),
     Path("claude/.claude-plugin/plugin.json"),
-    Path("codex/plugin/.codex-plugin/plugin.json"),
-    Path("grok/plugin.json"),
-    Path("agent-plugin/plugin.json"),
 )
-AGENT_PLUGIN_FIELDS = {
-    "$schema",
-    "name",
-    "version",
-    "description",
-    "author",
-    "homepage",
-    "repository",
-    "license",
-    "keywords",
-    "extensions",
-}
-SKILL_FIELDS = {
-    "name",
-    "description",
-    "license",
-    "compatibility",
-    "metadata",
-    "allowed-tools",
-    "disable-model-invocation",
-}
 MARKETPLACE_TARGETS = {
     Path(".claude-plugin/marketplace.json"): Path("claude"),
-    Path(".agents/plugins/marketplace.json"): Path("codex/plugin"),
-    Path(".grok-plugin/marketplace.json"): Path("grok"),
-    Path(".github/plugin/marketplace.json"): Path("agent-plugin"),
 }
 
 
@@ -179,111 +147,45 @@ def frontmatter(path: Path) -> dict[str, str]:
     return values
 
 
-def validate_agent_plugin(root: Path) -> None:
-    package = root / "agent-plugin"
-    manifest = load_json(package / "plugin.json")
-    unknown = set(manifest) - AGENT_PLUGIN_FIELDS
-    if unknown:
-        raise VerificationError(f"unknown Agent Plugin manifest fields: {', '.join(sorted(unknown))}")
-    if manifest.get("$schema") != AGENT_PLUGIN_SCHEMA:
-        raise VerificationError("Agent Plugin schema is missing or unsupported")
-    name = manifest.get("name")
-    if not isinstance(name, str) or not re.fullmatch(r"[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?", name):
-        raise VerificationError("invalid Agent Plugin name")
-    if "--" in name or ".." in name or len(name) > 64:
-        raise VerificationError("invalid Agent Plugin name")
-    skills = package / "skills"
-    if not skills.is_dir():
-        raise VerificationError("Agent Plugin skills directory is missing")
-    discovered = sorted(path for path in skills.iterdir() if path.is_dir())
-    if not discovered:
-        raise VerificationError("Agent Plugin has no skills")
-    for skill in discovered:
-        skill_file = skill / "SKILL.md"
-        if not skill_file.is_file():
-            raise VerificationError(f"Agent Plugin skill has no SKILL.md: {skill.name}")
-        values = frontmatter(skill_file)
-        unknown_skill_fields = set(values) - SKILL_FIELDS
-        if unknown_skill_fields:
-            raise VerificationError(
-                f"unknown Agent Plugin skill fields in {skill.name}: {', '.join(sorted(unknown_skill_fields))}"
-            )
-        if values.get("name") != skill.name:
-            raise VerificationError(f"Agent Plugin skill name does not match directory: {skill.name}")
-        if not values.get("description"):
-            raise VerificationError(f"Agent Plugin skill description is missing: {skill.name}")
-        if values.get("disable-model-invocation") != "true":
-            raise VerificationError(f"Agent Plugin skill is not manual-only: {skill.name}")
-        if "allowed-tools" in values:
-            raise VerificationError(f"platform-specific allowed-tools leaked into Agent Plugin: {skill.name}")
-    print(f"OK Agent Plugins 1.0 package ({len(discovered)} skills)")
 
-
-def validate_grok_package(root: Path) -> None:
-    skills = root / "grok/skills"
-    discovered = sorted(path for path in skills.iterdir() if path.is_dir()) if skills.is_dir() else []
-    if not discovered:
-        raise VerificationError("Grok package has no skills")
-    for skill in discovered:
-        values = frontmatter(skill / "SKILL.md")
-        if values.get("name") != skill.name:
-            raise VerificationError(f"Grok skill name does not match directory: {skill.name}")
-        if values.get("disable-model-invocation") != "true":
-            raise VerificationError(f"Grok skill is not manual-only: {skill.name}")
-        if "allowed-tools" in values:
-            raise VerificationError(f"Claude allowed-tools leaked into Grok: {skill.name}")
-    print(f"OK Grok package ({len(discovered)} skills)")
-
-
-def validate_antigravity_package(root: Path) -> None:
-    package = root / "antigravity"
-    manifest = load_json(package / "plugin.json")
-    unknown = set(manifest) - ANTIGRAVITY_FIELDS
-    if unknown:
-        raise VerificationError(f"unknown Antigravity manifest fields: {', '.join(sorted(unknown))}")
-    if manifest.get("$schema") != ANTIGRAVITY_SCHEMA:
-        raise VerificationError("Antigravity schema is missing or unsupported")
-    if manifest.get("name") != "dryforge":
-        raise VerificationError("unexpected Antigravity plugin name")
-    if not isinstance(manifest.get("description"), str) or not manifest["description"].strip():
-        raise VerificationError("Antigravity description is missing")
-
+def validate_claude_package(root: Path) -> None:
+    """Claude counterpart of the removed per-platform package checks (CHANGES.md CH-01)."""
     source_skills = root / "src/skills"
-    generated_skills = package / "skills"
+    generated_skills = root / "claude/skills"
     source_names = sorted(path.name for path in source_skills.iterdir() if path.is_dir())
-    generated_names = sorted(path.name for path in generated_skills.iterdir() if path.is_dir())
-    source_files = {
+    generated_names = sorted(path.name for path in generated_skills.iterdir() if path.is_dir()) \
+        if generated_skills.is_dir() else []
+    if not source_names or generated_names != source_names:
+        raise VerificationError("Claude skills do not match src/skills")
+    for name in source_names:
+        skill_file = generated_skills / name / "SKILL.md"
+        values = frontmatter(skill_file)
+        if values.get("name") != name:
+            raise VerificationError(f"Claude skill name does not match directory: {name}")
+        if not values.get("description"):
+            raise VerificationError(f"Claude skill description is missing: {name}")
+        if values.get("disable-model-invocation") != "true":
+            raise VerificationError(f"Claude skill is not manual-only: {name}")
+        if not values.get("allowed-tools"):
+            raise VerificationError(f"Claude skill has no allowed-tools: {name}")
+        # Everything except the injected frontmatter lines must equal the source byte-for-byte.
+        injected = re.compile(r"^(disable-model-invocation|allowed-tools):.*\n", re.MULTILINE)
+        if injected.sub("", skill_file.read_text(encoding="utf-8")) != \
+                (source_skills / name / "SKILL.md").read_text(encoding="utf-8"):
+            raise VerificationError(f"Claude SKILL.md differs from src beyond frontmatter: {name}")
+    source_refs = {
         path.relative_to(source_skills): path.read_bytes()
         for path in source_skills.rglob("*")
-        if path.is_file() and path.name != ".DS_Store"
+        if path.is_file() and path.name not in {".DS_Store", "SKILL.md"}
     }
-    generated_files = {
+    generated_refs = {
         path.relative_to(generated_skills): path.read_bytes()
         for path in generated_skills.rglob("*")
-        if path.is_file() and path.name != ".DS_Store"
+        if path.is_file() and path.name not in {".DS_Store", "SKILL.md"}
     }
-    if not source_names or generated_names != source_names or generated_files != source_files:
-        raise VerificationError("Antigravity skills do not match src/skills")
-    for name in source_names:
-        generated = generated_skills / name / "SKILL.md"
-        if frontmatter(generated).get("name") != name:
-            raise VerificationError(f"Antigravity skill name does not match directory: {name}")
-
-    rule = package / "rules/invocation.md"
-    if not rule.is_file():
-        raise VerificationError("Antigravity invocation rule is missing")
-    rule_text = rule.read_text(encoding="utf-8")
-    source_rule = root / "platform/antigravity/rules/invocation.md"
-    if not source_rule.is_file() or source_rule.read_bytes() != rule.read_bytes():
-        raise VerificationError("Antigravity invocation rule differs from platform source")
-    required_phrases = (
-        "Only invoke a dryforge skill when the user explicitly enters",
-        "Do not select or invoke dryforge from semantic similarity",
-        "Without an explicit dryforge slash command",
-    )
-    if any(phrase not in rule_text for phrase in required_phrases):
-        raise VerificationError("Antigravity invocation rule is missing the manual-only contract")
-    print(f"OK Antigravity package ({len(generated_names)} skills + invocation rule)")
+    if source_refs != generated_refs:
+        raise VerificationError("Claude skill references do not match src/skills")
+    print(f"OK Claude package ({len(source_names)} skills)")
 
 
 def git_status(root: Path) -> str:
@@ -305,15 +207,6 @@ def validate_reproducible_build(root: Path) -> None:
     print("OK reproducible build")
 
 
-def validate_codex_invocation(root: Path) -> None:
-    skills = sorted(path.name for path in (root / "src/skills").iterdir() if path.is_dir())
-    pattern = re.compile(r"^policy:\n  allow_implicit_invocation: false$", re.MULTILINE)
-    for name in skills:
-        overlay = root / "codex/plugin/skills" / name / "agents/openai.yaml"
-        if not overlay.is_file() or not pattern.search(overlay.read_text(encoding="utf-8")):
-            raise VerificationError(f"Codex implicit invocation is not disabled for skill: {name}")
-    print(f"OK Codex manual-only invocation ({len(skills)} skills)")
-
 
 def validate_licenses(root: Path) -> None:
     canonical = (root / "LICENSE").read_bytes()
@@ -332,15 +225,7 @@ def verify(root: Path, tag: str | None = None) -> None:
         "build/build.sh",
         "src/skills",
         "platform/claude/plugin.json",
-        "platform/codex/plugin.json",
-        "platform/grok/plugin.json",
-        "platform/agent-plugin/plugin.json",
-        "platform/antigravity/plugin.json",
-        "platform/antigravity/rules/invocation.md",
         ".claude-plugin/marketplace.json",
-        ".agents/plugins/marketplace.json",
-        ".grok-plugin/marketplace.json",
-        ".github/plugin/marketplace.json",
         "LICENSE",
     ]
     missing = [item for item in required if not (root / item).exists()]
@@ -349,10 +234,7 @@ def verify(root: Path, tag: str | None = None) -> None:
     validate_json_files(root)
     validate_versions(root, tag)
     validate_marketplaces(root)
-    validate_agent_plugin(root)
-    validate_grok_package(root)
-    validate_antigravity_package(root)
-    validate_codex_invocation(root)
+    validate_claude_package(root)
     validate_licenses(root)
     validate_reproducible_build(root)
 
