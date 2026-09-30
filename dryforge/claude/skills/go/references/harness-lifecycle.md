@@ -93,11 +93,19 @@ no Foundation is produced.)
 ## Re-run after a fix
 
 If the final review triggers a fix:
-- **Document changed** → re-run the completion gate (the base SHA moved).
-- **Harness changed** → re-run the harness review (lenses 3–4).
+- **Document changed** → re-run the completion gate (the base SHA moved), with the reader check
+  bounded as in `reader-check-prompt.md` (affected questions only).
+- **Harness changed** → re-run the harness review (lenses 3–4): a **fresh** reviewer over this
+  cycle's whole harness diff, given the list of fixes to verify.
 - **Both changed** → re-run both.
 
-Do not approve/archive until the re-run is green.
+**Bounded.** A re-run judges blocking findings. The advisories it raises are triaged once
+(lightweight fix, or accepted with a reason) and do **not** start another re-run. Only a fix to a
+blocking finding starts a new round, at most two rounds after the final review; still blocking →
+stop and ask the user. A fresh reviewer almost always finds new advisories — they are recorded, not
+a reason to loop.
+
+Do not approve/archive while a blocking finding is open.
 
 ## Out-of-scope review finding
 

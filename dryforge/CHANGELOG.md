@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.7-docs.2 (2026-09-30)
+
+- go: bounded re-checks. The reader check separates blocking findings (conflicting facts, unsourced
+  figures, a wrong expected answer) from the reader's open questions, which go to the user gate
+  instead of starting another round; at most two re-checks, then the user decides. Advisories are
+  triaged once, and a re-review after a fix judges blocking findings only
+- go: completion-gate fixes use the same lightweight/fix-dispatch triage; text the user dictated is
+  applied directly; a mid-run content change by the user updates the spec before re-verifying
+
 ## v1.3.7-docs.1 (2026-09-30)
 
 - WorkforMe fork: ready, go and migration produce IT planning and business-operations documents

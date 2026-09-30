@@ -290,7 +290,9 @@ typo, a heading level, a term swapped for the harness term) → edit directly on
 completion gate. The default disposition is lightweight fix, not "accepted." Only mark an advisory
 as accepted when a fix is genuinely inappropriate (design trade-off, spec-intentional behavior).
 Do not skip advisories as "accepted" when a lightweight fix would take seconds. Scoped to trivial,
-non-behavioral changes only — substantive findings still go to an independent fix-dispatch.
+non-behavioral changes only — substantive findings still go to an independent fix-dispatch. Each
+advisory is triaged once; a re-run after an advisory fix judges blocking findings only (go SKILL.md
+step 11, bounded).
 
 ## Failure handling
 
@@ -299,7 +301,7 @@ non-behavioral changes only — substantive findings still go to an independent 
 | `BLOCKED` / `NEEDS_CONTEXT` | walk the bounded ladder: attempt 1 more context → attempt 2 stronger model where the platform allows it → escalate |
 | max retries exceeded | **escalate to the user + preserve the worktree for manual recovery** (do not discard) |
 | mid-run spec-review fail | re-dispatch with the specific fix |
-| final review fail | fix-dispatch the blocking findings, re-run final review |
+| final review fail | fix-dispatch the blocking findings, re-run final review (at most two rounds, then escalate) |
 | merge conflict | analyze; resolve if mechanical / same-intent, else escalate |
 | merge commit-msg hook rejection | inspect hook name + full output; verify branch state (`git log`); retry with the producer-discovered commit convention; else escalate with hook name + error + attempted message + branch state |
 | regen-barrier non-zero / conflicting output | capture command + exit + stderr; analyze whether a prior merge broke a precondition; if it would overwrite merged files, escalate |
@@ -329,6 +331,13 @@ the user's answer — it never silently hangs, fires-and-forgets, or proceeds on
 "waiting." (Subagents run in fresh sessions with no live user conversation, so they cannot ask the
 user; they return their escalation through their structured result, and the orchestrator relays it
 to the user synchronously.)
+
+**The user changes content mid-run.** When the user's answer to an escalation changes what the
+document says (a line removed, a comparison dropped, a marking changed), update the spec first — and
+the plan and handoff where they carry it (a hard gate, the marking string) — and record the change
+and its reason in the spec's thinking-base. Then fix the document and re-verify against the updated
+spec. The archived 3-doc must match the delivered document. Only the user's decision changes the
+spec; a reader's or reviewer's suggestion alone never does.
 
 **Detection ≠ diagnosis.** Spotting that something broke is not the same as correctly
 attributing *why*. A confident but wrong cause-attribution is possible — verify it against the

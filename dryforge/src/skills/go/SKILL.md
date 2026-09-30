@@ -204,7 +204,9 @@ trivial (1–2 files, no change to a claim or fact, e.g. a typo, a heading level
 the harness term) → edit directly on the base, commit, re-run the completion gate. Substantive (structural,
 multi-file, behavioral) → fix-dispatch subagent. The default is lightweight — only escalate to
 fix-dispatch when the change warrants independent review. Do not skip advisories as "accepted"
-when a lightweight fix would take seconds.
+when a lightweight fix would take seconds. The same triage applies to fixes at the completion gate
+(reader-check findings). Text the user dictated word for word is applied directly, whatever the file
+count — no writing judgment is left for an independent writer.
 
 **Sequential wave** (single task — the common case). Execution mode is set by the task's `risk`
 (full rules in `references/orchestration.md`):
@@ -287,6 +289,10 @@ when a lightweight fix would take seconds.
    base tip SHA has not changed since that gate (no lightweight fix, no wiring, no regen committed
    after it), the completion gate is satisfied by the prior gate's captured result — do not re-run.
    If any commit landed after the last gate, **or that gate was affected-only**, re-run the full verify set.
+   After that full run, a **fix** (during the completion gate or after the final review) re-checks in
+   the bounded way (`reader-check-prompt.md`, "Re-check - bounded"): the fact trace and classification
+   check in full, the reader check on the affected questions only. A fix does not restart the full
+   reader check.
 
 9. **Harness create / update** (`references/harness-lifecycle.md` + `references/harness-format.md`,
    force-load). After the completion gate, before the final review: **re-read the 3-doc** (mandatory —
@@ -311,13 +317,19 @@ when a lightweight fix would take seconds.
 
 11. **Fix if needed** — lightweight fix path for trivial advisories (MUST triage); fix-dispatch
     substantive findings. Fixes may touch **the document or the harness**. Re-run per `harness-lifecycle.md`:
-    document changed → re-run completion gate; harness changed → re-run harness review; both → both. A
+    document changed → re-run completion gate; harness changed → re-run harness review; both → both.
+    **Bounded:** each advisory is triaged **once**. A re-run judges blocking findings; the advisories it
+    raises are triaged (lightweight fix or accepted with a reason) without another re-run. Only a fix
+    to a blocking finding starts a new round, **at most two rounds** after the final review — still
+    blocking after that → stop and ask the user with options. A
     finding about a material/harness mismatch **outside this cycle's change scope** is not fixed here — record
     it in `docs/tracking/findings.md` and defer (scope-limited delta).
 
 12. **User gate.** Present for approval: where the document is, its key message and request in one
     line each, its classification and recipients, any `unconfirmed` fact still shown as unconfirmed
-    (the user must fill or accept it before sending), and what the reader check found. Offer the
+    (the user must fill or accept it before sending), what the reader check found, and **the reader's
+    open questions** (the non-blocking reader-check items, `reader-check-prompt.md`) for the user to
+    add, change, or leave. Offer the
     document itself (share the file with the user in this session if the platform allows). **First cycle:** also present the harness
     as a reconciliation against the decisions the user took part in — *"the [X] we agreed is
     recorded in the harness as [this]"* — **not** a raw document dump. **Later cycle:** include a

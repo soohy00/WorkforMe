@@ -3,8 +3,8 @@
 A document passes when **a reader who never saw the dialogue or the 3-doc** reaches the answers the
 spec expects. The writer cannot run this check on their own work: the writer fills every gap from
 memory (A=A). So the reader check is always a **fresh subagent**, dispatched by the orchestrator at
-the completion gate on the whole assembled document (all questions), and again after a fix that
-touches the first screen or the key message.
+the completion gate on the whole assembled document (all questions), and again after a fix, within
+the bounds below ("Re-check - bounded").
 
 > You are in a fresh session with no live user conversation — do **not** ask the user directly.
 > Return your structured result; the orchestrator relays anything that needs the user.
@@ -14,7 +14,9 @@ touches the first screen or the key message.
 - **Given:** the assembled document (path), the reader's role from the spec and the harness
   (`audiences.md` entry: what they know, what they worry about, what they decide; first cycle — the
   harness does not exist yet, so from the spec's reader model only), and the
-  **reader-check questions — the questions only**.
+  **reader-check questions — the questions only**. The role says who the reader is and what they
+  decide; it never hands them facts the document itself must convey (a reader told "you attended the
+  meeting" answers from memory, not from the document).
 - **Not given:** the expected answers, the 3-doc, the dialogue, the writer's summary. An expected
   answer in the prompt turns a reading test into a matching exercise; the reader then finds what it
   was told to find.
@@ -28,7 +30,8 @@ touches the first screen or the key message.
    what the document wants from you.
 3. **Questions.** Read the whole document, then answer each question **from the document alone**,
    citing where the answer is (heading or visual). If the document does not answer it: `not
-   answered`. If it can be read two ways: `ambiguous: <the two readings>`.
+   answered`. If it can be read two ways: `ambiguous: <the two readings>`. If the document says
+   outright that something is unknown and asks the reader about it, that is the answer: `answered`.
 4. **What else stops this reader** (only when present): terms this reader would not know and the
    document does not explain; claims stated without support; figures, names, dates, or scope that
    disagree between two places; an action without an owner or a date; a visual that is hard to read or
@@ -51,15 +54,40 @@ other:
 
 1. **First screen.** Compare the reader's sentence with the spec's key message and outcome. A mismatch
    is the most important finding — fix the first screen first.
-2. **Per question.** Compare each answer with the spec's expected answer (the orchestrator holds it).
-   Same meaning → pass. `not answered` / `ambiguous` / different → the owning part is fixed. If the fix
-   needs content the spec does not hold → **stop and ask the user**; never invent it.
-3. **Other.** Unexplained term → explain it or use the harness term; unsupported claim or unsourced
-   figure → trace to the ledger or remove; inconsistency → reconcile to the ledger; visual → redraw.
-   A reader-question the document should answer and cannot within the spec's scope → tell the user.
-4. **Re-check.** After a fix, re-run the fact trace; re-run the reader check on the affected questions
-   (all questions if the first screen or the key message changed). If the same question fails twice,
-   stop and tell the user.
+2. **Per question.** Compare each answer's **meaning** with the spec's expected answer (the
+   orchestrator holds it) — not the reader's status label. Same meaning → pass, even if the reader
+   marked it `not answered` (e.g. the expected answer is "unknown — the document asks you", and that
+   is what the reader reports). Different meaning, or two readings of which one is wrong → the owning
+   part is fixed. If the fix needs content the spec does not hold → **stop and ask the user**; never
+   invent it.
+3. **Sort "other".** The reader's `kind` is a hint; the orchestrator decides by reading the cited
+   places in the document.
+   - **Blocking** (fixed before the check passes): two places in the document state **different
+     facts** (a figure, date, name, scope, classification, or who decides); a figure or claim not in
+     the fact ledger; a term the reader cannot understand that an expected answer depends on; a visual
+     that says something different from its caption.
+   - **Not blocking** — everything else: a sentence a reader could read two ways without changing any
+     expected answer; content the spec does not hold (an owner, a date, a reason, a scope detail the
+     reader would like); the reader's own questions; wording preferences; an ambiguity in wording the
+     user approved. Do not fix these on your own and do not re-check for them. Collect them as **the
+     reader's open questions** and present them at the user gate (go SKILL.md step 12), where the user
+     decides to add, change, or leave each one. A fresh reader almost always finds some — they are
+     information for the user, not a reason to loop.
+4. **Fix path.** The same triage as after the final review (go SKILL.md, "Lightweight fix path"):
+   trivial, or text the user dictated word for word → edit directly on the base; otherwise
+   fix-dispatch.
+5. **Re-check - bounded.**
+   - After a fix, re-run the fact trace and the classification check, then the reader check on the
+     **affected questions only**. Re-run all questions only when the key message, the request, or a
+     claim on the first screen changed — not for a wording-only edit, and not for a change to the
+     marking line (that re-checks only the question about classification and recipients).
+   - A re-check judges its questions and blocking items only. New non-blocking items join the open
+     questions and never start another round.
+   - **At most two re-checks** after the first full reader check. If a blocking item or a question
+     still fails after the second, or the same question or the same blocking item fails twice → stop
+     and tell the user: what still fails, the two readings, and options (fix it with the user's
+     wording / leave it and explain in person / change the spec).
 
-**Pass:** every question `answered` with the expected meaning, the first-screen sentence matches the
-key message, no inconsistency, no unsourced figure.
+**Pass:** the first-screen sentence matches the key message, every question is answered with the
+expected meaning, and no blocking item is open. Non-blocking items never stop the pass; they go to the
+user gate as the reader's open questions.
