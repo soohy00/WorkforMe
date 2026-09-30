@@ -1,9 +1,10 @@
 ---
 name: ready
 description: >
-  Understand what you mean before anything is built. Takes anything — a one-line idea, notes, a
-  spec, or a mix — reads the project first, asks only what is yours to decide, and writes your
-  intent down for you to approve. Use when the user invokes the `ready` skill. Requires git.
+  Understand what you mean before any document is written. Takes anything — a one-line request,
+  notes, meeting minutes, a draft, files, or a mix — reads the project first, asks only what is
+  yours to decide, and writes your intent down for you to approve. Use when the user invokes the
+  `ready` skill. Requires git.
 ---
 
 # ready
@@ -17,6 +18,13 @@ The **front door** of dryforge. Turn any input — a natural-language goal, a sp
 brought from elsewhere, scattered notes, several files, a mix, or nothing yet — into an
 execution-ready **3-doc** (handoff + spec + plan), grounded in the real project, ready for `go`.
 
+**The deliverable is a document, not code.** This fork of dryforge produces the documents of IT
+planning and business operations — a proposal, an alignment doc for designers and developers, an
+escalation report to a manager or CEO, a results report to investors, meeting material, a visual
+explainer. The **project** is one company project: a folder under the workspace's `projects/`,
+kept as its own local git repository. "Implementation" below means *writing the document*; the
+3-doc is the design of that document, and `go` writes it.
+
 **The input is *material*, not ground truth.** Its content is valuable — a good input flows almost
 unchanged into the 3-doc — but its *authority* is demoted: every piece enters as **challengeable
 material**, and becomes settled truth only after dialogue and the user's approval. A long requirements
@@ -28,13 +36,13 @@ where the input came from. The 3-doc contract is in `references/output-format.md
 
 - **Serve the spec.** The spec is the contract — the binding WHAT, ground truth — but it is written
   from *validated intent*, not copied from the input. The plan is a *provisional blueprint* that
-  realizes it (revise freely). Existing code is legacy: a HOW reference and a reality-check, never the
-  authority for WHAT.
+  realizes it (revise freely). Existing material — earlier documents in the project, a received
+  draft — is a HOW reference and a reality-check, never the authority for WHAT.
 - **Ask, don't assume — but don't ask the derivable.** Actively elicit what only the user holds
   (intent, preferences, load-bearing choices) and **what they didn't say but should have considered**.
-  What the input/code/harness settles, resolve yourself. Anything you can neither derive nor get the
+  What the input/material/harness settles, resolve yourself. Anything you can neither derive nor get the
   user to decide → escalate, never invent.
-- **Conflicts and unknowns → ask, never self-resolve.** Any difference between sources (input ↔ code ↔
+- **Conflicts and unknowns → ask, never self-resolve.** Any difference between sources (input ↔ material ↔
   harness, attached doc ↔ spoken description) is flagged in DECOMPOSE and asked in ELICIT — never
   resolved arbitrarily. Self-filling a conflict is the origin of drift.
 - **ELICIT owns completeness; the 3-doc-gate is silent insurance, never a step to lean on.** Elicit
@@ -50,8 +58,10 @@ where the input came from. The 3-doc contract is in `references/output-format.md
   The user approves the 3-doc before execution; within that, the agent judges freely.
 - **Floor, not ceiling.** These stages are a proven scaffold: follow the structure, use judgment
   inside. Do not hardcode question lists or verification checklists.
-- **Stack-agnostic.** No stack/framework/library name in this skill. Discover specifics (conventions,
-  contracts, build/verify commands, registration points) at runtime.
+- **Stack-agnostic and company-agnostic.** No stack/framework/library name, and no company, service,
+  or industry name in this skill. Discover specifics (the organization, the service, the
+  stakeholders, writing conventions, delivery channels, verification) at runtime — the same skill
+  serves every company project.
 - **Subagents only at the two independent checks.** Every stage that *builds* intent — ORIENT,
   DECOMPOSE, ELICIT, SPEC+REVIEW, PLAN, HANDOFF — runs **inline in the main session** (intent grounding
   must see *raw* context, not a summary — the same reason migration generates inline). The **only**
@@ -80,7 +90,7 @@ where the input came from. The 3-doc contract is in `references/output-format.md
   moments: (a) a question you genuinely need answered, (b) the final result or a concise summary,
   (c) a real blocker — **these are the only times user-facing text exists.** If what you are about to
   emit is none of (a)/(b)/(c), the correct output is **nothing**. **Between those beats, stay silent.**
-  Reading references, reading the input / code / notes,
+  Reading references, reading the input / material / notes,
   writing the docs, and dispatching a review are all **internal** — never announce them, and **never
   narrate the transition between steps.** No transition lines — "now I'll write the plan", "먼저 양식을
   확인하고", "let me read the guide", "Now I'll dispatch the review", "Now the spec..." (announcing each
@@ -101,11 +111,16 @@ where the input came from. The 3-doc contract is in `references/output-format.md
 ## Input & preconditions
 
 - Invocation: the user invokes the `ready` skill. The input may be a goal, file path(s), prose, a mix,
-  or empty. If it is empty or only says to use the skill, ask what they want to build or change.
+  or empty. If it is empty or only says to use the skill, ask what document they need.
+- **Project folder.** Work happens inside **one company project folder**. If the current directory is
+  the workspace root (it holds `projects/` and `dryforge/`), do not work there: list the folders in
+  `projects/` and ask which project this is for, or offer to create a new one (`projects/<name>/`,
+  `git init`, an initial commit). A project repository stays **local** — never add a remote or push
+  on your own; company material must not leave the machine unless the user sets that up.
 - **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
   commit** (an empty repo has no HEAD, so go could not create a worktree later). If git is not
-  installed, stop and say so. This holds for both greenfield and existing projects — code presence is
-  *not* the deciding factor.
+  installed, stop and say so. This holds for both new and existing projects — whether documents
+  already exist is *not* the deciding factor.
 - **Output location.** The 3-doc is written to `.dryforge/` at the project root as plain files. You
   do **not** touch `.gitignore` and do **not** commit anything — `go` owns all git mechanics. Keep the
   produce=plan / run=do boundary: produce writes documents, run touches git.
@@ -120,7 +135,7 @@ stage sequence is identical for first and delta.
 ```
 Core principles  inline (subagents only at intent-completeness + 3-doc-gate) · understand-not-guess ·
                  stack/language-agnostic · conflict→ELICIT · floor not ceiling · user-language native
-ORIENT           absorb input + ground code/harness · branch on status.json     (no refs)
+ORIENT           absorb input + ground material/harness · branch on status.json (no refs)
 DECOMPOSE        decompose.md · grounds-gate.md
 ELICIT           elicitation.md · gap-analysis.md · intent-review.md · grounds-gate.md
        [first]+  project-scoping.md · project-design-domain.md · project-design-technical.md ·
@@ -136,7 +151,7 @@ USER GATE (the one human checkpoint)
 
 ## ORIENT — absorb · branch · ground
 
-Take the input raw, decide first-vs-delta, and read code/harness inline to lay the context later
+Take the input raw, decide first-vs-delta, and read material/harness inline to lay the context later
 stages stand on. **No judgment or resolution here** — classification is DECOMPOSE's, conflict
 questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusion.
 
@@ -144,15 +159,17 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
    so. Greenfield or existing, git is required.
 2. **Absorb the input lightly — capture its *character* only.** Parse the argument tokens: resolve to
    files where they are paths, read as prose otherwise, accept a mix. Empty / "use the skill" → ask
-   what they want to build or change first (that answer becomes the input; git from step 1 already
+   what document they need first (that answer becomes the input; git from step 1 already
    holds). Load what you read **raw — do not summarize** (it is the ore DECOMPOSE will deconstruct).
-   Capture the input's character: the rough conception, task type (greenfield / feature / refactor /
-   docs-config) and blast radius, and what the input *points at* (paths, entities, feature names — for
-   aiming grounding). **Stop at character (type / scale)** — assigning each piece to an axis is
-   DECOMPOSE's job, not ORIENT's.
-   - **Low-blast downshift.** A low-blast, no-new-contract goal (a one-line change, a docs/config edit,
-     a refactor with no new behavior) → keep the later dialogue light; don't over-interrogate intent
-     that isn't there. Still emit a **VALID** 3-doc: every section present, gates met, just thinner.
+   Capture the input's character: the rough conception, task type (new document / revision of an
+   existing document / next entry in a document series / small fix) and blast radius (who will read
+   it and what it can change — a decision, a commitment, a build, money), and what the input *points
+   at* (files, people, features, numbers — for aiming grounding). **Stop at character (type /
+   scale)** — assigning each piece to an axis is DECOMPOSE's job, not ORIENT's.
+   - **Low-blast downshift.** A low-blast, no-new-commitment goal (a typo fix, a date update, a
+     one-page internal note that only restates settled facts) → keep the later dialogue light; don't
+     over-interrogate intent that isn't there. Still emit a **VALID** 3-doc: every section present,
+     gates met, just thinner.
    - **Large input.** "Load raw" means *preserve the original losslessly and keep it quotable*, not
      paste a huge file into live context. For large/multi-file input, keep an **index and read
      section-by-section** — don't kill signal by summarizing, but don't ingest it all at once either.
@@ -165,25 +182,31 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
      navigation structure + a populated `docs/`), do **not** assume greenfield — **stop and ask**
      whether to treat it as existing context (delta) or regenerate (first cycle). Don't guess (same
      as go's clobber guard).
-4. **Ground the code (inline, optional).** If code exists, read the *cheapest map first* — repo
-   instructions, file list, manifests, verify scripts, the directories the input points at. **Stop
-   broad reading the moment the completion bar is met** (inline ≠ "read everything" — suppress
-   flooding). Deep-read only the contract to preserve, one representative HOW pattern, and the verify
-   commands. Greenfield → minimal or skip. **No subagent.**
-5. **Find the verify command.** Discover the project's verify command. If none, surface that *absence*
-   as a decision (a custom check / named human-approval evidence / "no automated gate") — recorded in
-   SPEC, never left implicit.
+4. **Ground the material (inline, optional).** If the project already holds material, read the
+   *cheapest map first* — the project entry file, the file list, earlier documents of the same kind
+   in `outputs/`, the received files the input points at. **Stop broad reading the moment the
+   completion bar is met** (inline ≠ "read everything" — suppress flooding). Deep-read only what this
+   document must stay consistent with (numbers, names, commitments already sent), one representative
+   earlier document for tone and structure, and the project's rules. New project → minimal or skip.
+   **No subagent.**
+5. **Set the verification.** A document has no build or test command. Its verification set is:
+   (a) the **reader-check questions** the spec will pin — each answered from the finished document by
+   an independent reader who never saw the dialogue; (b) the **fact trace** — every figure, date,
+   name, and quotation in the document traced to a source in the spec's fact ledger; (c) the
+   **classification check** — the document carries the level and recipients the spec sets and holds
+   nothing above that level. If the project adds its own evidence (a manager's sign-off, a legal
+   read), record it as named human-approval evidence in SPEC — never left implicit.
 
 **Completion bar:** input is loaded raw and the cycle is decided (+ delta: harness loaded); existing →
-you can state the goal's blast radius, the contract to honor, and the verify commands; greenfield →
-you have a grounded conception.
+you can state the document's readers and blast radius, what it must stay consistent with, and the
+verification set; new project → you have a grounded conception.
 
 ## DECOMPOSE — deconstruct the input — `references/decompose.md`
 
 Force-load `references/decompose.md` and `references/grounds-gate.md`. Break the input's *content*
 into material ELICIT can use: classify each piece by axis (a fragment may file under several —
-classification is not partition; when unsure, duplicate); convert premature code to a behavioral
-contract **and keep the verbatim snippet alongside it where it carries a load-bearing edge** (keep-bias:
+classification is not partition; when unsure, duplicate); convert premature prose to a content
+contract **and keep the verbatim sentence alongside it where it carries a load-bearing edge** (keep-bias:
 a dropped nuance is unrecoverable, an over-kept block is cheap); preserve non-derivable forms verbatim;
 dedup wording but **treat repetition as an importance signal, not redundancy**; **flag — never resolve —
 every source difference**; write a **presence map** per axis with a non-scoring *form* marker (bare

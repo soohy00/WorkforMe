@@ -24,7 +24,7 @@ means"); conflict-resolution and gap-scoring are not.
 | work objective / scope | spec objective / scope |
 | invariants / hard constraints | spec invariants + handoff hard gates |
 | non-derivable form (wire format, a specific predicate, a data structure) | **preserve** (code/data block) |
-| implementation code · task-order/dependency graph · noise | **discard** |
+| finished prose / slide text / layout from another tool · section order or outline supplied by the input · noise | **discard** (lift the content first — see below) |
 
 **Classification is not partition — file under every axis a fragment informs.** Much real content is
 dual-natured: a technical choice carries a *domain consequence* (e.g. "eventual consistency" is
@@ -36,10 +36,12 @@ extra sweep. (Keep-biased default, applied to classification.)
 
 ## Discard what is derivable or noise
 
-- **Implementation code** — the agent can re-author it after reading the project, so it is not
-  intent. Discard the code itself (but see the conversion below — its *behavioral* content is kept).
-- **Task-order / dependency graph** — PLAN recomputes this from the whole project. Trusting an
-  INPUT-supplied graph would bypass the producer's core computation — so discard it here.
+- **Finished prose, slide text, or layout** — the agent can re-write it once the intent is settled,
+  so polished wording is not intent. Discard the wording itself (but see the conversion below — its
+  *claims* and *facts* are kept).
+- **Section order / outline / task graph** — PLAN recomputes this from the settled intent and the
+  reader. Trusting an INPUT-supplied outline would bypass the producer's core computation — so
+  discard it here (the reader and the outcome decide the order, not the draft).
 - **Pure noise** — but use a *test*, not a vibe: noise = **removing it changes nothing a downstream
   agent must honor.** If a line states or constrains behavior, an invariant, a boundary, or a scope
   edge — even tersely, even as a *repeat* — it is **signal, not noise.** **Repetition is an importance
@@ -49,35 +51,39 @@ extra sweep. (Keep-biased default, applied to classification.)
 
 ## Preserve non-derivable forms verbatim
 
-A wire format, a specific predicate, a concrete data structure — anything independent judgment could
-get **wrong versus the designer's intent** — is preserved **verbatim as a code/data block**. If you
-discard it, a later independent decision that diverges from intent cannot be recovered.
+A figure with its unit and date, a quotation, a contract or policy clause, a table of numbers, a
+committed date, a name spelled a specific way — anything independent judgment could get **wrong
+versus the author's intent** — is preserved **verbatim as a quoted block**. If you discard it, a later
+independent decision that diverges from intent cannot be recovered. Every figure, date, name, and
+quotation also enters the **fact ledger** with its source (`output-format.md`).
 
-## Premature code → behavioral contract
+## Premature prose → content contract
 
-Premature implementation code is **converted** to a behavioral contract, not kept as code and not
-silently dropped: *"write this code"* → *"for input X produce output Y; hold this invariant."* The
-keep/cut line is precise:
+Premature finished prose (a drafted page, slide text, an AI-written document) is **converted** to a
+content contract, not kept as prose and not silently dropped: *"use this paragraph"* → *"this section
+must make the reader accept claim C, supported by facts F1–F2, without promising P."* The keep/cut line
+is precise:
 
 | In the INPUT | Do |
 |---|---|
-| implementation code blocks (source, queries, schema/DSL, ...) | convert to a behavioral contract — **delete the code only after** lifting its behavior (see below) |
-| feature scope, invariants, API surface, design intent | **keep** — things independent judgment could get wrong |
-| non-obvious shapes (wire format, a specific predicate, a data structure) | **keep as a code/data block** — not derivable, must be pinned |
+| drafted prose / slide text / layout | convert to a content contract (claim · evidence · what it must not promise) — **delete the wording only after** lifting its content (see below) |
+| purpose, audience, scope, commitments, decisions requested | **keep** — things independent judgment could get wrong |
+| non-obvious forms (figures, quotations, clauses, committed dates) | **keep verbatim** — not derivable, must be pinned |
 
 **The keep/cut line:** cut what reading the project reveals; keep what independent judgment could get
 wrong versus the designer's intent. This conversion is **classification + mechanical translation**,
 not conflict mediation — the keep/cut decision *is* a classification judgment and belongs here.
 
 **Keep-biased gray-zone default (the cost is asymmetric — borrow `output-format.md`'s thinking-base
-rule).** A wrongly-*dropped* invariant is **unrecoverable** (the source is gone, see below); a
+rule).** A wrongly-*dropped* commitment is **unrecoverable** (the source is gone, see below); a
 wrongly-*kept* block is **cheap** (ELICIT/SPEC demotes it later). So the tie-breaker is **not**
-symmetric: **unsure whether a fresh agent could re-derive it from the project? Preserve it.** Code
-encodes load-bearing nuance that prose misses — a rounding direction, a `<` vs `<=` boundary, an
-ordering tie-break, a null branch, a field order. When converting code to a contract, if the code
-carries *any* such edge the contract restatement might not fully capture, **keep the original snippet
-verbatim as a code/data block *alongside* the contract** — the two are not exclusive, and pairing them
-costs little while giving ELICIT both the question material and the ground truth to check it against.
+symmetric: **unsure whether a fresh agent could re-derive it from the project? Preserve it.** Wording
+can encode load-bearing nuance that a summary misses — "up to" vs "at least", "estimated" vs
+"confirmed", a hedge, a condition attached to a promise, whose number it is. When converting prose to
+a contract, if the wording carries *any* such edge the restatement might not fully capture, **keep the
+original sentence verbatim as a quoted block *alongside* the contract** — the two are not exclusive,
+and pairing them costs little while giving ELICIT both the question material and the ground truth to
+check it against.
 **Nothing downstream can recover what you cut here** — no later stage (REVIEW(A), the 3-doc-gate) ever
 sees the raw INPUT again, so a dropped nuance is gone for good.
 
@@ -135,8 +141,9 @@ ELICIT is forbidden (`elicitation.md`). It is forbidden here too.
 Do not leave DECOMPOSE until all hold:
 - **Every INPUT fragment is routed** — classified (to ≥1 axis), preserved verbatim, or
   discarded-with-a-nameable-reason. No fragment silently skipped.
-- **Every non-derivable form preserved verbatim**, and every converted code block paired with its
-  verbatim source where it carries a load-bearing edge (keep-biased default above).
+- **Every non-derivable form preserved verbatim**, every figure/date/name/quotation entered in the
+  fact ledger with its source, and every converted prose block paired with its verbatim source where
+  it carries a load-bearing edge (keep-biased default above).
 - **Every source difference flagged** as a conflict candidate.
 - **The presence map lists what landed per axis** with its form marker, and **no axis the INPUT
   actually touches is left silently empty.**
