@@ -31,3 +31,4 @@ git subtree로 가져온 것이에요. 가져온 커밋에서는 아무것도 �
 |---|---|---|---|
 | CH-01 | 빌드를 Claude 패키지만 만들도록 줄임. Codex·Grok·Agent Plugin·Antigravity 패키지와 그 입력 폴더, 마켓플레이스 파일을 지움. `verify.py`의 다른 패키지 검사는 같은 강도의 Claude 검사(`validate_claude_package`)로 바꿈 | 쓰는 도구가 Claude Code뿐이에요. 원본은 변경 하나가 패키지 6곳에 복사되어 diff에 6번 보여요. 한 곳만 남기면 "무엇을 바꾸었나"가 한 번만 보여요 | U7 |
 | CH-02 | 플러그인 이름을 `dryforge` → `dryforge-docs`로, 마켓플레이스 이름을 `workforme`로 바꿈. WorkforMe 루트에 마켓플레이스(`.claude-plugin/marketplace.json` → `./dryforge/claude`)를 둠. 루트 `NOTICE` 추가 | 원본 dryforge를 따로 설치해도 이름이 겹치지 않게 해요. 루트 마켓플레이스가 있어야 `/plugin marketplace add soohy00/WorkforMe`로 바로 설치돼요. Apache-2.0은 바꾼 파일에 "바꾸었다"는 표시를 요구해요 | U1, U7 |
+| CH-03 | WorkforMe 루트에 CI(`.github/workflows/dryforge-ci.yml`)를 추가. `dryforge/`에서 원본의 검사(`shellcheck`, `ci/verify.py`)를 돌리고, 루트 마켓플레이스가 빌드된 패키지를 가리키는지 확인 | 원본 CI는 `dryforge/.github/` 안에 있어서 하위 폴더에서는 돌지 않아요. 원본의 강점(빌드 안전장치, 다시 빌드해도 같은 결과인지 검사)을 PR마다 살려요 | U1 |
