@@ -75,7 +75,7 @@ The Foundation is a **required first-cycle artifact**, not optional: `ready` alw
 through its first-cycle ELICIT loop. So `go` treats its presence as an **invariant**, not something to
 work around. If `go` runs a first cycle (no `status.json`) and the handoff carries **no Foundation
 section**, that is a **precondition violation, not a degrade path** — `go` does **not** guess a
-Foundation from spec + code. It **stops and asks the user to regenerate the 3-doc via `ready`**
+Foundation from spec + material. It **stops and asks the user to regenerate the 3-doc via `ready`**
 (escalate-don't-guess). (This is a fail-fast check, not a fallback mode — the operational rule lives
 in `go`'s `harness-lifecycle.md`.)
 

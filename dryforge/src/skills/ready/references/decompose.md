@@ -1,6 +1,6 @@
 # decompose.md — DECOMPOSE (deconstruct the INPUT into ELICIT material)
 
-DECOMPOSE takes the raw INPUT (and the code/harness context ORIENT loaded) and breaks its
+DECOMPOSE takes the raw INPUT (and the material/harness context ORIENT loaded) and breaks its
 *content* into material ELICIT can use. This stage **classifies, organizes, and flags — it does not
 judge.** "What is correct?" (conflict) and "is it enough?" (gap) are deferred: conflicts go to
 ELICIT as questions, gaps are uncomputable until ELICIT establishes the depth floor (first cycle: the foundation design's character→depth; delta: the harness).
@@ -24,7 +24,7 @@ means"); conflict-resolution and gap-scoring are not.
 | purpose / reader / outcome / scope | spec objective / reader / outcome / scope |
 | hard constraints (must-not-say, classification, fixed dates, promised wording) | spec invariants + handoff hard gates |
 | every figure, date, name, quotation | **fact ledger** (with its source) |
-| non-derivable form (wire format, a specific predicate, a data structure) | **preserve** (code/data block) |
+| non-derivable form (a figure with unit and date, a quotation, a clause, a committed date) | **preserve** (quoted block) + fact ledger |
 | finished prose / slide text / layout from another tool · section order or outline supplied by the input · noise | **discard** (lift the content first — see below) |
 
 **Classification is not partition — file under every axis a fragment informs.** Much real content is
@@ -98,7 +98,7 @@ sees the raw INPUT again, so a dropped nuance is gone for good.
 
 ## Flag every source difference as a question candidate — don't resolve it
 
-When sources disagree — INPUT↔code, INPUT↔harness, code↔harness, an attached doc↔a spoken
+When sources disagree — INPUT↔material, INPUT↔harness, material↔harness, an attached doc↔a spoken
 description, anything — **do not pick one yourself. Flag it as an ELICIT question candidate.** The
 question takes the form *"the situation is X — which is right?"* or *"I consolidated it this way — is
 that right?"* (pass the candidate through `grounds-gate.md` before it becomes a confident question).
@@ -156,9 +156,9 @@ Do not leave DECOMPOSE until all hold:
 - **Don't resolve a conflict — ask.** Don't pre-split conflict types into cases; "if it differs, ask"
   is the whole rule. (See the flag rule above.)
 - **Don't guess the floor.** Produce the presence map only (what landed + its form marker); the gap calculation is ELICIT's.
-- **Don't invent intent.** If it is in neither the INPUT, the code, nor the harness, do not
+- **Don't invent intent.** If it is in neither the INPUT, the material, nor the harness, do not
   manufacture it — pass it on as a question candidate.
-- **Don't discard something as "wrong information."** An INPUT that differs from the code may be
+- **Don't discard something as "wrong information."** An INPUT that differs from the material may be
   stale, or it may be the *intended change* that is the heart of this task. Don't adjudicate — flag.
 
 ## What this produces (in-session, written to no file)

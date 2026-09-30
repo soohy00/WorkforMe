@@ -77,7 +77,7 @@ Dispatch a fresh subagent that did **not author** the intent. Give it:
 | | intent-completeness (here) | 3-doc-gate |
 |---|---|---|
 | when | ELICIT exit, **before** SPEC | **after** the full 3-doc |
-| input | chat session + the **decision surface** (+ code) | the **3-doc** (+ code) |
+| input | chat session + the **decision surface** (+ material) | the **3-doc** (+ material) |
 | hunts | un-defensible dispositions + **un-enumerated** slots | executability + contract fidelity |
 | resolves by | **looping to the user** (extract/present) | relaying blockers, fixing the doc |
 

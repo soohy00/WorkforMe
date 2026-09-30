@@ -45,7 +45,7 @@ as each result is captured separately. The completion gate remains the full safe
 - **ROI collapse (objective conditions, not a free judgment).** A multi-task wave defaults to parallel
   worktrees. Collapse to **orchestrator-direct on the base** **only** on an objective condition — a
   **single shared runtime** the tasks cannot isolate within (one DB / container stack / port set), or a
-  **greenfield** codebase where cross-agent convention drift outweighs the parallelism. This is a *rule*,
+  **new** project where cross-agent convention drift (terms, tone) outweighs the parallelism. This is a *rule*,
   not a free "ROI doesn't pay" call. **Record the collapse internally** (which wave, which condition) —
   do **not** surface it for a non-technical user to adjudicate (they cannot evaluate a parallelism/
   isolation trade-off, and the terms are internal tokens). Collapsed tasks carry the per-task evidence
@@ -211,7 +211,7 @@ bounded — do not loop re-dispatching past the ladder.
 ## Per-wave step order
 
 > **Review policy.** Default: a single **final review** after all waves merge — one subagent
-> checks the full base diff for spec conformance + code quality. Mid-run spec-review is added only
+> checks the full base diff for spec conformance + writing quality. Mid-run spec-review is added only
 > when the orchestrator judges that a **RISKY task with downstream dependents** could cascade a
 > deviation. When dispatched, spec-review is always a subagent (never inline) to preserve
 > independence.
@@ -309,7 +309,7 @@ non-behavioral changes only — substantive findings still go to an independent 
 | regen-barrier non-zero / conflicting output | capture command + exit + stderr; analyze whether a prior merge broke a precondition; if it would overwrite merged files, escalate |
 | deferred-wiring conflict | capture file + conflicting lines + involved tasks; escalate (never auto-pick a winner) |
 | integration gate fail | analyze → identify the causing task → fix-dispatch |
-| code-quality issue (final review) | fix-dispatch |
+| writing-quality issue (final review) | fix-dispatch |
 | architecture mismatch / suspected spec violation / data-corruption risk | **stop and escalate** |
 
 - **Partial wave failure — cleanup order + retry semantics**: keep the merged successful tasks.

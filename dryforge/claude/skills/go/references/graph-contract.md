@@ -60,7 +60,7 @@ regen_barriers:
 ## Rules go must hold when reading the graph
 
 - **Follow it; never re-judge.** Derive waves purely from `depends`. Do not second-guess the
-  producer's edges with your own read of the code.
+  producer's edges with your own read of the material.
 - **Validate, then trust.** Before scheduling, confirm the graph **parses**, is **acyclic**, and
   every `depends` / `after` id **names a real task**. A parse failure, a cycle, or a dangling id is
   a **producer-side defect → stop and escalate**, never silently patch it.

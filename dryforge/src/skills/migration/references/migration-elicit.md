@@ -39,7 +39,7 @@ migration's most common *and most dangerous* input: least to infer from, most th
 the user. "The material didn't tell me much" is never a license for a thin harness — it means **ask
 more, mine the user harder.**
 
-**Ask grounded questions, not spray.** A confident question can state its **site** (the exact module /
+**Ask grounded questions, not spray.** A confident question can state its **site** (the exact person /
 rule / policy), **why the material doesn't already answer it**, and the **consequence** of getting it
 wrong. Can't ground all three? Don't press it as blocking — vague "is something missing?" spray
 fatigues the user and erodes trust.

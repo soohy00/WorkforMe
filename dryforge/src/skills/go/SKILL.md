@@ -45,7 +45,7 @@ counts as **evidence** changes:
   `depends` + `regen_barriers` against the whole project. Derive waves from it — do not invent,
   drop, or reorder dependencies. (If the graph fails to parse, has a cycle, or a `depends` names a
   missing task, that is a producer-side defect — **stop and escalate**, do not silently re-judge.)
-- **Serve the spec.** "Correct" = matches the spec. On any spec/code/convention conflict, spec
+- **Serve the spec.** "Correct" = matches the spec. On any spec/material/convention conflict, spec
   wins; where plan conflicts with spec, follow the spec.
 - **Classification is a hard gate** (`references/classification.md`, load it up front; load
   `references/reader-check-prompt.md` before the first gate). The
@@ -93,15 +93,15 @@ counts as **evidence** changes:
   communicates in, written **natively** (as a fluent speaker of that language would, never
   translationese). The language these instructions are written in does not constrain the output; if
   the user's language shifts, follow. **Hold it from the very first line, continuously** — never open
-  in the 3-doc's, the codebase's, or these instructions' language and switch later; only the user's
+  in the 3-doc's, the material's, or these instructions' language and switch later; only the user's
   language constrains your output.
 - **Talk to the user only when needed — between beats, say nothing.** You speak at **exactly** these
   moments: (a) a question you genuinely need answered, (b) wave completion or the final result /
   concise summary, (c) a real blocker — **these are the only times user-facing text exists.**
-  Scaffolding, reading the 3-doc/references/code, implementing, merging, gating, dispatching the
+  Building the skeleton, reading the 3-doc/references/material, writing, merging, gating, dispatching the
   review, and writing the harness are **silent**: the UI already shows the activity, so narrating it
   is pure leak. If what you are about to emit is none of (a)/(b)/(c), the correct output is **nothing**.
-  **Between those beats, stay silent** — reading references, reading code, and internal
+  **Between those beats, stay silent** — reading references, reading material, and internal
   operations are not narrated. **No transition lines** ("now I'll...", "먼저 ...", "let me read...", "Now the ..." announcing each write) — at
   those plumbing moments your voice slips into the instructions' language (English) or internal tokens;
   emit *nothing* there, don't translate it. When you *do* speak (a/b/c), use a **plain, non-technical
@@ -192,7 +192,7 @@ document's structure), dispatch it as a writer before the first wave.
 **Review policy (natural language, orchestrator judgment).**
 Default: a single **final review** after all waves merge — one subagent checks the full diff for
 spec conformance + writing quality (`reviewer-prompt.md`), plus the harness (content + format) when it
-was created/updated this cycle (step 9). This replaces per-task spec-review and per-wave code-review
+was created/updated this cycle (step 9). This replaces per-task spec-review and per-wave writing review
 for most graphs. Mid-run review is added only when the orchestrator judges
 that **a RISKY task with downstream dependents could cascade a deviation** — then that task gets a
 spec-review before merge. The judgment comes from the Execution Graph: `risk` + `depends`.
@@ -305,9 +305,9 @@ when a lightweight fix would take seconds.
     (`reviewer-prompt.md`, four lenses). **Clear = zero blocking findings, recorded.**
 
 11. **Fix if needed** — lightweight fix path for trivial advisories (MUST triage); fix-dispatch
-    substantive findings. Fixes may touch **code or harness**. Re-run per `harness-lifecycle.md`:
-    code changed → re-run completion gate; harness changed → re-run harness review; both → both. A
-    finding about a doc/code mismatch **outside this cycle's change scope** is not fixed here — record
+    substantive findings. Fixes may touch **the document or the harness**. Re-run per `harness-lifecycle.md`:
+    document changed → re-run completion gate; harness changed → re-run harness review; both → both. A
+    finding about a material/harness mismatch **outside this cycle's change scope** is not fixed here — record
     it in `docs/tracking/findings.md` and defer (scope-limited delta).
 
 12. **User gate.** Present for approval: where the document is, its key message and request in one
@@ -341,7 +341,7 @@ Done only when ALL hold — on **evidence**, not assertion:
   **completed escalation to the user** (the user has been told and has resolved its disposition) with
   its **worktree preserved** for diagnosis; a BLOCKED task may never be silently tallied into "done".
 - every `DONE_WITH_CONCERNS` concern **resolved (fix-dispatched) or explicitly accepted and
-  recorded** (at code-review or by the user) — a flagged concern is never silently carried into
+  recorded** (at the final review or by the user) — a flagged concern is never silently carried into
   "done".
 - a **final full check** — the **whole** verify set on the assembled document: the fact trace over
   every figure, date, name, and quotation; the classification check; and the **reader check on all
