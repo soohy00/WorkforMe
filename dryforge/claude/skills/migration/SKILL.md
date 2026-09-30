@@ -116,6 +116,11 @@ information code alone cannot extract — project-wide (not task-focused). The g
 invariants, security policy must be user-confirmed even when code-inferable; technical WHY and
 conventions need only a light confirm when the code answers them).
 
+**Classification policy.** Ask whether the company has its own document classification scheme. If
+it does, it overrides the default (`references/classification.md`) and is recorded in `security.md`;
+if not, confirm the default four levels for this project. Either way, record which recipients
+usually receive which level.
+
 **Existing-docs handling.** Read existing docs (reference status). Review any existing
 CLAUDE.md/AGENTS.md **critically** — decide what to fold into the dryforge system, what to drop, and
 what to improve — then present the review to the user, explain it, and get approval.

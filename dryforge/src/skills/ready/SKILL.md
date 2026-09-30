@@ -137,7 +137,8 @@ Core principles  inline (subagents only at intent-completeness + 3-doc-gate) · 
                  stack/language-agnostic · conflict→ELICIT · floor not ceiling · user-language native
 ORIENT           absorb input + ground material/harness · branch on status.json (no refs)
 DECOMPOSE        decompose.md · grounds-gate.md
-ELICIT           elicitation.md · doc-types.md · gap-analysis.md · intent-review.md · grounds-gate.md
+ELICIT           elicitation.md · doc-types.md · classification.md · gap-analysis.md ·
+                 intent-review.md · grounds-gate.md
        [first]+  project-scoping.md · project-design-domain.md · project-design-technical.md ·
                  first-cycle-review.md · foundation-format.md
 intent-completeness  intent-completeness.md  ← independent guess-hunt → loop to user (subagent)
@@ -218,8 +219,8 @@ is written fresh from the dialogue, not from the input.
 
 ## ELICIT — realize the user's intent — `references/elicitation.md`
 
-Force-load `references/elicitation.md`, `references/doc-types.md`, `references/gap-analysis.md`,
-`references/intent-review.md`, `references/grounds-gate.md`. **First cycle additionally:** `references/project-scoping.md`,
+Force-load `references/elicitation.md`, `references/doc-types.md`, `references/classification.md`,
+`references/gap-analysis.md`, `references/intent-review.md`, `references/grounds-gate.md`. **First cycle additionally:** `references/project-scoping.md`,
 `references/project-design-domain.md`, `references/project-design-technical.md`,
 `references/first-cycle-review.md`, `references/foundation-format.md`.
 
@@ -238,6 +239,11 @@ trade-offs + recommendation, grounded in the extracted content; the user decides
 Build and maintain a **model of the user** (goal / values / constraints / domain facts) and a **model
 of each reader**, and test each load-bearing decision against them: grounded → realize; model-silent →
 that *is* the gap, close it.
+
+**Classification is settled in ELICIT, never defaulted silently** (`classification.md`). Recommend
+the level from the most sensitive content and from the recipients, and let the user decide. The
+project's own policy (harness `security.md`) overrides the default scheme. The spec records the level
+and the named recipients; the handoff carries the level's requirements as hard gates.
 
 **Scope by cycle — first establishes the foundation, delta works within it; both EQUALLY rigorous
 (delta is not "lighter").**

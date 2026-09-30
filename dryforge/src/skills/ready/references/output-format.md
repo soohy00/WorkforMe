@@ -17,7 +17,9 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
 - File locations (as project-root-relative paths, e.g. `.dryforge/spec.md` — never
   machine-absolute, so the 3-doc stays portable and survives archiving) + the big
   picture (execution shape).
-- **Hard gates**: non-negotiable constraints the executing agent cannot derive from code alone.
+- **Hard gates**: non-negotiable constraints the executing agent cannot derive from code alone —
+  always including the classification requirements of the spec's level (`classification.md`, "Hard
+  gates").
 - Intent decided while authoring but not captured in spec/plan.
 - **First cycle only (no project harness yet):** the handoff **carries** a **Project Foundation**
   section — the project-wide foundation (full domain model, technical decisions, future scope) that
@@ -28,7 +30,8 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
   taken over the project-context role).
 
 ### spec — what to build (ground truth)
-Must convey: objective + motivation; product behavior; key design rationale / thinking-base
+Must convey: the **classification level and named recipients** (`classification.md`); objective +
+motivation; product behavior; key design rationale / thinking-base
 (decision + why, where not code-derivable — see below); domain decisions/invariants; scope
 boundaries; API surface; edge cases as explicit rules; required verification.
 spec is ground truth — on conflict spec wins; spec errors are fixed only with user

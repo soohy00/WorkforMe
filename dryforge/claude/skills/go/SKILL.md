@@ -33,6 +33,9 @@ references load at their steps.
   missing task, that is a producer-side defect — **stop and escalate**, do not silently re-judge.)
 - **Serve the spec.** "Correct" = matches the spec. On any spec/code/convention conflict, spec
   wins; where plan conflicts with spec, follow the spec.
+- **Classification is a hard gate** (`references/classification.md`, load it up front). The
+  document carries the spec's level and recipients at the top; content above that level is a
+  blocking finding, never shipped; a recipient the level does not allow → stop and ask.
 - **escalate-don't-guess.** Architecture mismatch, suspected spec violation, ambiguous task,
   unresolvable conflict → stop and **ask the user**; never guess. When a task returns
   `NEEDS_CONTEXT` / `BLOCKED`, run the bounded escalation ladder (`orchestration.md` — re-dispatch

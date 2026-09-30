@@ -131,7 +131,7 @@ is *a question the document must answer or it isn't a design*:
   "an internal estimate" → "shown as an estimate, or left out?"): walk the colliding pairs.
 - **FORM** — document kind, channel, length, the parts that text alone would leave open to different
   readings (a flow, a state change, a structure, a comparison, a timeline — each a visual candidate),
-  tone and formality, and the **classification level and recipients**.
+  tone and formality, and the **classification level and recipients** (`classification.md`).
 - **ALIGNMENT** — for a document that coordinates people: what is settled / open / to be decided now,
   and per open item its owner and due date; for designers — flows, screens, and every state (empty,
   loading, error, no permission) and edge case; for developers — rules and exceptions, data,
