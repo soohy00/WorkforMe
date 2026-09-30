@@ -19,7 +19,7 @@ catch it" is reward-hacking (Core principles).
 Dispatch a fresh subagent in a session that has **not** seen the conversation. Pin these (required
 elements, not a fixed script):
 
-- **Scope** — give it the **3-doc only**. It *may* read the project code (that is what `go` reads at
+- **Scope** — give it the **3-doc only**. It *may* read the project material (that is what `go` reads at
   run time), but not the dialogue.
 - **Read-only** — it verifies; it does not edit anything.
 - **Return contract** — a **structured list** of residual blockers/questions, not a raw dump. Each
@@ -35,11 +35,13 @@ the **orchestrator relays it** to the user in plain words (no raw dump), gets th
 
 **One pass, not several.** Because the deep completeness work was done upstream by intent-completeness
 (with the user), this final gate is a **single holistic review of the artifact** — not split into
-separate deep dispatches. Ask: *"can this 3-doc alone execute the task — what would block, or what would
-you have to ask?"*
-Aim it at the **output / interface contract** — the data model's fields and constraints, response/
-output keys, status/enum value sets (and whether two distinct fields were collapsed), uniqueness/
-identity rules. But note the shift: the contract is now **pinned upstream** (ELICIT's CONTRACT lens +
+separate deep dispatches. Ask: *"can a fresh writer write this document from the 3-doc alone —
+without deciding any content — what would block, or what would you have to ask?"*
+Aim it at **what the reader acts on** — the exact request, each figure against the fact ledger (is
+every figure a part needs in the ledger?), the committed scope and what is out, the owners and dates
+of open items, the classification level against the content, and whether every reader-check question
+maps to a part that can answer it. But note the shift: this is now **pinned upstream** (ELICIT's
+lenses +
 SPEC's "write precisely as if no gate exists", `output-format.md`). So the aim here is a **fidelity /
 consistency check** — is the pinned contract internally consistent and intact through transcription? —
 **not** a place to *tighten* a half-pinned contract over rounds. A contract-precision gap surfacing
@@ -87,5 +89,5 @@ machine 0-signals are zero.
 
 ## Universality guard
 
-Stack-agnostic. Executability and foundation sufficiency are judged against whatever this project is,
-discovered at runtime from the 3-doc and the code — no stack assumed, no fixed field checklist.
+Stack- and company-agnostic. Writability and foundation sufficiency are judged against whatever this
+project is, discovered at runtime from the 3-doc and the material — no fixed field checklist.

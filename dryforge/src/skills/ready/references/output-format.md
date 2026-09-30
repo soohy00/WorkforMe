@@ -3,21 +3,29 @@
 Defines what **`ready`** (the producer) outputs and **`go` consumes**. This is the contract between
 `ready` and `go`.
 
-**Core principle:** exactly ONE part is a rigid, machine-parsed schema — the
-Execution Graph. The three documents' bodies are *content requirements*: the agent
-designs the structure per project (intent fixed, structure flexible). All content is
-stack-agnostic — project specifics are discovered while reading the project, never hardcoded.
+**Core principle:** exactly THREE parts are rigid, machine-read schemas — the **Execution
+Graph** (plan), the **fact ledger** and the **reader-check questions** (spec). `go` schedules from the
+first and verifies against the other two. Everything else in the three documents is a *content
+requirement*: the agent designs the structure per project (intent fixed, structure flexible). All
+content is stack- and company-agnostic — project specifics are discovered while reading the project,
+never hardcoded.
+
+**The deliverable is a document** (`SKILL.md`). Its output lives at a project-root-relative folder,
+by default `outputs/<YYYY-MM-DD>-<slug>/`, as Markdown (the channel the spec names — a Notion page,
+an email, a shared screen — is where the Markdown goes; converting to other file formats is not part
+of this cycle).
 
 ## The three documents (handoff governs)
 
 ### handoff — governing doc + intent injection
 Must convey (structure is the agent's to design — 3 hard gates or 30):
-- **Document Roles** table + conflict resolution: spec defines *behavior*; plan defines
-  *order and work targets*.
+- **Document Roles** table + conflict resolution: spec defines *what the document says and for
+  whom*; plan defines *its parts, their order, and work targets*.
 - File locations (as project-root-relative paths, e.g. `.dryforge/spec.md` — never
   machine-absolute, so the 3-doc stays portable and survives archiving) + the big
   picture (execution shape).
-- **Hard gates**: non-negotiable constraints the executing agent cannot derive from code alone —
+- **Hard gates**: non-negotiable constraints the executing agent cannot derive from the material
+  alone (things the document must never say or promise, fixed dates and wording) —
   always including the classification requirements of the spec's level (`classification.md`, "Hard
   gates").
 - Intent decided while authoring but not captured in spec/plan.
@@ -29,19 +37,57 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
   stops (`foundation-format.md`, "First-cycle precondition"). Omit it in later cycles (the harness has
   taken over the project-context role).
 
-### spec — what to build (ground truth)
-Must convey: the **classification level and named recipients** (`classification.md`); objective +
-motivation; product behavior; key design rationale / thinking-base
-(decision + why, where not code-derivable — see below); domain decisions/invariants; scope
-boundaries; API surface; edge cases as explicit rules; required verification.
+### spec — what to write (ground truth)
+Must convey: the **classification level and named recipients** (`classification.md`); the **readers**
+(the one primary reader, the others, and per reader what they know · worry about · decide); the
+**outcome** (the one action after reading, by when, and what counts as success); the **key message**
+in one sentence; the **content** — each claim with its evidence (fact-ledger ids), what is committed
+and what is explicitly not (scope), risks and their handling, the objections to answer; the
+**requests** (what, how much, from whom, by when; options and recommendation where a decision is
+asked); for a coordinating document, what is **settled / open / to decide** with owners and dates,
+states and edge cases as explicit rules, acceptance criteria; the **form** — kind, channel, length,
+tone, output location, and the **visual list** (each visual with the question it answers); key design
+rationale / thinking-base (decision + why, where not derivable from the material — see below); the
+**fact ledger**; the **reader-check questions** (the required verification).
 spec is ground truth — on conflict spec wins; spec errors are fixed only with user
 approval.
 
+**Fact ledger (fixed format).** Every figure, date, proper name, and quotation that may appear in the
+document, one row each — `go` traces the finished document against it:
+
+```
+## Fact ledger
+| id | fact | source | status |
+|---|---|---|---|
+| F1 | Monthly active users 120,000 (2026-09) | Q3 report.pdf p.4 | sourced |
+| F2 | Launch target 2026-11-20 | user, in dialogue | user-stated |
+| F3 | Competitor A monthly price | — | unconfirmed |
+```
+
+`status` is exactly one of `sourced` / `user-stated` / `unconfirmed` (write the labels in the user's
+language if the document is in it; keep the three meanings). An `unconfirmed` fact is shown in the
+document **marked as unconfirmed**, never smoothed into a confident statement — and the user was told
+about it in ELICIT.
+
+**Reader-check questions (fixed format).** The document's acceptance test: an independent reader who
+never saw the dialogue must answer each from the finished document alone:
+
+```
+## Reader-check questions
+| id | question | expected answer (gist) | answered in |
+|---|---|---|---|
+| Q1 | What exactly am I asked to approve? | a 3-month pilot, 40M KRW | first screen, section 1 |
+| Q2 | When payment fails, where does the user go? | retry screen; after 3 failures, support | section 3, V2 |
+```
+
+5–10 questions. They must cover the outcome, the key message, every request, and the part most easily
+misread. The expected answer is for `go`'s comparison only — it is **never** shown to the reader.
+
 **The spec transcribes the settled decision surface — it does not make or defer decisions.** ELICIT
-already settled every load-bearing decision, *including the contract* (`elicitation.md`'s CONTRACT
-lens: data-model fields and their constraints, the exact status/enum value **sets**, uniqueness/
-identity rules, output keys, whether two conceptually distinct fields were collapsed into one). Pin
-each of those **here, the first time — as precisely as if no downstream gate existed.** Do **not** ship
+already settled every load-bearing decision, *including what the reader acts on* (`intent-review.md`:
+the exact request, each figure with unit · date · source, the committed scope and what is out, owners
+and dates of open items, acceptance criteria). Pin each of those **here, the first time — as precisely
+as if no downstream gate existed.** Do **not** ship
 a half-pinned contract for the 3-doc-gate to tighten over rounds: a gate catching a precision gap is an
 *upstream failure*, not the gate's job, and leaning on it is the reward-hack
 `elicitation.md` forbids. (A genuine tuning default with no user preference is *pinned* as a default
@@ -57,13 +103,15 @@ by a tag in the doc. The only annotation a decision carries is its **reason in t
 non-derivable (below), written in the user's terms as prose.
 
 ### plan — what to do (tasks + the machine graph)
-Must convey: per-task **behavioral contract** (goal, **work targets** — files |
-state | external resource — and verification gate); **thinking-base** (decision +
-reason where not code-derivable); shared-write guidance (prose, below); a phase
-narrative for humans; and the **Execution Graph** (below). The verification gate
-matches the deliverable type: a file diff for code, captured external evidence for
-state/operational work. Target shape and gate are discovered from the project, not
-assumed.
+A task is one **part of the document** — a section, a visual, an appendix, the first screen (title,
+summary, request). Must convey: per-task **content contract** (the part's job for the reader, the
+claims and fact-ledger ids it uses, what it must not say, **work targets** — files | state | external
+resource — and verification gate: the reader-check questions it answers + the facts it must trace);
+**thinking-base** (decision + reason where not derivable from the material); shared-write guidance
+(prose, below); a narrative of how the reader moves through the document; and the **Execution Graph**
+(below). The verification gate matches the deliverable type: a file diff for a written part, captured
+external evidence for work outside the tree (e.g. a page updated in an outside tool). Target shape
+and gate are discovered from the project, not assumed.
 
 ## The Execution Graph — the only rigid part
 
@@ -81,31 +129,34 @@ regen_barriers:
 - `depends` is the **only encoded judgment** (which task needs which). the producer
   computes it; go follows.
 - `risk: RISKY | MECHANICAL | NONE` is an **optional** per-task atom alongside `depends`.
-  It sizes the implementer's per-task test ceremony — it never changes whether code is
+  It sizes the writer's per-part verification ceremony — it never changes whether a part is
   verified or reviewed, and never touches gate topology. (go may also read it to choose a single-task
   wave's execution mode, but that is a consumer-side use; the producer just derives the tier.) Derive
   it per task (see
-  `references/dependency-calc.md`): RISKY if the behavioral contract names an explicit edge case,
-  invariant, state-coordination, or validation rule; NONE if the target is config / schema / docs /
-  pure scaffold with no behavioral surface; otherwise MECHANICAL. This is a derivation heuristic
+  `references/dependency-calc.md`): RISKY if the part carries figures, commitments, a request, a
+  decision, classification-sensitive content, or is the first screen; NONE if it is metadata or pure
+  assembly with no new claim; otherwise MECHANICAL. This is a derivation heuristic
   judged per task, not a fixed checklist. If a producer omits it, the task is unclassified: go leans
   toward stronger verification, and the implementer still judges test ceremony at build time — no
   break.
 - go derives waves by topological sort of `depends`, then dispatches in
   batches of **≤8 concurrent**.
 - `regen_barriers` = cross-cutting steps between waves (timing: after task X). The
-  command is discovered per project while reading the code, not hardcoded.
+  command is discovered per project while reading the project, not hardcoded. Documents rarely need
+  one; when a part must be regenerated after others land (a numbered figure index, a table of
+  contents), that is the barrier.
 - Do **not** encode produces / consumes / shared_write / waves here — they are prose,
   runtime-derived (git diff), or computed.
 - `id`s match the prose plan; the graph is the scheduling skeleton only.
 
 ## Shared-write handling — two layers (hint + safety net)
 
-Parallel tasks must not collide on shared/registration files (an aggregator/index file, a module
-list, a routes table, ...). Two layers, not a strict prediction:
+Parallel tasks must not collide on shared files (the assembled document, a shared glossary, a
+figure index, ...). Each part is written to its **own file**; one assembly step writes the shared
+document. Two layers, not a strict prediction:
 
-1. **Hint** (prose in plan, best-effort, may be incomplete): per task, e.g. *"Do not
-   write the shared registration files; a single wiring step adds all registrations at
+1. **Hint** (prose in plan, best-effort, may be incomplete): per task, e.g. *"Write only
+   `parts/03-payment-failure.md`; do not edit `document.md` — the assembly step joins all parts at
    the end of the wave."* Proactively avoids known collisions. Not authoritative.
 2. **Guarantee** (runtime, go): before merging a wave, detect changed-file
    overlaps across task branches (`git diff`). Declared-shared files are already
@@ -117,8 +168,8 @@ list, a routes table, ...). Two layers, not a strict prediction:
 - **Match the user's language (language-agnostic)**: author the three docs in the language the user
   communicates in, natively — discovered at runtime, never assumed, exactly like stack specifics. Not
   translationese; the language this contract is written in does not constrain the 3-doc.
-- Replace premature implementation code with **behavioral contracts** (goal,
-  invariants, what-to-test — not how).
+- Replace premature prose with **content contracts** (the part's job, its claims and facts,
+  what it must not say, which reader-check questions it answers — not the wording).
 - **Stack-agnostic**: no project-specific assumption as a rule; specifics (build
   targets, regen commands, conventions) are discovered from the project.
 - The three docs' section layout is the agent's to design; only the content above is
@@ -126,10 +177,10 @@ list, a routes table, ...). Two layers, not a strict prediction:
 
 ## thinking-base (decision + reason) — the derivability test
 
-Record a reason only where a fresh agent, reading the project code, could **not** reach the
+Record a reason only where a fresh agent, reading the project material, could **not** reach the
 designer's decision on its own. Test in order:
 
-1. **Derivable from code?** → **Yes**: no reason needed (the code says it).
+1. **Derivable from the material?** → **Yes**: no reason needed (the material says it).
 2. **Unsure if it's derivable?** → include it (gray-zone default: an over-included reason is cheap; a
    missing one derails the executing agent).
 3. **Not derivable (a reason is needed)** → is it **actually on the record** — settled in the
@@ -149,14 +200,15 @@ the load-bearing decision; the *value* is the tunable. (Mechanism vs tuning valu
 project, never a fixed list.)
 
 Frequent categories (accelerators for spotting candidates, **not** an exhaustive list): trade-off /
-external constraint / scope boundary / convention exception / domain invariant / non-functional (a
-chosen quality attribute: security posture, consistency level, perf budget) / rejected alternative (an
-option the designer considered and discarded — record it, and why, so a downstream agent doesn't
-"improve" the design back into the rejected choice).
+external constraint / scope boundary / convention exception / domain invariant / reader-driven
+choice (why this reader gets this order, this length, this level of detail) / sensitivity (why a
+figure is generalized or left out) / rejected alternative (an option the designer considered and
+discarded — record it, and why, so a downstream agent doesn't "improve" the design back into the
+rejected choice).
 
 ## A complete worked example
 
-See `references/example-3doc.md` for one full `handoff` + `spec` + `plan` (an idempotent-submission
-feature) — read it once to anchor the shape and altitude. It is **illustrative, not a template**:
+See `references/example-3doc.md` for one full `handoff` + `spec` + `plan` (an alignment document for
+designers and developers) — read it once to anchor the shape and altitude. It is **illustrative, not a template**:
 its role names are deliberately generic because a real 3-doc is stack-agnostic and written against
 the project discovered at runtime. Copy the structure, not the words.

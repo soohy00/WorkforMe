@@ -4,13 +4,13 @@ The **last** step of PLAN: after the spec is frozen and the plan prose is writte
 machine-readable scheduling skeleton. The schema is in `output-format.md`; this file is *how*
 to fill it. Compute it once here — go follows it and never re-judges dependencies.
 
-## Scaffold is not a task
+## The skeleton is not a task
 
-Project initialization (manifests, dependencies, directory layout, build config, entry points) is
-**not a plan task**. `go` performs scaffold inline before dispatching implementers. Do not create a
-scaffold task in the Execution Graph. Exception: if scaffold itself is large enough to warrant a
-dedicated agent (complex infra, containers, CI pipelines — work that requires investigation or
-trial-and-error), it may appear as a task, but this is rare.
+The document skeleton (the output folder, the part files, the classification header, the title
+block, the heading outline) is **not a plan task**. `go` creates it inline before dispatching writers.
+Do not create a skeleton task in the Execution Graph. Exception: if setting up the skeleton itself
+needs investigation (collecting many received files into the project, rebuilding an existing
+document's structure), it may appear as a task, but this is rare.
 
 ## Encode two things; leave the rest
 
@@ -26,28 +26,30 @@ Do **not** encode produces / consumes / shared_write / waves:
 
 ## Deriving `depends`
 
-For each task ask: does it **consume** something another task **produces** — a file, an
-exported symbol, a type, a schema, a migration? If so, it depends on that task.
+For each task ask: does it **consume** something another task **produces** — a figure or term a
+part defines, a visual a section explains, a conclusion a summary restates? If so, it depends on that
+task. The **first screen** (title, key message, summary, request) consumes every part it summarizes,
+so it depends on them — write it last, even though it is read first.
 
 - **Complete *and* minimal** — go topologically sorts `depends` into waves, so
   accuracy cuts both ways:
   - **Miss a real edge** → a consumer runs before its producer exists → it breaks at
-    integration (the classic "merge, then a wall of type errors").
+    integration (the summary promises what the section never says; two parts define the same term
+    differently).
   - **Add a spurious edge** → work that could run in parallel gets serialized → lost parallelism.
 - Encode every genuine producer→consumer need and nothing else. Tasks with no real edge share a
   wave (run in parallel).
 
-**Beyond artifact consumption.** Are any tasks ordered by runtime **sequence**, environment setup,
-or external-state initialization rather than artifact consumption? If so, declare an explicit
-`depends` even with no file consumed. And for **external shared state** — tasks writing a DB, a
-registry, a queue, or remote config with no local file collision — declare a serialization point (a
-writer task the others `depends` on) when the parallel writes are **not** idempotent/commutative;
-otherwise record the safe-parallel assumption in the handoff. ORIENT surfaces these project-specific
-constraints.
+**Beyond artifact consumption.** Are any tasks ordered by something other than content — a part
+that needs a figure the user will only confirm later, a part updated in an outside tool? If so,
+declare an explicit `depends` even with no file consumed. And for **external shared state** — tasks
+writing the same outside page or workspace with no local file collision — declare a serialization
+point (a writer task the others `depends` on); otherwise record the safe-parallel assumption in the
+handoff. ORIENT surfaces these project-specific constraints.
 
 ## Task risk tier (optional)
 
-Per task, optionally classify the behavioral risk. It sizes the implementer's **per-task test
+Per task, optionally classify the content risk. It sizes the writer's **per-part verification
 ceremony** and, for a single-task wave, go's execution mode; it does not set review topology. The
 field shape is `risk: RISKY | MECHANICAL | NONE`. It is **optional**. If omitted, the task is
 unclassified: go leans toward stronger verification, and the implementer still judges test ceremony
@@ -55,50 +57,48 @@ at build time (no break). When present it is visible in the 3-doc the user revie
 
 Derivation heuristic (a **floor, not a checklist** — judged per task):
 
-- **RISKY** if the behavioral contract names an explicit edge case, invariant, state-coordination,
-  or validation rule.
-- **NONE** if the target is config / schema / docs / pure scaffold with no behavioral surface.
-- **MECHANICAL** otherwise.
+- **RISKY** if the part carries figures, commitments, a request or decision, classification-sensitive
+  content, rules and edge cases a builder will follow, or is the first screen.
+- **NONE** if the part is metadata or pure assembly with no new claim (a revision table, joining
+  finished parts).
+- **MECHANICAL** otherwise (explanation or background that restates settled, sourced content).
 
-This sizes the implementer's per-task test ceremony — it never changes whether code is
+This sizes the writer's per-part verification ceremony — it never changes whether a part is
 verified or reviewed, and never touches gate topology. (go may also read the tier to choose a
 single-task wave's execution mode — a consumer-side use; the producer only derives and emits it.)
 
 ## regen barriers
 
 A step that must run **between** waves because one task changes an input others regenerate
-from: schema → client/type generation, contract → codegen, message-catalog rebuilds, etc.
-Encode `{ after: [ids], run: "<command>" }`. **The command is discovered while reading the
-project** — never hardcode a stack's regen command. Note for the executor: if the regen *output* is
+from: a figure index or numbering rebuilt after the visuals land, a table of contents, a glossary
+collected from the parts. Encode `{ after: [ids], run: "<command or step>" }`. **The step is
+discovered while reading the project** — never hardcode one. Most documents need none. Note for the executor: if the regen *output* is
 consumed by a later task, it must be **committed** to the base (and not gitignored), or it
 won't reach the fresh worktree of a downstream wave — same propagation rule as the deferred-wiring
 commit.
 
 ## shared-write (prose hint, not graph)
 
-When several tasks would write the **same** file (an aggregator/index file, a module registry/list,
-a routes table, any registration point), prevent collision with a **single deferred writer**:
+When several tasks would write the **same** file (the assembled document, a shared glossary, a
+figure index), prevent collision with a **single deferred writer**:
 
-- In the plan prose, tell each feature task *not* to touch the shared file, and add one wiring
-  step at the **end of the wave** that appends all registrations.
+- In the plan prose, give each part its own file and tell it *not* to touch the shared file; add one
+  assembly step at the **end of the wave** that joins the parts in order.
 - This is best-effort. go still backstops it at runtime (changed-file overlap
   detection + merge-conflict). A missed hint becomes a *handled conflict*, not corruption.
-- **Package/namespace markers count too.** In a *new* package or namespace, a marker file the
-  ecosystem requires every module to sit under — a package/module declaration file, or an
-  aggregator/index created from scratch — is needed by **every** parallel task, so it is an implicit
-  shared-write: if each task creates it, they collide. Assign it to the **scaffold step** (go's
-  inline setup, so it exists before the parallel wave) — don't leave each feature task to create it. (Identical empty
-  markers happen to merge cleanly, but differing ones conflict — don't rely on the accident. What
-  the marker is and whether the stack needs one is discovered from the project, never assumed.)
+- **Shared scaffolding counts too.** The classification header, the title block, and the folder
+  every part sits in are needed by **every** parallel task, so they are an implicit shared-write: if
+  each task creates them, they collide or disagree. Assign them to the **skeleton step** (go's inline
+  setup, so they exist before the parallel wave) — don't leave each part to create them.
 
 ## When uncertain, escalate
 
-If you can't confidently determine a dependency, a regen command, or whether a file is
-shared-written, **ask the user — don't guess.** A wrong edge breaks waves or kills parallelism;
-a guessed regen command breaks the build. (escalate-don't-guess.)
+If you can't confidently determine a dependency, a regen step, or whether a file is
+shared-written, **ask the user — don't guess.** A wrong edge breaks waves or kills parallelism.
+(escalate-don't-guess.)
 
 ## Method fixed, specifics discovered
 
 The *method* (produces/consumes → `depends`; mark regen points; defer shared writes) is
-stack-agnostic and fixed. *What* is a regen barrier or a shared/registration file is
-discovered per project while reading the code — never assumed.
+stack-agnostic and fixed. *What* is a regen barrier or a shared file is discovered per project while
+reading the material — never assumed.

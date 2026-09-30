@@ -299,15 +299,15 @@ Force-load `references/output-format.md` and `references/review-fidelity.md` (+ 
 `references/foundation-format.md`).
 
 1. **Write `.dryforge/spec.md` — from the *validated intent*, not the input.** Dense; premature
-   implementation excluded. The item list is `output-format.md`'s contract — it owns the list; follow
-   it there (if ORIENT found no verify command, record that gate decision in the spec's
-   required-verification item).
+   prose excluded. The item list is `output-format.md`'s contract — it owns the list, including the
+   two fixed-format blocks (**fact ledger**, **reader-check questions**); follow it there (record any
+   project-specific extra verification ORIENT found — a named human sign-off — in the spec).
 2. **First cycle — write the Foundation too, into `handoff.md`.** Write ELICIT's Foundation 4 sections
    (identity / domain / technical / future) into `handoff.md`'s Foundation section **now** (the rest
    of the handoff's governing parts wait for the plan and are filled at HANDOFF; the Foundation does
    not depend on the plan). **No separate `.dryforge/foundation.md`.** Into the spec, lift only **this
-   task's WHAT** (the part of the domain this task actually implements); the project-wide context (the
-   rest of the domain, future scope) stays in the Foundation. (Written here so REVIEW(A) can verify a
+   document's WHAT** (the part of the domain this document actually uses); the project-wide context
+   (the rest of the domain, future scope) stays in the Foundation. (Written here so REVIEW(A) can verify a
    *written* Foundation.)
 3. **REVIEW(A) — fidelity only, inline.** Check that what the session settled landed in the document
    without evaporation or distortion (+ first cycle: the written Foundation). Internally resolvable →
@@ -319,16 +319,20 @@ Force-load `references/output-format.md` and `references/review-fidelity.md` (+ 
 ## PLAN — decomposition for parallel execution — `references/dependency-calc.md`
 
 Force-load `references/output-format.md`, `references/dependency-calc.md`, `references/example-3doc.md`.
-Write `.dryforge/plan.md` from the frozen spec. Per task: a **behavioral contract** (goal, work
-targets [files | state | external], verification gate), thinking-base where not code-derivable,
-shared-write guidance (prose). Compute the **Execution Graph** last — a **fenced `yaml` block** with
+Write `.dryforge/plan.md` from the frozen spec. A task is one **part of the document** (a section, a
+visual, an appendix, the first screen). Per task: a **content contract** (the part's job for the
+reader, claims and fact-ledger ids, what it must not say, work targets [files | state | external],
+verification gate: the reader-check questions it answers + the facts it traces), thinking-base where
+not derivable from the material, shared-write guidance (prose — each part its own file, one assembly
+step). Compute the **Execution Graph** last — a **fenced `yaml` block** with
 `depends` (the only encoded judgment), `regen_barriers`, and the optional per-task `risk` using
 **exactly the enum `RISKY | MECHANICAL | NONE`** (never an ad-hoc value like "high"/"low"). go follows
-it and never re-judges. **Scaffold is
+it and never re-judges. **The skeleton (folder, part files, classification header, title block) is
 not a task.** (Any task-order/dependency graph the input carried was discarded in DECOMPOSE; PLAN
 always computes the graph fresh from the spec.) **Trace gate:** every
-spec requirement maps to ≥1 task (forward); every task grounds in a spec requirement (no orphan); the
-Execution Graph parses.
+spec requirement maps to ≥1 task (forward); every reader-check question maps to ≥1 task; every task
+grounds in a spec requirement (no orphan); every fact-ledger id a task uses exists; the Execution
+Graph parses.
 
 ## HANDOFF — governing doc + assemble — `references/output-format.md`
 
@@ -353,9 +357,10 @@ Force-load `references/output-format.md` (+ first cycle: `references/foundation-
 ## 3-doc-gate — the final backstop — `references/3-doc-gate.md`
 
 Force-load `references/3-doc-gate.md` (+ first cycle: `references/first-cycle-review.md`). Dispatch a
-fresh subagent that has **not** seen the dialogue; give it the 3-doc only (it may read the code),
-read-only, returning a **structured list** (no raw dump). **A single holistic review** — executability
-(aim explicitly at the output/interface contract), plus, **first cycle only, a foundation-sufficiency
+fresh subagent that has **not** seen the dialogue; give it the 3-doc only (it may read the project material),
+read-only, returning a **structured list** (no raw dump). **A single holistic review** — writability
+(aim explicitly at what the reader acts on: the request, the figures against the fact ledger, scope,
+owners, classification, reader-check coverage), plus, **first cycle only, a foundation-sufficiency
 *lens*** within the same review (`first-cycle-review.md` rubric on the written Foundation — not a
 second dispatch). It is the *final* backstop and should find little, because intent-completeness
 already routed the guesses to the user. Empty → the user gate. A blocker → the orchestrator relays it to the user,
@@ -383,7 +388,8 @@ Done only when ALL hold:
 - **ELICIT completeness bar met:** every load-bearing dimension the domain implies was surfaced to the
   user and settled (or explicitly marked N/A with a reason) — recorded in the spec, not left for the
   gate to discover.
-- **Deterministic 0-signals:** coverage gaps = 0, orphan tasks = 0, Execution Graph parses.
+- **Deterministic 0-signals:** coverage gaps = 0, reader-check questions without a task = 0, orphan
+  tasks = 0, fact-ledger ids used but missing = 0, Execution Graph parses.
 - **3-doc-gate clear (insurance):** the independent fresh subagent returned no blocking item. A finding
   here is an **ELICIT failure that escaped**, not a normal step — fix the stage it belongs to and treat
   it as a signal you closed the dialogue too early; residual → escalate to the user, never self-fill.
