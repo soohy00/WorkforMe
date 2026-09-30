@@ -14,14 +14,15 @@ are direct cost.
 
 Before the first wave, write a compact verification plan in the orchestrator's working notes:
 
-- command set and purpose
-- which commands can run independently in parallel
-- which commands are cheap per-wave gates
-- which commands are expensive and reserved for the completion gate unless risk demands earlier use
-- whether the project supports affected-only filtering for intermediate gates
+- the verify set and its purpose (fact trace, classification check, reader check, any named sign-off)
+- which reader-check questions each part owns (so an intermediate gate can check only the landed ones)
+- which checks are cheap per-wave gates (fact trace, classification check) and which are reserved for
+  the completion gate (the full reader check by a fresh reader) unless risk demands earlier use
+- what the fact trace covers (every figure, date, proper name, quotation) and how an `unconfirmed`
+  fact must appear in the text
 
-The plan prevents re-deciding verification every wave. Independent commands may run in parallel as
-long as each exit code is captured separately. The completion gate remains the full safety net.
+The plan prevents re-deciding verification every wave. Independent checks may run in parallel as long
+as each result is captured separately. The completion gate remains the full safety net.
 
 ## Wave scheduling
 
@@ -30,8 +31,8 @@ long as each exit code is captured separately. The completion gate remains the f
   whose execution mode is set by the task's `risk`:
   - **`MECHANICAL` / `NONE`** → the **orchestrator implements directly on the base** (no worktree, no
     dispatch, no integration gate) — commit on the base, **verify with captured evidence** (same floor
-    as a dispatched implementer: command + captured exit code; real testable behavior left untested =
-    not done), advance. **You own conformance here — the final review is insurance, not your check.**
+    as a dispatched writer: the part's fact trace captured; an owned reader-check question left
+    unanswerable = not done), advance. **You own conformance here — the final review is insurance, not your check.**
   - **Omitted `risk`** → the producer did *not* judge; treat it as **unclassified, not `MECHANICAL`** —
     judge at read time and bias toward dispatch / stronger verification if it shows any behavioral
     surface (degrade-don't-corrupt).
@@ -89,9 +90,9 @@ A single-task wave runs in one of three modes (by `risk` + target type; see Wave
 
 - **Orchestrator-direct** (`MECHANICAL` / `NONE` file-diff task; an omitted-`risk` task takes this
   path only after the read-time judgment finds no behavioral surface — see Wave scheduling). The orchestrator
-  implements directly on the base — it reads the task's behavioral contract + spec slice itself (no
-  prompt authoring, no dispatch), writes the code, runs right-sized verification (capturing command +
-  exit code), and commits on the base. No worktree, no dependency install, no integration gate, **no
+  writes directly on the base — it reads the task's content contract + spec slice itself (no
+  prompt authoring, no dispatch), writes the part, runs right-sized verification (capturing the fact
+  trace and the answering sentence per owned question), and commits on the base. No worktree, no dependency install, no integration gate, **no
   implementer status protocol** — the orchestrator knows its own state. If the task turns out
   ambiguous, behavioral, multi-file, or riskier than declared, treat it as a **runtime risk upgrade**
   (`graph-contract.md`): strengthen verification (conditional spec-review or final-review focus); do
@@ -249,15 +250,14 @@ bounded — do not loop re-dispatching past the ladder.
 4. **Deferred wiring** — the single writer appends all registrations, **idempotently**
    (check-before-append; conflicts → escalate). **Commit on the base** — uncommitted wiring is
    silently lost to later worktrees and the final merge.
-5. **Integration gate** — run the project's verify commands on the merged + wired base; **green =
-   exit 0, output captured**. This catches cross-task interactions. Failure → fix-dispatch or
-   escalate. **If the producer found zero verify commands**, the absence of a gate is a recorded
-   decision, not silence. **Record the base tip SHA after the gate passes** (e.g. `GATE_SHA=$(git rev-parse HEAD)`) — the
-   completion gate compares against it to avoid redundant re-runs (see SKILL.md, Completion gate). **Run verify commands in parallel** when they are independent — capture each exit code separately
-   so failure attribution is clear. Wall time = max(commands), not sum. Pattern: issue all verify
-   commands in a single shell call, backgrounding each and collecting its exit code individually
-   (e.g. `cmd1 & p1=$!; cmd2 & p2=$!; wait $p1; e1=$?; wait $p2; e2=$?`), then report per-command
-   pass/fail.
+5. **Integration gate** — run the verify set on the assembled base: the fact trace across all landed
+   parts, the classification check, and the reader check (`reader-check-prompt.md`) on the questions
+   whose parts have landed; **green = every check passed, evidence captured** (trace table, answers,
+   comparison). This catches cross-part interactions. Failure → fix-dispatch or escalate. **Record
+   the base tip SHA after the gate passes** (e.g. `GATE_SHA=$(git rev-parse HEAD)`) — the completion
+   gate compares against it to avoid redundant re-runs (see SKILL.md, Completion gate). **Run
+   independent checks in parallel** (the reader subagent while the orchestrator runs the fact trace)
+   — capture each result separately so failure attribution is clear.
 6. **Clean up or recycle** task worktrees — if a later parallel wave exists, **recycle** pooled
    worktrees (reset to the new base tip — Dispatch constraints, worktree pool) instead of removing;
    batch-remove all worktrees only after the last parallel wave. When removing: only after asserting

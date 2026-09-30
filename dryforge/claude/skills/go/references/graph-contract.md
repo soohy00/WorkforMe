@@ -26,7 +26,7 @@ regen_barriers:
 - **`tasks[].depends`** — the task ids that must finish first. This is the **only encoded
   judgment**. go follows it and never re-judges, adds, drops, or reorders an edge.
 - **`tasks[].risk`** *(OPTIONAL)* — `RISKY | MECHANICAL | NONE`. go has **two** consumer-side uses:
-  (1) it sizes the **per-task test ceremony** passed to the implementer; (2) for a **single-task
+  (1) it sizes the **per-part verification ceremony** passed to the writer; (2) for a **single-task
   (sequential) wave** it picks the **execution mode** — `MECHANICAL` / `NONE` → the orchestrator
   implements directly on the base; `RISKY` → dispatch a subagent in a worktree (independent
   verification, A=A avoidance, base protected by the merge-gate). Risk sizes test ceremony and
@@ -38,13 +38,13 @@ regen_barriers:
   stronger verification if any behavioral surface appears (degrade-don't-corrupt); the implementer
   still judges test ceremony at build time — no break.
 - **Runtime risk upgrade.** If the producer marked a task `MECHANICAL` / `NONE` but go finds it is
-  actually `RISKY` while implementing (an unexpectedly complex state change, an external-system
-  integration), the orchestrator strengthens independent verification. It does **not** switch an
+  actually `RISKY` while writing (it turns out to need a figure, a commitment, or a rule the reader
+  will act on), the orchestrator strengthens independent verification. It does **not** switch an
   in-flight direct execution to a subagent mid-task, but it may fire a conditional spec-review or
   direct the final review to focus on that task.
 - **`regen_barriers[]`** — `{ after: [ids], run: "<cmd>" }`: a cross-cutting step that must run
-  **between** waves once `after` is satisfied (schema→client/type generation, contract→codegen,
-  catalog rebuilds, ...). The command is project-specific (discovered by the producer); go runs it
+  **between** waves once `after` is satisfied (a figure index or table of contents rebuilt after
+  the parts land, ...). The command is project-specific (discovered by the producer); go runs it
   as given, it does not invent one.
 
 ## What is NOT in the graph (do not look for it here)

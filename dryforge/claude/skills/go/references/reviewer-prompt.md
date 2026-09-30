@@ -1,8 +1,8 @@
-# reviewer-prompt.md — final review (spec + code + harness)
+# reviewer-prompt.md — final review (spec + writing + harness)
 
 After all waves merge, the completion gate passes, and the **harness has been created/updated**
 (`harness-lifecycle.md`), one reviewer subagent checks the **full diff on the base** (from initial
-state to current) **plus the harness**. This is the single review pass — spec conformance, code
+state to current) **plus the harness**. This is the single review pass — spec conformance, writing
 quality, and (when the harness was created/updated this cycle) harness content and format.
 
 > You are in a fresh session with no live user conversation — do **not** ask the user directly.
@@ -10,13 +10,20 @@ quality, and (when the harness was created/updated this cycle) harness content a
 
 ## Scope — four lenses, one pass
 
-**Lens 1: spec conformance.** Does the implementation do what the spec says — behavior, invariants,
-edge-case rules, API surface? Every spec requirement should be traceable to code in the diff. Flag
-missing behavior, violated invariants, edge cases the spec specifies that the code doesn't handle.
+**Lens 1: spec conformance.** Does the document say what the spec says, to the reader the spec
+names — the key message on the first screen, every claim with its evidence, every request exactly
+as specified (what, how much, from whom, by when), the committed scope and what is explicitly out,
+open items with owners and dates, the classification marking and recipients? Every spec requirement
+should be traceable to text in the diff. Flag a missing or softened request, a commitment the spec
+does not make, content above the classification level (blocking), a fact not in the ledger.
 
-**Lens 2: code quality.** Cross-task consistency, seam leaks where tasks meet, duplication, naming
-and pattern divergence across independently-written code. The completion gate already proved the
-combined state builds and runs — your scope is what mechanical gates cannot see.
+**Lens 2: writing quality.** Cross-part consistency (one term per thing, the same figure stated the
+same way, no two parts contradicting), seams where independently written parts meet (repetition, a
+missing transition, a summary that promises what a section never says), the reader's register (terms
+this reader knows or has explained; tone per the harness `audiences.md`), vague modifiers where a
+number or criterion is needed, visuals that answer their stated question. The completion gate
+already proved the facts trace and the reader answers the questions — your scope is what those
+checks cannot see.
 
 **Lenses 3–4: harness** (all four dimensions of `harness-review.md`, not only content/format) —
 apply only when the harness was created
@@ -26,30 +33,30 @@ principles), format (self-containment, altitude, no references), completeness (r
 present), and source-cross-check (omission vs. hallucination, future-scope content exempt). Using the
 shared `harness-review.md` keeps a single source of truth — `migration` verifies against the same
 criteria. Your dispatch states the user's language; flag a harness not written natively in it.
-Harness findings carry the same blocking/advisory split as code findings.
+Harness findings carry the same blocking/advisory split as document findings.
 
 ## No fixed checklist — derive the rubric
 
 Do **not** hardcode a quality checklist (that is a ceiling). Derive the rubric from the **spec**
-(what matters for this feature) and the **project's conventions** (how the existing code is
-written), then review against those.
+(what matters for this document and reader) and the **project's conventions** (the harness's
+standards and audiences, and how earlier documents are written), then review against those.
 
 ## Calibration
 
-Flag what would cause **real problems** — spec deviations, correctness, maintainability, convention
-breaks that matter. Don't nitpick style the project doesn't care about. Separate **blocking** issues
+Flag what would cause **real problems** — spec deviations, wrong or unsupported facts, a reader who
+would misread or push back, classification breaches, convention breaks that matter. Don't nitpick
+wording the project doesn't care about. Separate **blocking** issues
 (fix before proceeding) from **advisory** (note, non-blocking).
 
-## Build-green blind spots
+## Checks-green blind spots
 
-A green build (exit 0) does not guarantee the product works. Actively check for:
-- **Declared assets exist on disk.** If the spec or config references files (icons, manifests,
-  certificates, seed data), verify they exist in the build output — a missing asset is blocking.
-- **Cross-boundary contract coverage.** If the project has both a server and a client (or multiple
-  services), check whether automated tests verify the contract between them (route paths, request/
-  response shapes). Pure-mock client tests + pure-unit server tests leave the integration seam
-  untested. Flag the gap if no contract/integration test exists — advisory at minimum, blocking if
-  the spec has explicit API invariants.
+A passed reader check and fact trace do not guarantee the document works. Actively check for:
+- **Declared assets exist on disk.** If the document references files (images, visual files,
+  attachments), verify they exist at the referenced paths — a missing asset is blocking.
+- **Consistency with what the reader already has.** If an earlier document in the project (last
+  month's report, the approved proposal) stated a figure, a date, or a scope, check that this document
+  either matches it or states the change explicitly — a silent disagreement is blocking for an
+  external or upward reader, advisory otherwise.
 
 ## Structured return
 

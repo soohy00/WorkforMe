@@ -1,10 +1,11 @@
 ---
 name: go
 description: >
-  Carry out the intent approved in `ready`, as meant, and prove it with checks that actually ran.
-  Comes back to you if the work would change what you approved, keeps the project docs in step,
-  and never merges on its own. Use when the user invokes the `go` skill after `ready`. Requires
-  git.
+  Write the document approved in `ready`, as meant, and prove it with checks that actually ran —
+  an independent reader answers the agreed questions, every figure is traced to its source, the
+  classification holds. Comes back to you if the work would change what you approved, keeps the
+  project docs in step, and never merges on its own. Use when the user invokes the `go` skill after
+  `ready`. Requires git.
 disable-model-invocation: true
 allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Agent, AskUserQuestion
 ---
@@ -13,7 +14,7 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Agent, AskUserQuestion
 
 > **Reply in the user's language, and hold it continuously from your very first line** — the opening,
 > every progress/escalation note, the final report, and the harness, not only some of them. Write
-> natively (never translationese). You are reading a 3-doc, a codebase, and these instructions that may
+> natively (never translationese). You are reading a 3-doc, the project's material, and these instructions that may
 > be in another language; **none of them sets your output language — only the user's does.** Full rule
 > in Core principles below.
 
@@ -25,6 +26,21 @@ for later cycles); the live design context carries over and aids judgment, espec
 step. **Load `references/orchestration.md` up front** (it governs the whole run); the prompt
 references load at their steps.
 
+**The deliverable is a document** (see `ready`). Where these instructions say *implement*, read
+*write the part*; where they say *code* or *diff*, read *the document's files* and their diff. The
+machinery — waves, worktrees, merge-gates, independent review, the harness — is unchanged; what
+counts as **evidence** changes:
+
+- **The verify set replaces verify commands.** A document has no build or test command. Its verify
+  set is: (1) the **fact trace** — every figure, date, proper name, and quotation in the output
+  matched to a fact-ledger row, with `unconfirmed` rows shown as unconfirmed in the text; (2) the
+  **reader check** — an independent reader subagent that never saw the dialogue or the 3-doc answers
+  the spec's reader-check questions from the output alone (`references/reader-check-prompt.md`), and
+  the orchestrator compares each answer with the expected answer; (3) the **classification check** —
+  the marking and recipients are present and match the spec, and nothing above the level is in the
+  text. "Green" means all three passed with **captured evidence** (the trace table, the reader's
+  answers and the comparison, the marking) — never "looks fine".
+
 ## Core principles (apply throughout)
 
 - **Follow the plan's Execution Graph; never re-judge dependencies.** The producer already computed
@@ -33,7 +49,8 @@ references load at their steps.
   missing task, that is a producer-side defect — **stop and escalate**, do not silently re-judge.)
 - **Serve the spec.** "Correct" = matches the spec. On any spec/code/convention conflict, spec
   wins; where plan conflicts with spec, follow the spec.
-- **Classification is a hard gate** (`references/classification.md`, load it up front). The
+- **Classification is a hard gate** (`references/classification.md`, load it up front; load
+  `references/reader-check-prompt.md` before the first gate). The
   document carries the spec's level and recipients at the top; content above that level is a
   blocking finding, never shipped; a recipient the level does not allow → stop and ask.
 - **escalate-don't-guess.** Architecture mismatch, suspected spec violation, ambiguous task,
@@ -104,6 +121,9 @@ references load at their steps.
 - Invocation: the user invokes the `go` skill.
   Load the 3-doc (handoff → spec → plan) from the project's
   `.dryforge/` (project-root-relative). If absent, ask for the path.
+- **Project folder.** Work only inside one company project folder (see `ready`). At the workspace
+  root, ask which project. The project repository stays local: never add a remote or push unless the
+  user set one up.
 - **git required** — worktree isolation depends on it. If not a repo, offer `git init` **and make an
   initial commit** (an empty repo has no HEAD, so no worktree/branch can be created). If git is not
   installed, stop and say so.
@@ -111,20 +131,21 @@ references load at their steps.
   guess). Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
   nothing unpushed) and the working tree has no modified/staged **tracked**
   files; if either fails, **stop and report**. Then classify:
-  - **Greenfield** (main has no application code — only an init commit, `.gitignore`, or
-    producer-generated `.dryforge/`): **base = main**. No feature branch — there is no production
-    code to protect.
-  - **Existing project** (main has meaningful committed code): **base = feature branch** created
-    from main (`git checkout -b dryforge/<feature>`). Protects main from incomplete work.
+  - **New project** (main has no finished documents — only an init commit, `.gitignore`, or
+    producer-generated `.dryforge/`): **base = main**. No branch — there is nothing delivered to
+    protect.
+  - **Existing project** (main has committed harness or finished documents): **base = branch**
+    created from main (`git checkout -b dryforge/<document>`). Protects the delivered record from
+    unfinished work.
   - **`.dryforge/` as untracked files** is the expected handoff state from the producer — do not
     treat it as a dirty tree. Anything else untracked or modified is foreign work → stop and report.
   - **You own the `.dryforge/` git mechanics.** On the base, add `.dryforge/` to `.gitignore` and
     commit. For existing projects this stays on the feature branch (never on main); for greenfield
     it is on main (acceptable — main has no meaningful history to protect). If a prior run left
     `.dryforge/` *tracked*, run `git rm -r --cached .dryforge/` first.
-- **Verify commands** — the project's build/test/lint commands are typically declared in the handoff
-  (hard gates section) or discovered during scaffold from the project's build scripts. Identify them
-  before the first wave; they are used in every integration gate and the completion gate.
+- **Verify set** — the fact trace, the reader check, and the classification check (above), plus any
+  named human sign-off the spec records. Fix it before the first wave; it is used in every
+  integration gate and the completion gate.
 - Read **handoff first** (it governs: document roles, hard gates, execution shape), then spec and
   plan. **First-cycle precondition (check now, not at the end):** if this is a first cycle (no
   `.dryforge/status.json` marker — the discriminator is the marker, not harness files on disk;
@@ -161,18 +182,18 @@ A task whose declared work targets are **state/external only** (no file diff) is
 sequentially, **never dispatched into a parallel worktree** — the file-diff merge-gate cannot verify
 it and worktree isolation buys it nothing (`orchestration.md`, Wave scheduling). Then, per wave:
 
-**Scaffold (inline, before dispatch).** Project initialization — manifests, dependencies, directory
-layout, build config, server/client entry points, shared types — is the orchestrator's job, not a
-task. On the base, perform scaffold inline: read the spec's tech decisions and set up the project so
-implementers start in a working skeleton. Scaffold is not in the Execution Graph. **Batch file
-writes** — scaffold typically creates many independent files; write 4–5 per tool-call turn instead
-of one at a time. Each extra turn adds thinking overhead and an API round-trip. Exception: if scaffold requires **investigation or trial-and-error** to get right (e.g. container
-orchestration, CI pipeline configuration, or 30+ files across 3+ workspaces), dispatch it as an
-implementer before the first wave.
+**Skeleton (inline, before dispatch).** The document skeleton — the output folder, one file per
+part, the classification header and recipients, the title block, the heading outline — is the
+orchestrator's job, not a task. On the base, create it inline from the spec so writers start inside a
+consistent frame. The skeleton is not in the Execution Graph. **Batch file
+writes** — the skeleton creates several independent files; write 4–5 per tool-call turn instead
+of one at a time. Each extra turn adds thinking overhead and an API round-trip. Exception: if the
+skeleton requires **investigation** (collecting many received files, rebuilding an existing
+document's structure), dispatch it as a writer before the first wave.
 
 **Review policy (natural language, orchestrator judgment).**
 Default: a single **final review** after all waves merge — one subagent checks the full diff for
-spec conformance + code quality (`reviewer-prompt.md`), plus the harness (content + format) when it
+spec conformance + writing quality (`reviewer-prompt.md`), plus the harness (content + format) when it
 was created/updated this cycle (step 9). This replaces per-task spec-review and per-wave code-review
 for most graphs. Mid-run review is added only when the orchestrator judges
 that **a RISKY task with downstream dependents could cascade a deviation** — then that task gets a
@@ -189,11 +210,11 @@ when a lightweight fix would take seconds.
 
 1. **Pick the mode by `risk`.**
    - **`MECHANICAL` / `NONE` (file-diff task) → orchestrator-direct.** The orchestrator
-     reads the task's behavioral contract + spec slice itself and implements **directly on the base**
-     — no dispatch, no worktree, no prompt authoring. **The same captured-evidence floor that binds a
-     dispatched implementer binds you here** (`implementer-prompt.md`): right-sized but *real*
-     verification (command + **captured** exit code; **real testable behavior left untested = not
-     done**, never a "right-size" excuse). Commit on the base. **You own conformance on this path — the
+     reads the task's content contract + spec slice itself and writes the part **directly on the
+     base** — no dispatch, no worktree, no prompt authoring. **The same captured-evidence floor that
+     binds a dispatched writer binds you here** (`implementer-prompt.md`): right-sized but *real*
+     verification (the part's fact trace captured; **a reader-check question this part owns left
+     unanswerable = not done**, never a "right-size" excuse). Commit on the base. **You own conformance on this path — the
      final review is insurance, not your check.** If the task proves ambiguous, behavioral, multi-file,
      or riskier than declared, treat it as a runtime risk upgrade (`graph-contract.md`) and strengthen
      verification.
@@ -240,9 +261,11 @@ when a lightweight fix would take seconds.
    The **merge commit message must satisfy the project's commit-msg hooks**. Then run **regen
    barriers**, then **deferred wiring** (check-before-append, idempotent; conflicts → escalate) and
    **commit wiring on the base**.
-6. **Integration gate** — run the project's verify commands on the merged result **after** wiring is
-   committed; **green = exit 0, output captured**. This catches cross-task interactions that no single
-   implementer could see. Failure → analyze → fix-dispatch or escalate.
+6. **Integration gate** — run the verify set on the assembled result **after** the assembly step is
+   committed (the fact trace across all parts, the classification check, and the reader check on the
+   questions whose parts have landed); **green = every check passed, evidence captured**. This
+   catches cross-part interactions that no single writer could see (a figure stated two ways, a term
+   defined twice, a summary promising what a section never says). Failure → analyze → fix-dispatch or escalate.
 7. **Clean up or recycle** task worktrees. If a later parallel wave exists, **recycle** pooled
    worktrees (`git checkout <base-tip> && git reset --hard`) instead of removing. If no later
    parallel wave needs them, **defer cleanup** to after the completion gate — batch-remove all
@@ -264,21 +287,22 @@ when a lightweight fix would take seconds.
 
 9. **Harness create / update** (`references/harness-lifecycle.md` + `references/harness-format.md`,
    force-load). After the completion gate, before the final review: **re-read the 3-doc** (mandatory —
-   the session is now code-biased), then act on the local marker `.dryforge/status.json`:
+   the session is now biased toward the document just written), then act on the local marker
+   `.dryforge/status.json`:
    - **First cycle** (marker absent): create the whole harness — CLAUDE.md / AGENTS.md + `docs/` +
      series AGENTS.md — from the handoff's Project Foundation + spec + the finished document. The Foundation is a
      **first-cycle invariant** (`ready` always writes it); if a first-cycle handoff has **no
-     Foundation section**, do **not** guess one from spec + code — **stop and ask the user to
+     Foundation section**, do **not** guess one from spec + material — **stop and ask the user to
      regenerate the 3-doc via `ready`** (`harness-lifecycle.md`, fail-fast precondition). Back up +
      critically rework any existing CLAUDE.md / AGENTS.md with user approval.
    - **Delta** (marker present): update only the changed-scope `docs/` (read all current docs first;
-     escalate an in-scope conflict; new module → new AGENTS.md + navigation-tree update).
+     escalate an in-scope conflict; new series → new AGENTS.md + navigation-tree update).
    See `harness-lifecycle.md` for the marker rule and the clobber safety guard.
    **Write every file silently** — do not announce each file or section as you go ("Now the docs...",
    "이제 모듈 노트를...", "Now the module roadmap note in `X`"); the UI already shows each write. This
    multi-file writing sequence is the last place narration leaks — emit nothing between writes.
 
-10. **Final review** — one subagent checks the **full diff on the base** for spec conformance + code
+10. **Final review** — one subagent checks the **full diff on the base** for spec conformance + writing
     quality, **and the harness** (when created/updated this cycle) against `references/harness-review.md`
     (`reviewer-prompt.md`, four lenses). **Clear = zero blocking findings, recorded.**
 
@@ -288,10 +312,14 @@ when a lightweight fix would take seconds.
     finding about a doc/code mismatch **outside this cycle's change scope** is not fixed here — record
     it in `docs/tracking/findings.md` and defer (scope-limited delta).
 
-12. **User gate.** Present for approval. **First cycle:** present the code result **and** the harness
+12. **User gate.** Present for approval: where the document is, its key message and request in one
+    line each, its classification and recipients, any `unconfirmed` fact still shown as unconfirmed
+    (the user must fill or accept it before sending), and what the reader check found. Offer the
+    document itself (send the file if the platform allows). **First cycle:** also present the harness
     as a reconciliation against the decisions the user took part in — *"the [X] we agreed is
     recorded in the harness as [this]"* — **not** a raw document dump. **Later cycle:** include a
-    harness-change summary in the result report.
+    harness-change summary in the result report. Sending the document to its readers is the user's
+    act — never send, post, or share it yourself.
 
 13. **Archive (move) + mark.** On approval, **move** the active 3-doc into `.dryforge/NNN/` — copy
     `.dryforge/{handoff,spec,plan}.md` into the new highest+1 dir, **then delete them from the
@@ -317,32 +345,31 @@ Done only when ALL hold — on **evidence**, not assertion:
 - every `DONE_WITH_CONCERNS` concern **resolved (fix-dispatched) or explicitly accepted and
   recorded** (at code-review or by the user) — a flagged concern is never silently carried into
   "done".
-- a **final full check** — **all** of the project's verify commands (whatever the stack actually has
-  — e.g. typecheck / lint / test / build, or fewer; including any genuinely expensive end-only step
-  deferred from the per-wave gate) on the integrated base **exit 0, with the commands and
-  exit codes captured and shown** (not "looks green"). **Why re-run everything when each wave already
+- a **final full check** — the **whole** verify set on the assembled document: the fact trace over
+  every figure, date, name, and quotation; the classification check; and the **reader check on all
+  reader-check questions** by a fresh independent reader (`reader-check-prompt.md`), each answer
+  compared with the expected answer — **with the trace table, the answers, and the comparison
+  captured and shown** (not "looks right"). **Why re-run everything when each wave already
   passed:** a per-wave gate proves each wave green *in isolation*, but the integrated result can break
   on **cross-wave interactions** that no single wave's gate could see — so the completion gate re-runs
   the full verify set against the whole base as the final, all-together check. Running the
   full verify set every wave is the **safe baseline**; narrowing to an **affected-only** subset is an
   optional efficiency lever for **intermediate (per-wave) gates only** — never for the completion
-  gate. Affected-only is permitted when the project's test runner supports change-based filtering
-  (e.g. the test runner's change-based filter — `--changed`, `--since`, `--lf`, or equivalent). When
-  using
+  gate (e.g. reader-checking only the questions whose parts landed in this wave). When using
   affected-only, record what was skipped so the completion gate's full run covers it. The
   **completion gate always runs the full verify set** — it is the cross-wave safety net.
-- **runtime smoke** — **in addition to** the verify commands above (which prove the code compiles
-  and tests pass): when the spec declares a running server or service, start it, send one
-  health-check or minimal request, confirm a 2xx response, then stop. A green build proves the
-  code compiles; a runtime smoke proves it boots and responds. Skip only when the project has no
-  runnable server component.
-- **An unevaluable check is a fail, not a pass.** A verify or smoke command counts as green only when
-  its **assertion itself evaluated and reported success** — exit 0 *from the assertion*, or the
-  expected output actually observed. If the assertion could not run (the command errored before
-  asserting, the server never came up, the matched output was empty, the response couldn't be parsed),
-  that is a **failure** — diagnose it, fix the check (or the code), and re-run until the assertion
-  genuinely passes. **Never infer a pass from side-effects** ("the server logged the request", "a file
-  appeared", "no error printed") when the declared assertion did not itself succeed; a check you can't
+- **read-through** — **in addition to** the verify set above: read the assembled document once from
+  top to bottom as it will be delivered — the first screen carries the key message and the request;
+  headings, tables, and lists render as Markdown; every visual and image path resolves; parts join
+  without repeated or missing text. The checks prove the parts are right; the read-through proves
+  the whole reads as one document.
+- **An unevaluable check is a fail, not a pass.** A check counts as green only when **it actually
+  ran and its result was observed** — the reader actually answered each question, the trace actually
+  covered every figure. If a check could not run (the reader subagent failed, returned no answers,
+  or answered a different document; the trace skipped a part), that is a **failure** — diagnose it,
+  fix the check (or the document), and re-run until it genuinely passes. **Never infer a pass from
+  side-effects** ("the reader said it was clear", "no one objected") when the declared check did not
+  itself succeed; a check you can't
   evaluate is not evidence. (This is A=A self-judgment applied to the gate's own evidence — see header.)
 - no residual escalation outstanding — every task that returned `NEEDS_CONTEXT` / `BLOCKED` was
   resolved through the bounded escalation ladder, and any escalation that **reached the user** was
@@ -354,12 +381,13 @@ Done only when ALL hold — on **evidence**, not assertion:
 
 After the harness step, final review, user approval, and 3-doc archiving (steps 9–13 above):
 
-- **Greenfield (base = main) →** work is already on main. Notify the user that the project is
+- **New project (base = main) →** work is already on main. Notify the user that the project is
   complete on main. No merge needed.
 - **Existing project (base = feature branch) →** ask the user **how to integrate**:
   - **Merge to main →** fetch and confirm main has not moved (if it has, re-integrate / escalate);
     merge the feature branch with **`--no-ff`** **from a checkout on the main branch**. **On
     conflict, abort and escalate.** After confirming the merge, clean up branches.
-  - **Open a PR / push →** push the feature branch; leave integration to the project's review flow.
+  - **Push →** only when the user set up a remote for this project (the project is local by
+    default): push the branch; leave integration to the project's review flow.
   - **Hand off only →** keep the feature branch intact.
   Never integrate on your own.

@@ -1,9 +1,9 @@
 # spec-review-prompt.md — conditional mid-run spec review
 
 Dispatched only when the orchestrator judges that a **RISKY task with downstream dependents** could
-cascade a deviation. Checks the task's diff against the **spec requirement** before merge — a spec
-violation caught late costs an undo/redo across dependent tasks. This is *conformance*, not code
-quality.
+cascade a deviation (e.g. the rules part that the flow visual and the first screen restate). Checks
+the task's diff against the **spec requirement** before merge — a spec violation caught late costs
+an undo/redo across dependent parts. This is *conformance*, not writing quality.
 
 ## Independence — what the reviewer is given
 
@@ -18,19 +18,21 @@ plus the captured external evidence passed inline, not from a diff that doesn't 
 
 ## What to check
 
-Given the spec requirement(s) for the task + the task's diff, in an independent context: does
-the implementation **do what the spec says** — behavior, invariants, edge-case rules, API
-surface? Judge conformance to the spec, nothing else. For a no-file-diff task the same question
+Given the spec requirement(s) for the task (with its fact-ledger rows and owned questions) + the
+task's diff, in an independent context: does the part **say what the spec says** — claims, requests,
+scope, rules and edge cases, no fact outside the ledger, nothing above the classification level?
+Judge conformance to the spec, nothing else. For a no-file-diff task the same question
 holds against the commit message + captured external evidence rather than a file diff.
 
 ## Calibration
 
-Flag a **real spec deviation** — missing behavior, a violated invariant, an edge case the spec
-specifies that the code doesn't handle. Do **not** flag style, naming, or quality — that is the
-final reviewer's job. spec is "correct"; measure against it.
+Flag a **real spec deviation** — a missing or softened claim or request, a commitment the spec does
+not make, an edge case the spec specifies that the part doesn't state, a figure not in the ledger.
+Do **not** flag wording or style — that is the final reviewer's job. spec is "correct"; measure
+against it.
 
-If the task's spec slice names a testable risk (edge case, invariant, validation) but the task was
-classified RISK=NONE and shipped without a test, flag needs-fix — a real risk was sized away.
+If the task's spec slice carries figures, a request, or rules but the task was classified RISK=NONE
+and shipped without a fact trace, flag needs-fix — a real risk was sized away.
 
 ## Structured return
 
