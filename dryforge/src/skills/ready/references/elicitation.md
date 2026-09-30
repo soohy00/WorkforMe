@@ -80,13 +80,15 @@ The cycle changes *what you must understand*, never *how rigorously you avoid gu
 **not** "lighter" — the intent for this task must be just as fully realized as in a first cycle.
 
 - **First cycle (no harness): a forced foundation design.** You must establish the project's
-  foundation — its domain model and its technical decisions — from scratch, because nothing holds it
-  yet. Force-load `project-scoping.md` (CALIBRATE: character → depth), then run the **domain extraction**
-  (`project-design-domain.md`) and the **technical presentation** (`project-design-technical.md`).
-  **Their floors are non-negotiable, not loop-optional:** the domain **breadth guard** (you may not
-  close without asking "are there other major entities/features/rules?"), the domain **depth floor**
-  (every concept has its four facts; every rule is testable), and the technical **no-silent-decision**
-  rule (every load-bearing technical decision settled by the user, presented as options). These are
+  foundation — its business and stakeholder model and its working decisions — from scratch, because
+  nothing holds it yet. Force-load `project-scoping.md` (CALIBRATE: character → depth), then run the
+  **model extraction** (`project-design-domain.md`) and the **working-decision presentation**
+  (`project-design-technical.md`). **Their floors are non-negotiable, not loop-optional:** the model
+  **breadth guard** (you may not close without asking "are there other major features / rules /
+  people / readers?"), the model **depth floor** (every concept has its four facts; every rule is
+  checkable; every metric defined; every decision type has an owner), and the working
+  **no-silent-decision** rule (every load-bearing working decision settled by the user, presented as
+  options). These are
   the structures that *force* understanding over guessing while the foundation is being laid — do not
   dilute them into a light pass. Scope = project foundation + this task.
 - **Delta (harness exists): task intent within the foundation — with the same rigor.** Do **not**

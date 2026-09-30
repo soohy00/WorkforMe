@@ -248,10 +248,11 @@ and the named recipients; the handoff carries the level's requirements as hard g
 **Scope by cycle — first establishes the foundation, delta works within it; both EQUALLY rigorous
 (delta is not "lighter").**
 - **First cycle (no harness): a *forced* foundation design.** Run `project-scoping.md` (CALIBRATE:
-  character → depth), then the **domain extraction** (`project-design-domain.md`) and **technical presentation**
-  (`project-design-technical.md`). **Their floors are non-negotiable, not loop-optional:** the domain
-  **breadth guard** (can't close without "are there other entities/features/rules?"), the domain
-  **depth floor**, the technical **no-silent-decision** rule. These force understanding over guessing
+  character → depth), then the **model extraction** (`project-design-domain.md` — the service domain
+  and the stakeholders) and **working-decision presentation** (`project-design-technical.md` —
+  classification, channels, conventions, review). **Their floors are non-negotiable, not
+  loop-optional:** the model **breadth guard** (can't close without "are there other features / rules /
+  people / readers?"), the model **depth floor**, the working **no-silent-decision** rule. These force understanding over guessing
   while the foundation is laid — do not dilute them. Scope = project foundation + this task; produces
   the Foundation 4 sections.
 - **Delta (harness exists):** do **not** re-run foundation design (read the floor from the harness;
@@ -303,7 +304,8 @@ Force-load `references/output-format.md` and `references/review-fidelity.md` (+ 
    two fixed-format blocks (**fact ledger**, **reader-check questions**); follow it there (record any
    project-specific extra verification ORIENT found — a named human sign-off — in the spec).
 2. **First cycle — write the Foundation too, into `handoff.md`.** Write ELICIT's Foundation 4 sections
-   (identity / domain / technical / future) into `handoff.md`'s Foundation section **now** (the rest
+   (identity / business and stakeholder model / working decisions / future) into `handoff.md`'s
+   Foundation section **now** (the rest
    of the handoff's governing parts wait for the plan and are filled at HANDOFF; the Foundation does
    not depend on the plan). **No separate `.dryforge/foundation.md`.** Into the spec, lift only **this
    document's WHAT** (the part of the domain this document actually uses); the project-wide context

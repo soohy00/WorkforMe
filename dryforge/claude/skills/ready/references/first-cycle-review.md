@@ -17,22 +17,22 @@ risk-proportional judgment.
 
 ## Failure modes to hunt
 
-- **Domain too shallow** — entity *names* present, but rules / invariants / edge-case dispositions
-  missing. A concept without its four facts (what it is / does / cannot do / how it ends) is a name,
-  not a model.
-- **Domain too narrow** — a core feature/entity is missing — the trace of closing without asking the
-  user "are there others?" (the breadth guard was skipped).
-- **Technical decision left open** — a "decide later" / "TBD" survives. An open load-bearing technical
-  question is a gap (the executor will fill it arbitrarily).
-- **Security generality** — "security considered" with no project-specific policy (auth approach,
-  authorization model, audit scope).
+- **Model too shallow** — entity or role *names* present, but rules / metric definitions / decision
+  owners / edge-case dispositions missing. A concept without its four facts (what it is / does /
+  cannot do / how it ends) is a name, not a model.
+- **Model too narrow** — a core feature, person, or recurring reader is missing — the trace of
+  closing without asking the user "are there others?" (the breadth guard was skipped).
+- **Working decision left open** — a "decide later" / "TBD" survives. An open load-bearing working
+  question is a gap (the writer will fill it arbitrarily).
+- **Classification generality** — "confidential stuff is handled carefully" with no project-specific
+  scheme, recipient levels, or sensitive items.
 - **Scoping mismatch** — the design is heavier or lighter than the project's confirmed character.
 - **Vague modifiers remain** — "appropriately," "if needed," "as suitable" still present.
 
 ## Floor
 
-- Every domain concept meets `project-design-domain.md`'s depth floor.
-- Every technical decision is closed by user confirmation (no open question).
+- Every model concept meets `project-design-domain.md`'s depth floor.
+- Every working decision is closed by user confirmation (no open question).
 - **Zero** vague modifiers.
 - Design depth is consistent with the CALIBRATE character profile.
 
@@ -41,15 +41,16 @@ risk-proportional judgment.
 A finding here is one of two kinds:
 - **Internally resolvable** (a vague modifier you can concretize from what's already on the record, an
   altitude slip) → fix it.
-- **A gap only the user can fill** (a missing domain rule, an unsettled technical decision, a security
-  policy) → **do not auto-fill it.** Auto-filling a foundation gap bakes a guess into the whole
+- **A gap only the user can fill** (a missing business rule, an unknown decision owner, an unsettled
+  working decision, a classification policy) → **do not auto-fill it.** Auto-filling a foundation gap bakes a guess into the whole
   project.
   - If found by ELICIT (during dialogue): **reopen the foundation gap in the loop** — add it to the
-    open-set and ask, in its mode (domain = extract, technical = present).
+    open-set and ask, in its mode (model = extract, working decisions = present).
   - If found by the 3-doc-gate (after the docs are written): the orchestrator relays it to the user
     and reopens ELICIT for that gap only → updates SPEC/Foundation (`3-doc-gate.md`).
 
 ## Universality guard
 
-Stack-agnostic. The rubric checks depth, breadth, and decision-closure — never conformance to a stack.
-What counts as a domain rule or a technical decision is whatever this project is, judged at runtime.
+Stack- and company-agnostic. The rubric checks depth, breadth, and decision-closure — never
+conformance to an organization. What counts as a rule or a working decision is whatever this project
+is, judged at runtime.

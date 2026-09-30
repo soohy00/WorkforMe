@@ -1,37 +1,39 @@
-# project-design-technical.md — first-cycle foundation design (technical decisions)
+# project-design-technical.md — first-cycle foundation design (working decisions)
 
-Establish the project's **technical decisions** with the user. This is the **present** mode (knowledge
-lives with *you*; the user speaks in generalities — translate them into concrete options +
-trade-offs, the user decides). The technical floor below is what the ELICIT loop must close on the
-technical axis; depth follows the CALIBRATE character. Order is gap-driven, not a fixed phase — the
-technical decisions interleave with domain in the loop and lean on the domain the loop has drawn out
-(a domain fact triggers a technical question and vice versa, `elicitation.md`).
+Establish the project's **working decisions** with the user — how documents are classified, delivered,
+written, reviewed, and stored in this project. This is the **present** mode (the knowledge of the
+options lives with *you*; the user speaks in generalities — translate them into concrete options +
+trade-offs, the user decides). The floor below is what the ELICIT loop must close on the working axis;
+depth follows the CALIBRATE character. Order is gap-driven, not a fixed phase — working decisions
+interleave with the business and stakeholder model and lean on it (a stakeholder fact triggers a
+working question and vice versa, `elicitation.md`).
 
-It is the opposite of domain design. Domain *draws out* what the user knows; technical *presents*
-what the user doesn't, as options the user chooses among. The user says a generality ("I want it to
-be secure") → you translate it into concrete choices ("an external auth service vs. rolling your own;
-the latter needs these decisions...") → the user decides → their language narrows → repeat. A few
-rounds converge a generality into this project's specific technical decision.
+It is the opposite of model design. The model *draws out* what the user knows; working decisions
+*present* what the user may not have framed, as options the user chooses among. The user says a
+generality ("keep it confidential") → you translate it into concrete choices ("Confidential with named
+recipients, or Internal with the revenue figures generalized — the first limits forwarding, the
+second lets the whole team read it") → the user decides → their language narrows → repeat.
 
-**Floor, not ceiling.** You know how to present technical options. This file blocks the failure modes
+**Floor, not ceiling.** You know how to present working options. This file blocks the failure modes
 and lays the floor; which options to present, in what order, is your judgment.
 
 ## Failure modes and guardrails
 
-- **Silent decision (the core one).** Never settle a technical direction without user approval.
+- **Silent decision (the core one).** Never settle a working direction without user approval.
   Translate the generality into concrete options with trade-offs and let the user pick — don't quietly
   choose the default and move on.
-- **Over-engineering.** When a technical choice is heavier than the CALIBRATE character warrants, detect
-  it and surface it to the user with your reasoning. Don't shrink it unilaterally — the user decides.
-- **Stack-locking.** Don't presuppose a specific technology. When presenting options, honor the
-  stack-agnostic principle: offer the *kinds* of approach and their trade-offs, not a single assumed
-  stack.
-- **Security generalities.** Don't stop at "follow security best practices." Concretize until this
-  project's own security decisions — auth approach, authorization model, audit scope — are settled by
-  user confirmation. (A generality here is the same as no decision.)
-- **No conventions established.** Entering `go` with no conventions lets the executor invent patterns
-  arbitrarily. Establish at least the minimal project standards (code conventions, test strategy,
-  module boundaries) with the user.
+- **Over-engineering.** When a process is heavier than the CALIBRATE character warrants (a four-step
+  approval route for a two-person team), detect it and surface it with your reasoning. Don't shrink it
+  unilaterally — the user decides.
+- **Tool-locking.** Don't presuppose a specific workspace, mail, or office tool. Offer the *kinds* of
+  channel and their trade-offs; the company's actual tools are discovered from the user.
+- **Classification generalities.** Don't stop at "handle it carefully." Concretize until this
+  project's classification scheme, the level each recurring reader may receive, and the project's
+  sensitive items are settled by user confirmation (`classification.md`). A company scheme, if one
+  exists, overrides the default.
+- **No conventions established.** Entering `go` with no conventions lets the writer invent them
+  arbitrarily. Establish at least the minimal standards (terminology source, number and date format,
+  tone per reader, file naming) with the user.
 
 ## What to cover (proportional to CALIBRATE depth)
 
@@ -39,33 +41,35 @@ The areas a typical project's technical floor touches — **common, not a fixed 
 may add others (data model / migration, observability, ...) or legitimately have almost nothing in one.
 Cover what *this* project's character implies, not all four by rote.
 
-- **Architecture** — components, how they communicate, data flow.
-- **Security model** — auth approach, authorization model, audit scope (this project's own policy,
-  not a generality).
-- **Conventions** — code conventions, test strategy, module boundaries.
-- **Operations** — deployment, environment, external dependencies.
+- **Classification** — the scheme, recipients per level, sensitive items (`classification.md`).
+- **Channels and formats** — where each kind of document goes (a workspace page, an email attachment,
+  a shared screen) and in what form.
+- **Writing conventions** — the terminology source, number/date/currency formats, tone per reader,
+  file naming and versioning.
+- **Review and storage** — who reviews and approves which kind of document; where finished documents
+  are stored and what may be backed up where.
 
-Scale to the character: a personal tool is "adopt the default + a one-beat confirm" per area; a
-larger/enterprise project is "design each area deeply." The depth comes from the character, not a
-fixed amount of ceremony.
+Scale to the character: a short internship is "adopt the default + a one-beat confirm" per area; a
+long engagement with outside readers is "design each area deeply." The depth comes from the
+character, not a fixed amount of ceremony.
 
 ## Depth floor
 
-- Every technical decision is **settled by user confirmation** — no solo agent decision.
+- Every working decision is **settled by user confirmation** — no solo agent decision.
 - Every decision that has a trade-off was presented as **options + each trade-off**.
-- The security model is this project's **specific** policy, not a generality.
-- **No open technical question remains.**
+- The classification policy is this project's **specific** policy, not a generality.
+- **No open working question remains.**
 
 The ceiling is open.
 
 ## What this produces
 
-The confirmed technical decisions, recorded in the handoff's Project Foundation
-(`foundation-format.md`, "technical decisions" section) — only decisions the user confirmed. `go`
-uses them as design context while implementing, and later turns them into `stakeholders.md` +
-`security.md` + `standards.md` + `operations.md`.
+The confirmed working decisions, recorded in the handoff's Project Foundation
+(`foundation-format.md`, "working decisions" section) — only decisions the user confirmed. `go` uses
+them as context while writing, and later turns them into `security.md` + `standards.md` +
+`operations.md`.
 
 ## Universality guard
 
-Stack-agnostic. Options are presented as kinds-of-approach with trade-offs; the concrete stack is the
-user's decision at runtime, never assumed or named as a rule here.
+Stack- and company-agnostic. Options are presented as kinds-of-approach with trade-offs; the
+concrete tools and rules are the user's decision at runtime, never assumed or named as a rule here.
