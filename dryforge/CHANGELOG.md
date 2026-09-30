@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.7-docs.1 (2026-09-30)
+
+- WorkforMe fork: ready, go and migration produce IT planning and business-operations documents
+  instead of code; see CHANGES.md at the WorkforMe repository root for every change and its reason
+- Added the shared classification reference, document kinds, the fact ledger and reader-check
+  questions, and the independent reader check
+- Build and verification cover the Claude package only
+
 ## v1.3.7 (2026-09-27)
 
 - Added Chinese and Japanese READMEs
