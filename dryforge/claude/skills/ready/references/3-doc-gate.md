@@ -58,8 +58,9 @@ intent-completeness, so this gate expects to find little.
 ## first cycle — add a foundation-sufficiency *lens* to the same review
 
 In a first cycle there is also a written Foundation, so the **same single review** carries one extra
-lens: **foundation sufficiency** — judge the written Foundation against `first-cycle-review.md` (domain
-depth and breadth, technical decisions closed, security project-specific, zero vague modifiers). This
+lens: **foundation sufficiency** — judge the written Foundation against `first-cycle-review.md` (model
+depth and breadth, working decisions closed, classification policy project-specific, zero vague
+modifiers). This
 is a **lens within the one holistic pass, not a second dispatch.** (intent-completeness owns the deep
 completeness work upstream, so the final gate's job is narrow enough to do executability + the
 foundation lens in one review.) In a delta there is no Foundation, so this lens is simply absent.

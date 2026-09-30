@@ -38,7 +38,7 @@ and lays the floor; which options to present, in what order, is your judgment.
 ## What to cover (proportional to CALIBRATE depth)
 
 The areas a typical project's technical floor touches — **common, not a fixed catalog.** A given project
-may add others (data model / migration, observability, ...) or legitimately have almost nothing in one.
+may add others (templates the company requires, translation, recurring schedules, ...) or legitimately have almost nothing in one.
 Cover what *this* project's character implies, not all four by rote.
 
 - **Classification** — the scheme, recipients per level, sensitive items (`classification.md`).

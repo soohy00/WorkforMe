@@ -110,8 +110,8 @@ Flow chart, user journey, service structure, roadmap, organization or role map, 
   branch; three lines of reading guidance under the visual.
 - **Commonly silent:** the exception paths; who performs each step; the direction of time; the scale
   (numbers).
-- **Choosing the form (signal → form):** "first … then … if …" → flow chart; several people taking
-  turns → swimlane flow; "changes to …", waiting/done/cancelled → state diagram; the user's steps and
+- **Choosing the form (signal → form):** "first ... then ... if ..." → flow chart; several people taking
+  turns → swimlane flow; "changes to ...", waiting/done/cancelled → state diagram; the user's steps and
   feelings → journey map; moving between screens → screen flow; what connects to what → structure
   diagram; option A vs B → comparison table; dates and milestones → roadmap; who decides and who does
   → responsibility table; a number over time → line chart; numbers side by side → bar chart. More

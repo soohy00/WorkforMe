@@ -87,7 +87,8 @@ migration is an independent piece of work, and a fresh session keeps the task-le
   commit). Never add a remote or push; company material stays on the machine.
 - **Existing material expected.** migration converts a project that already has material —
   onboarding documents, wiki or workspace exports, org charts, earlier plans, proposals, reports,
-  meeting notes. Ask the user to put it in the project folder (or give the paths). With no material
+  meeting notes. Ask the user to put it in the project's `material/` folder and commit it to the
+  local repository (later `go` runs treat other untracked files as foreign work). With no material
   at all, there is nothing to migrate — direct the user to `ready` (which designs the project's first
   cycle and lets `go` create the harness from scratch).
 - **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
@@ -198,7 +199,7 @@ Done only when ALL hold:
 - Every `docs/` file exists (7 core docs + tracking: status.md, decisions/index.md **+ an ADR
   (`NNNN-*.md`) for each trade-off decision the ledger confirmed**, findings.md).
 - CLAUDE.md and AGENTS.md both exist, with identical content.
-- An AGENTS.md exists for every identified module.
+- An AGENTS.md exists for every identified document series.
 - The **independent** REVIEW passes (no blocking finding under `references/harness-review.md`; any
   surviving blocker was escalated to the user, not looped).
 - The user has approved.

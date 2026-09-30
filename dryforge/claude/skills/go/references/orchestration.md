@@ -44,7 +44,7 @@ as each result is captured separately. The completion gate remains the full safe
   merge catches cross-task interactions.
 - **ROI collapse (objective conditions, not a free judgment).** A multi-task wave defaults to parallel
   worktrees. Collapse to **orchestrator-direct on the base** **only** on an objective condition — a
-  **single shared runtime** the tasks cannot isolate within (one DB / container stack / port set), or a
+  **single shared outside resource** the parts cannot isolate within (one outside page all parts write to), or a
   **new** project where cross-agent convention drift (terms, tone) outweighs the parallelism. This is a *rule*,
   not a free "ROI doesn't pay" call. **Record the collapse internally** (which wave, which condition) —
   do **not** surface it for a non-technical user to adjudicate (they cannot evaluate a parallelism/
@@ -145,23 +145,11 @@ cross-wave interactions at the end.
 - **Restore the orchestrator's cwd after each wave.**
 - **Subagent output is bounded.**
 - **Practical parallelism ~5–8.**
-- **Don't disable the build cache or daemon.** Warm it once and share across worktrees.
-- **Enable incremental / caching mode at scaffold** when the project's build or verify tools
-  support it but default to off. Check the tool's config or documentation during scaffold setup;
-  if an incremental or cache option exists, enable it. Repeated verify runs (per-wave gates,
-  completion gate) benefit from warm caches. This is the orchestrator's scaffold responsibility,
-  not a per-task concern.
-- **Share dependencies; don't reinstall per worktree.** Symlink/reflink external deps; relink
-  workspace-internal packages to this worktree's own source. **Caveat — path-mapping monorepos:**
-  per-worktree install from the warm store is the safe default; don't force symlink sharing.
-  **Cleanup caveat:** a dependency-store symlink is untracked; ignore it with a **slash-less**
-  pattern (`<dir>`, not `<dir>/`); remove the symlink before safe-removing the worktree.
-- **Slash-less gitignore — verify at scaffold, before any worktree.** After scaffold commits,
-  confirm `.gitignore` uses slash-less patterns for dependency directories (the project's dependency
-  store directory, without a trailing slash). A trailing-slash pattern does not match a symlink, so
-  worktree dependency symlinks get staged by `git add`. Fix this **before** creating the first
-  parallel wave's worktrees — every worktree agent will otherwise hit the same papercut
-  independently.
+- **Build tooling (only if the project has any).** A document project normally has no build cache,
+  dependencies, or dependency symlinks, and none of upstream's build-cache, dependency-sharing, or
+  slash-less-gitignore steps apply. If a project does carry tooling (a diagram renderer, a
+  converter), install it once, share it across worktrees, and ignore any symlink with a slash-less
+  pattern (`<dir>`, not `<dir>/`) before the first parallel wave.
 - **Worktrees isolate *files*, not *runtime*.** Shared external resources (DB, cache, queue, ports)
   are shared across all tasks. Treat mutations as dangerous; on unexpected state drift, **stop and
   escalate**.
@@ -285,7 +273,7 @@ don't run strictly sequentially by default. The next wave's **dispatch still wai
 but the worktrees and dependencies are already ready. On gate failure the provisioned worktrees
 are harmless (no task work yet) — remove or reuse after the fix. Fall back to fully serial advance
 only if lock contention or refresh bookkeeping makes overlap unsafe. (Intermediate per-wave gates may
-also use the test runner's affected-only filter; the completion gate always runs the full set.)
+also trace only the parts that landed in the wave; the completion gate always runs the full set.)
 
 **Advisory findings are recorded, never dropped.** Findings not fix-dispatched must be explicitly
 marked accepted — never silently dropped.
@@ -297,8 +285,8 @@ off the base — reuse a task worktree if present, else create a fresh one. The 
 the orchestrator merges back under the same merge-gate.
 
 **Lightweight fix** (trivial advisory findings — 1–2 files, non-behavioral): the orchestrator MUST
-triage each advisory after the final review. Trivial (1–2 files, non-behavioral — e.g. a missing
-attribute, a test warning, a one-line comment) → edit directly on the base, commit, re-run the
+triage each advisory after the final review. Trivial (1–2 files, no change to a claim or fact — e.g. a
+typo, a heading level, a term swapped for the harness term) → edit directly on the base, commit, re-run the
 completion gate. The default disposition is lightweight fix, not "accepted." Only mark an advisory
 as accepted when a fix is genuinely inappropriate (design trade-off, spec-intentional behavior).
 Do not skip advisories as "accepted" when a lightweight fix would take seconds. Scoped to trivial,

@@ -22,7 +22,7 @@ means"); conflict-resolution and gap-scoring are not.
 | content — claims, facts and figures, commitments, requests, the reader's situation | EXTRACT track → spec content + foundation domain |
 | form — kind, structure, visuals, channel, length, tone | PRESENT track → spec form + foundation working decisions |
 | purpose / reader / outcome / scope | spec objective / reader / outcome / scope |
-| hard constraints (must-not-say, classification, fixed dates, promised wording) | spec invariants + handoff hard gates |
+| hard constraints (must-not-say, classification, fixed dates, promised wording) | spec content rules + handoff hard gates |
 | every figure, date, name, quotation | **fact ledger** (with its source) |
 | non-derivable form (a figure with unit and date, a quotation, a clause, a committed date) | **preserve** (quoted block) + fact ledger |
 | finished prose / slide text / layout from another tool · section order or outline supplied by the input · noise | **discard** (lift the content first — see below) |
@@ -171,7 +171,7 @@ small — the same mechanism, only the volume differs.
 
 ## Universality guard
 
-Stack-agnostic. The axes (domain / technical / invariant / non-derivable form) and the
-premature→contract conversion are methods that hold in any stack; what a wire format, a regen target,
-or a registration point actually is, is discovered from the project at runtime — never assumed or
+Stack- and company-agnostic. The axes (content / form / hard constraint / fact / non-derivable form)
+and the premature→contract conversion are methods that hold in any project; what a committed figure,
+a regen step, or a shared file actually is, is discovered from the project at runtime — never assumed or
 named as a rule here.

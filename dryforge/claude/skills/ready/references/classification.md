@@ -25,8 +25,9 @@ Write the label in the user's language (for Korean: 공개 / 사내한정 / 대�
 
 ## Setting the level — recommend, the user decides
 
-The level is a **content decision** (`elicitation.md`): recommend it with the reason, the user
-decides. The recommendation is the **higher** of two readings:
+The level is a **content decision** (settled in `ready`'s ELICIT): recommend it with the reason, the
+user decides. The recommendation is the **higher** of two readings — taking the higher one is the
+normal case:
 
 **(a) By the most sensitive content in the document** (minimum level):
 
@@ -36,7 +37,7 @@ decides. The recommendation is the **higher** of two readings:
 | Internal processes, organization, plans already shared inside the company, work-in-progress designs | Internal |
 | Revenue, costs, prices not yet public, contract terms, unreleased product plans, per-customer data, fundraising in progress, investor reports | Confidential |
 | Security weaknesses, mergers or acquisitions, layoffs or pay, terms before a contract is signed, anything the user calls "only for the CEO" | Strictly confidential |
-| Personal data (names with contact details, identifiers, anything about a person) | Confidential at least — and include only what the document needs |
+| Personal data — contact details, identifiers, evaluations, pay, health, anything private about a person | Confidential at least — and include only what the document needs (a colleague's name and work role in an internal document is Internal, not personal data in this sense) |
 
 **(b) By the recipients** (typical, not a rule):
 
@@ -47,17 +48,18 @@ decides. The recommendation is the **higher** of two readings:
 | Investors, advisors, partners (outside, under a confidentiality agreement) | Confidential |
 | Customers, the public | Public |
 
-When (a) and (b) disagree — a recipient who may not receive the content's level — **do not relabel**.
-Either the content is removed or generalized until the level fits the recipient ("revenue grew" instead
-of the figure), or the recipient is dropped. That choice is the user's; present both with a
+When a named recipient **may not receive** the level the content requires (an outside recipient and
+Confidential revenue figures), **never lower the level to fit the recipient**. Either the content is
+removed or generalized until a level the recipient may receive fits it ("revenue grew" instead of the
+figure), or the recipient is dropped. That choice is the user's; present both with a
 recommendation.
 
 ## What each level requires of the document
 
 | Level | Marking (top of the document) | Distribution | Content |
 |---|---|---|---|
-| Public | the level | no limit | nothing above Public |
-| Internal | the level | inside the company; no public links (a shared page open to "anyone with the link" is public) | nothing above Internal |
+| Public | the level + the intended audience | no limit | nothing above Public |
+| Internal | the level + the recipients (a team or role is enough) | inside the company; no public links (a shared page open to "anyone with the link" is public) | nothing above Internal |
 | Confidential | the level + the named recipients + date and version | only the named recipients; forwarding needs the author's consent; outside recipients only under a confidentiality agreement the user confirms | minimum personal data |
 | Strictly confidential | the level + the named individuals + date and version | only the named individuals; never pasted into shared workspaces or chat tools | sensitive figures kept to what the decision needs; prefer "available on request" over including them |
 
@@ -68,7 +70,10 @@ the Confidential content.
 
 - The document states its level and recipients at the top, in the form above.
 - **Content above the level is a blocking finding** — never shipped, never "noted as a risk".
-- A recipient the level does not allow → stop and ask the user; never widen the level on your own.
+- A recipient the level does not allow → stop and ask the user; never lower the level, and never add
+  a recipient, on your own.
 - Personal data only as much as the document needs; never collected "in case".
+- Internal ids from the design files (fact ids like `F1`, question ids like `Q1`, visual ids `V1`, task
+  ids `T1`) never appear in the delivered document — they are working labels, not content.
 - Nothing in this file overrides the law or the company's own rules; where they are stricter, they
   apply.

@@ -17,7 +17,7 @@ description: >
 > in Core principles below.
 
 Consume the **3-doc** `ready` (the producer) wrote and realize the spec:
-parallel, wave-based execution with right-sized verification (test-first where it fits), spec-first
+parallel, wave-based execution with right-sized verification (question-first where it fits), spec-first
 review, and integration gates. Runs in the **same session** the producer (ready) wrote the 3-doc
 — the 3-doc is the **authority** go executes against (it stays self-sufficient because it is archived
 for later cycles); the live design context carries over and aids judgment, especially the harness
@@ -59,8 +59,9 @@ counts as **evidence** changes:
   never a silent hang or a timeout-drop. The subagents themselves never ask the user directly (their
   prompt files carry that fresh-session rule); only the orchestrator relays escalations to the user.
 - **Protect main; evidence over self-report.** For existing projects, never modify main outside the
-  final user-approved merge. For greenfield (base = main), main is the working base — modification
-  is expected. Gates pass on captured command exit codes, not on an agent's "looks fine."
+  final user-approved merge. For a new project (base = main), main is the working base — modification
+  is expected. Gates pass on captured evidence (the trace table, the reader's answers compared with
+  the expected answers, the marking check), not on an agent's "looks fine."
 - **Floor, not ceiling.** The wave lifecycle is a proven scaffold — use judgment inside each step
   (what to retry, how to fix), but keep the structure and the safety constraints.
 - **Report results, not process.** User-facing text covers wave completion, blockers, and final
@@ -72,8 +73,8 @@ counts as **evidence** changes:
   **parallel wave** (multiple tasks) or a **single `RISKY` task** is dispatched to subagents (file
   isolation / independent verification). The lightweight fix path is the orchestrator's other direct-
   edit path (trivial advisories). A multi-task wave is **collapsed to orchestrator-direct** only on an
-  **objective condition** — a single shared runtime the tasks cannot isolate within (one DB / container
-  / port set), or greenfield convention-drift risk — **not** a free ROI judgment, and the collapse is
+  **objective condition** — a single shared outside resource the parts cannot isolate within (one
+  outside page all parts write to), or new-project convention-drift risk (terms, tone) — **not** a free ROI judgment, and the collapse is
   **recorded internally** (which wave, which condition), never surfaced for a non-technical user to
   adjudicate. Collapsed tasks still carry the per-task evidence floor and are **reviewed as if
   independently authored**; the mid-run spec-review (RISKY + downstream + cascade) is still honored
@@ -136,14 +137,16 @@ counts as **evidence** changes:
     created from main (`git checkout -b dryforge/<document>`). Protects the delivered record from
     unfinished work.
   - **`.dryforge/` as untracked files** is the expected handoff state from the producer — do not
-    treat it as a dirty tree. Anything else untracked or modified is foreign work → stop and report.
+    treat it as a dirty tree. Anything else untracked or modified is foreign work → stop and report
+    (received material belongs in `material/`, committed — ask the user to commit it).
   - **You own the `.dryforge/` git mechanics.** On the base, add `.dryforge/` to `.gitignore` and
     commit. For existing projects this stays on the feature branch (never on main); for greenfield
     it is on main (acceptable — main has no meaningful history to protect). If a prior run left
     `.dryforge/` *tracked*, run `git rm -r --cached .dryforge/` first.
-- **Verify set** — the fact trace, the reader check, and the classification check (above), plus any
-  named human sign-off the spec records. Fix it before the first wave; it is used in every
-  integration gate and the completion gate.
+- **Verify set** — the fact trace and the classification check (every integration gate and the
+  completion gate) and the reader check (the completion gate). Fix it before the first wave. A named
+  human sign-off the spec records is **not** something `go` can obtain — `go` never sends the
+  document; report it as **pending** at the user gate, and the user obtains it after the run.
 - Read **handoff first** (it governs: document roles, hard gates, execution shape), then spec and
   plan. **First-cycle precondition (check now, not at the end):** if this is a first cycle (no
   `.dryforge/status.json` marker — the discriminator is the marker, not harness files on disk;
@@ -197,8 +200,8 @@ for most graphs. Mid-run review is added only when the orchestrator judges
 that **a RISKY task with downstream dependents could cascade a deviation** — then that task gets a
 spec-review before merge. The judgment comes from the Execution Graph: `risk` + `depends`.
 **Lightweight fix path:** after the final review, the orchestrator MUST triage each advisory finding:
-trivial (1–2 files, non-behavioral, e.g. a missing `step` attribute, a test warning, a one-line
-comment) → edit directly on the base, commit, re-run the completion gate. Substantive (structural,
+trivial (1–2 files, no change to a claim or fact, e.g. a typo, a heading level, a term swapped for
+the harness term) → edit directly on the base, commit, re-run the completion gate. Substantive (structural,
 multi-file, behavioral) → fix-dispatch subagent. The default is lightweight — only escalate to
 fix-dispatch when the change warrants independent review. Do not skip advisories as "accepted"
 when a lightweight fix would take seconds.
@@ -315,7 +318,7 @@ when a lightweight fix would take seconds.
 12. **User gate.** Present for approval: where the document is, its key message and request in one
     line each, its classification and recipients, any `unconfirmed` fact still shown as unconfirmed
     (the user must fill or accept it before sending), and what the reader check found. Offer the
-    document itself (send the file if the platform allows). **First cycle:** also present the harness
+    document itself (share the file with the user in this session if the platform allows). **First cycle:** also present the harness
     as a reconciliation against the decisions the user took part in — *"the [X] we agreed is
     recorded in the harness as [this]"* — **not** a raw document dump. **Later cycle:** include a
     harness-change summary in the result report. Sending the document to its readers is the user's

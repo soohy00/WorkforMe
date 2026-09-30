@@ -7,16 +7,18 @@ shape from memory. The producer's authoring view is in its own `output-format.md
 `dependency-calc.md` (in the producer's references, not go's); this is the same contract, stated
 for the consumer.
 
-## The graph — the only machine-parsed part of the 3-doc
+## The graph — the scheduling schema of the 3-doc
 
-A single fenced `yaml` block inside the plain plan. Everything else in the 3-doc is prose for
+A single fenced `yaml` block inside the plain plan. It is the only part go *schedules* from; the two
+other fixed-format blocks — the spec's fact ledger and reader-check questions — are what go
+*verifies* against (`SKILL.md`, the verify set). Everything else in the 3-doc is prose for
 human/agent reading; this block is the scheduling skeleton:
 
 ```yaml
 tasks:
   - id: T5
     depends: [T2, T3]      # task ids that must finish before T5 can start
-    risk: RISKY            # OPTIONAL: RISKY | MECHANICAL | NONE — test ceremony + single-task wave execution mode
+    risk: RISKY            # OPTIONAL: RISKY | MECHANICAL | NONE — verification ceremony + single-task wave execution mode
 regen_barriers:
   - { after: [T3], run: "<regen step — discovered by the producer while reading the project>" }
 ```
@@ -29,14 +31,14 @@ regen_barriers:
   (1) it sizes the **per-part verification ceremony** passed to the writer; (2) for a **single-task
   (sequential) wave** it picks the **execution mode** — `MECHANICAL` / `NONE` → the orchestrator
   implements directly on the base; `RISKY` → dispatch a subagent in a worktree (independent
-  verification, A=A avoidance, base protected by the merge-gate). Risk sizes test ceremony and
+  verification, A=A avoidance, base protected by the merge-gate). Risk sizes verification ceremony and
   single-task execution mode; **review topology is governed by `orchestration.md`'s review policy**
   (a `RISKY` task *with downstream dependents + cascade risk* may add a mid-run spec-review — risk
   alone does not). Multi-task waves default to parallel dispatch regardless of risk; collapse and
   no-file-diff routing follow `orchestration.md`. **Omitted `risk` = the producer did not judge →
   treat as *unclassified*, not `MECHANICAL`:** go judges at read time and biases toward dispatch /
-  stronger verification if any behavioral surface appears (degrade-don't-corrupt); the implementer
-  still judges test ceremony at build time — no break.
+  stronger verification if any behavioral surface appears (degrade-don't-corrupt); the writer
+  still judges verification ceremony while writing — no break.
 - **Runtime risk upgrade.** If the producer marked a task `MECHANICAL` / `NONE` but go finds it is
   actually `RISKY` while writing (it turns out to need a figure, a commitment, or a rule the reader
   will act on), the orchestrator strengthens independent verification. It does **not** switch an

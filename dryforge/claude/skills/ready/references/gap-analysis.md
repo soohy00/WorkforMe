@@ -12,9 +12,9 @@ is ORIENT's, spec↔plan trace is PLAN's trace gate, source conflicts are DECOMP
 
 ## Depth probe — coverage vs floor, per axis
 
-After CALIBRATE has set the floor, measure each axis (domain, technical, security, ...) for **depth
-proportional to the project's character**: are the rules verifiable (a test case derivable from
-each), or do they stay at generalities? The gap is `floor − coverage`, where *coverage* is the
+After CALIBRATE has set the floor, measure each axis (reader, claim, classification, alignment, ...) for **depth
+proportional to the project's character**: are the rules and claims checkable (a reader could verify
+each against its source), or do they stay at generalities? The gap is `floor − coverage`, where *coverage* is the
 **measured depth**, not the mere presence of content: DECOMPOSE supplies a **presence map** (what landed
 per axis + a **form marker** — bare mention vs. full treatment), and a *touched* axis is **not**
 automatically a *covered* one — the form marker is what keeps a thin mention from reading as coverage.
@@ -54,7 +54,7 @@ deliberately **liberal** — they raise more than survives — so every candidat
   because Z").
 
 These three are **concrete slot-finders that populate `elicitation.md`'s decision-surface lenses** (the
-behavioral kind-sweep and the structural colliding-pair walk) — the lenses say *what kinds* of
+OUTCOME kind-sweep and the CLAIM colliding-pair walk) — the lenses say *what kinds* of
 obligation to enumerate; these probes mechanically surface the candidates. Cross-stack testing showed roughly half of what they raise are false positives,
 which is exactly why they are paired with the grounds gate: never escalate a candidate you can't
 ground.

@@ -27,7 +27,9 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
   reader-check questions it owns and the fact trace of every figure, date, name, and quotation it
   uses. **Consume the producer-set tier — don't re-derive "is this risky?" from scratch.** This task
   is classified RISK=<tier> by the producer. RISKY → question-first: before writing, list the
-  owned questions and confirm each is **unanswerable** from the empty part (RED); write the part;
+  owned questions and confirm each is **not yet answered** by the current assembled document on the
+  base (RED — this also shows whether another part already covers it, which is an overlap to report);
+  write the part;
   then, for each question, quote the sentence that answers it (GREEN), and build the fact-trace
   table. MECHANICAL → a confirming fact trace and one pass over the owned questions, no RED
   ceremony. NONE → appropriate evidence (the metadata matches the spec — e.g. the revision
@@ -54,8 +56,8 @@ Reader: <role and situation>.  Content to deliver: <spec slice>.  Hard gates: <c
 must-not-say>.  Facts you may use (and no others): <fact-ledger rows>.  Questions this part must
 answer: <owned reader-check questions>.
 File yours to write: <parts/NN-name.md>.  Do NOT touch: <assembled document, shared glossary>.
-This part is RISK=<tier>: RISKY → question-first (confirm each owned question is unanswerable from the
-empty part → write → quote the answering sentence per question) + fact trace; MECHANICAL →
+This part is RISK=<tier>: RISKY → question-first (confirm each owned question is not yet answered by
+the current assembled document → write → quote the answering sentence per question) + fact trace; MECHANICAL →
 confirming fact trace + one pass over the owned questions; NONE → metadata evidence. Show an
 `unconfirmed` fact as unconfirmed in the text. If the tier looks wrong, return DONE_WITH_CONCERNS.
 When done: commit, then return ONLY the structured summary. Do not inline the text.

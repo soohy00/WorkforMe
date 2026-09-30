@@ -63,7 +63,9 @@ that reads as generic boilerplate, restates what the material shows, or fills a 
 - **No constraint-ID labels (blocking).** Flag any constraint-ID carried into the harness — the
   3-doc's `INV-N` / `T-N`, or any `XXX-N` scheme — and any reference to another doc's invariant/rule
   *by label*. These dangle once the 3-doc is archived and violate self-containment; invariants must be
-  stated **by content**. A sweep for `\b[A-Z]{2,}-[0-9]+\b` across the harness catches most.
+  stated **by content**. A sweep for `\b[A-Z]{2,}-[0-9]+\b` across the harness catches most; also sweep for the 3-doc's
+working ids (`\b[FQVT][0-9]+\b` — fact, question, visual, task), which must never appear in the
+harness or in a delivered document.
 - **Series AGENTS.md** references no other series AGENTS.md and no `docs/` file.
 
 ## Dimension 3 — completeness (required files present)

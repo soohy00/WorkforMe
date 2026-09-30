@@ -217,7 +217,7 @@ the shape, **confirm** rather than re-ask.
 
 Stop and proceed to SPEC **only when all hold** (not merely when the user says "that's enough"):
 
-1. **The decision surface is accounted** — entities named (manifest), the four lenses walked over each
+1. **The decision surface is accounted** — entities named (manifest), the five lenses walked over each
    entity and each colliding pair, and **every load-bearing slot is `grounded`, `deferred-tunable`, or
    was asked-and-answered. No slot is left `assumed` (a silent guess).** This is observable — a scan
    over the enumerated surface — not a feeling.

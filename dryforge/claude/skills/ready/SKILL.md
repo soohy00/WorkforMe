@@ -187,7 +187,9 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
      as go's clobber guard).
 4. **Ground the material (inline, optional).** If the project already holds material, read the
    *cheapest map first* — the project entry file, the file list, earlier documents of the same kind
-   in `outputs/`, the received files the input points at. **Stop broad reading the moment the
+   in `outputs/`, the received files the input points at. Received files belong in the project's
+   `material/` folder, committed to the local repository (`go` treats other untracked files as
+   foreign work); if the user attaches files elsewhere, suggest moving them there and committing. **Stop broad reading the moment the
    completion bar is met** (inline ≠ "read everything" — suppress flooding). Deep-read only what this
    document must stay consistent with (numbers, names, commitments already sent), one representative
    earlier document for tone and structure, and the project's rules. New project → minimal or skip.
@@ -198,7 +200,8 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
    name, and quotation in the document traced to a source in the spec's fact ledger; (c) the
    **classification check** — the document carries the level and recipients the spec sets and holds
    nothing above that level. If the project adds its own evidence (a manager's sign-off, a legal
-   read), record it as named human-approval evidence in SPEC — never left implicit.
+   read), record it in SPEC as named human-approval evidence the **user** obtains after `go` — never
+   left implicit (`go` never sends the document).
 
 **Completion bar:** input is loaded raw and the cycle is decided (+ delta: harness loaded); existing →
 you can state the document's readers and blast radius, what it must stay consistent with, and the

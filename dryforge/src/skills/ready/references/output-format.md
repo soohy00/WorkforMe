@@ -10,8 +10,9 @@ requirement*: the agent designs the structure per project (intent fixed, structu
 content is stack- and company-agnostic — project specifics are discovered while reading the project,
 never hardcoded.
 
-**The deliverable is a document** (`SKILL.md`). Its output lives at a project-root-relative folder,
-by default `outputs/<YYYY-MM-DD>-<slug>/`, as Markdown (the channel the spec names — a Notion page,
+**The deliverable is a document** (see `ready`'s SKILL.md). Its output lives at a project-root-relative folder,
+by default `outputs/<YYYY-MM-DD>-<slug>/` (a document in a recurring series:
+`outputs/<series>/<YYYY-MM-DD>-<slug>/`), as Markdown (the channel the spec names — a Notion page,
 an email, a shared screen — is where the Markdown goes; converting to other file formats is not part
 of this cycle).
 
@@ -30,7 +31,7 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
   gates").
 - Intent decided while authoring but not captured in spec/plan.
 - **First cycle only (no project harness yet):** the handoff **carries** a **Project Foundation**
-  section — the project-wide foundation (full domain model, technical decisions, future scope) that
+  section — the project-wide foundation (business and stakeholder model, working decisions, future scope) that
   seeds the harness `go` creates at the end. `ready` produces it through its first-cycle ELICIT loop
   and writes it at the SPEC step (`foundation-format.md`). It is **required** in a first cycle — there
   is no degrade path; `go` treats a missing Foundation in a first cycle as a precondition violation and
@@ -67,7 +68,8 @@ document, one row each — `go` traces the finished document against it:
 `status` is exactly one of `sourced` / `user-stated` / `unconfirmed` (write the labels in the user's
 language if the document is in it; keep the three meanings). An `unconfirmed` fact is shown in the
 document **marked as unconfirmed**, never smoothed into a confident statement — and the user was told
-about it in ELICIT.
+about it in ELICIT. The ids (`F1`, and the `Q1` / `V1` / `T1` ids below) are working labels for the
+3-doc and `go`'s checks — they never appear in the delivered document.
 
 **Reader-check questions (fixed format).** The document's acceptance test: an independent reader who
 never saw the dialogue must answer each from the finished document alone:
@@ -113,7 +115,7 @@ resource — and verification gate: the reader-check questions it answers + the 
 external evidence for work outside the tree (e.g. a page updated in an outside tool). Target shape
 and gate are discovered from the project, not assumed.
 
-## The Execution Graph — the only rigid part
+## The Execution Graph — the scheduling schema
 
 A fenced `yaml` block inside the plan. go parses it for scheduling:
 
@@ -133,12 +135,13 @@ regen_barriers:
   verified or reviewed, and never touches gate topology. (go may also read it to choose a single-task
   wave's execution mode, but that is a consumer-side use; the producer just derives the tier.) Derive
   it per task (see
-  `references/dependency-calc.md`): RISKY if the part carries figures, commitments, a request, a
-  decision, classification-sensitive content, or is the first screen; NONE if it is metadata with no new
+  `references/dependency-calc.md`): RISKY if the part introduces figures or commitments the reader
+  acts on, a request or decision, rules and edge cases a builder will follow, classification-sensitive
+  content, or is the first screen (restating an already-sourced figure as background is MECHANICAL); NONE if it is metadata with no new
   claim; otherwise MECHANICAL. (Assembly is never a task — `go` regenerates the assembled document
   after every wave.) This is a derivation heuristic
   judged per task, not a fixed checklist. If a producer omits it, the task is unclassified: go leans
-  toward stronger verification, and the implementer still judges test ceremony at build time — no
+  toward stronger verification, and the writer still judges verification ceremony while writing — no
   break.
 - go derives waves by topological sort of `depends`, then dispatches in
   batches of **≤8 concurrent**.

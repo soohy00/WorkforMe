@@ -52,16 +52,18 @@ handoff. ORIENT surfaces these project-specific constraints.
 Per task, optionally classify the content risk. It sizes the writer's **per-part verification
 ceremony** and, for a single-task wave, go's execution mode; it does not set review topology. The
 field shape is `risk: RISKY | MECHANICAL | NONE`. It is **optional**. If omitted, the task is
-unclassified: go leans toward stronger verification, and the implementer still judges test ceremony
-at build time (no break). When present it is visible in the 3-doc the user reviews before go runs.
+unclassified: go leans toward stronger verification, and the writer still judges verification ceremony
+while writing (no break). When present it is visible in the 3-doc the user reviews before go runs.
 
 Derivation heuristic (a **floor, not a checklist** — judged per task):
 
-- **RISKY** if the part carries figures, commitments, a request or decision, classification-sensitive
-  content, rules and edge cases a builder will follow, or is the first screen.
+- **RISKY** if the part introduces figures or commitments the reader acts on, a request or decision,
+  classification-sensitive content, rules and edge cases a builder will follow, or is the first
+  screen.
 - **NONE** if the part is metadata with no new claim (a revision table, a distribution list already
   fixed by the spec). Assembly itself is never a task — `go` does it after every wave.
-- **MECHANICAL** otherwise (explanation or background that restates settled, sourced content).
+- **MECHANICAL** otherwise (explanation or background that restates settled, sourced content — an
+  already-sourced figure repeated as background included).
 
 This sizes the writer's per-part verification ceremony — it never changes whether a part is
 verified or reviewed, and never touches gate topology. (go may also read the tier to choose a

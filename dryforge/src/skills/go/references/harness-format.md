@@ -56,7 +56,8 @@ project-root/
 └── outputs/
     ├── <YYYY-MM-DD>-<slug>/      ← one finished document (its parts and the assembled file)
     └── <series>/
-        └── AGENTS.md             ← per-series scope, reader, invariants (recurring documents)
+        ├── AGENTS.md             ← per-series scope, reader, invariants (recurring documents)
+        └── <YYYY-MM-DD>-<slug>/  ← one issue of the series
 ```
 
 `.dryforge/` (the 3-doc, `NNN/` archives, `backup/`, the local `status.json` marker) is the
