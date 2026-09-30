@@ -1,27 +1,31 @@
 ---
 name: migration
 description: >
-  Bring an existing codebase into Dryforge, once. Reads the code, asks what code cannot show —
-  business rules, security policy, what is intentional — and writes the project docs at the entry
-  points agents already read. Use when the user invokes the `migration` skill on an existing
-  project. Requires git.
+  Set up a company project from the material you already have, once. Reads onboarding documents,
+  wiki exports, earlier plans and reports, asks what the material cannot show — who decides what,
+  what may go to whom, what each reader needs — and writes the project docs at the entry points
+  agents already read. Use when the user invokes the `migration` skill in a company project folder.
+  Requires git.
 ---
 
 # migration
 
 > **Reply in the user's language, and hold it continuously from your very first line** — the opening,
 > every grounding/progress note, the questions, and the harness, not only some of them. Write natively
-> (never translationese). You are reading a codebase (and these instructions) that may be in another
-> language; **neither sets your output language — only the user's does.** Full rule in Core principles below.
+> (never translationese). You are reading company material (and these instructions) that may be in
+> another language; **neither sets your output language — only the user's does.** Full rule in Core principles below.
 
-Convert an existing project into the dryforge **project harness** — the durable documentation layer
-that every later agent (dryforge or not) works inside. migration reads the codebase, elicits the
-intent/constraints/decisions that code cannot express, and generates the whole harness:
+Convert an existing company project into the dryforge **project harness** — the durable
+documentation layer that every later agent (dryforge or not) works inside. The deliverables of the
+project are documents (see `ready`); the project is one company folder under the workspace's
+`projects/`, kept as a local git repository. migration reads the material the user brings, elicits
+the intent/constraints/decisions that material cannot express, and generates the whole harness:
 `CLAUDE.md` / `AGENTS.md`, the `docs/` set, and a per-series `AGENTS.md`. The harness spec is in
 `references/harness-format.md`.
 
-migration is a **one-time conversion**, not a task runner. It writes documentation only — it does
-**not** create a 3-doc (that is `ready`'s job) and does **not** execute code (that is `go`'s).
+migration is a **one-time conversion**, not a task runner. It writes the project harness only — it
+does **not** create a 3-doc (that is `ready`'s job) and does **not** write deliverable documents (that
+is `go`'s).
 After it finishes, commit the harness and clear the session before running `ready` → `go`:
 migration is an independent piece of work, and a fresh session keeps the task-level dialogue clean.
 
@@ -33,9 +37,10 @@ migration is an independent piece of work, and a fresh session keeps the task-le
 - **Content density is the whole point.** Every file must clear the quality bar in
   `references/harness-format.md` (five principles, four techniques). Filling sections is not the
   goal; informing the next agent is.
-- **Knowledge asymmetry drives elicitation.** Domain knowledge lives with the user — *extract* it
-  (don't fabricate). Technical knowledge lives with you — *present* options + trade-offs and let the
-  user decide. Don't accept the user's generalities as-is, and don't concretize them alone.
+- **Knowledge asymmetry drives elicitation.** Knowledge of the business, the people, and the readers
+  lives with the user — *extract* it (don't fabricate). Knowledge of working options (classification
+  schemes, channels, conventions) lives with you — *present* options + trade-offs and let the user
+  decide. Don't accept the user's generalities as-is, and don't concretize them alone.
 - **Subagents only at the final REVIEW.** SCAN, ELICIT, and GENERATE run inline in the main session —
   generation needs the live conversation's *raw* grounding, not a summary. **REVIEW is the exception:**
   the finished harness is verified by **one independent subagent that did not author it.** Self-judging
@@ -43,24 +48,25 @@ migration is an independent piece of work, and a fresh session keeps the task-le
   durable artifact in the system** (every later agent works inside it), so it earns the one fresh-eye
   check — the same relaxation `ready` made (generate inline, verify independently). This is the *only*
   dispatch.
-- **Stack-agnostic.** No stack/framework/library name in this skill. Discover all specifics
-  (conventions, module boundaries, build/verify commands, external deps) at runtime from the project.
-- **escalate-don't-guess.** What the code can't settle and you can't derive, ask the user — never
-  invent a domain rule, a policy, or a rationale.
+- **Stack- and company-agnostic.** No stack, company, or industry name in this skill. Discover all
+  specifics (the organization, the service, the readers, conventions, document series, channels) at
+  runtime from the material and the user.
+- **escalate-don't-guess.** What the material can't settle and you can't derive, ask the user —
+  never invent a business rule, a decision owner, a policy, or a rationale.
 - **Match the user's language (language-agnostic).** Like stack-agnosticism, the *method* is fixed
   and the *specific language* is discovered at runtime, never assumed: produce every user-facing
   output — the dialogue **and the whole harness** (CLAUDE.md / AGENTS.md, docs/, series AGENTS.md) —
   in the language the user communicates in, written **natively** (as a fluent speaker of that language
   would, never translationese). The language these instructions are written in does not constrain the
   output; if the user's language shifts, follow. **Hold it from the very first line, continuously** —
-  never open in the codebase's or these instructions' language and switch later. The language of the
-  code you read does **not** constrain your output; only the user's does.
+  never open in the material's or these instructions' language and switch later. The language of the
+  material you read does **not** constrain your output; only the user's does.
 - **Talk to the user only when needed — between beats, say nothing.** You speak at **exactly** these
   moments: (a) a question you genuinely need answered, (b) the final walk-through / result, (c) a real
   blocker — **these are the only times user-facing text exists.** SCAN, GENERATE, REVIEW, and any fix
   loop are **silent phases**: the UI already shows the file/command activity, so narrating it is pure
   leak. If what you are about to emit is none of (a)/(b)/(c), the correct output is **nothing**.
-  **Between those beats, stay silent** — reading references, reading code, and internal
+  **Between those beats, stay silent** — reading references, reading material, and internal
   operations are not narrated. **No transition lines** ("now I'll...", "먼저 ...", "let me read...", "Now the ..." announcing each write) — at
   those plumbing moments your voice slips into the instructions' language (English) or internal tokens;
   emit *nothing* there, don't translate it. When you *do* speak (a/b/c), use a **plain, non-technical
@@ -74,11 +80,16 @@ migration is an independent piece of work, and a fresh session keeps the task-le
 
 ## Input & preconditions
 
-- Invocation: the user invokes the `migration` skill, no arguments — migration reads the **current
-  project**.
-- **Existing codebase expected.** migration converts a project that already has code. For a
-  greenfield project (no code yet), there is nothing to migrate — direct the user to `ready` (which
-  designs the project's first cycle and lets `go` create the harness from scratch).
+- Invocation: the user invokes the `migration` skill, optionally with paths to material — migration
+  reads the **current project folder** and the material given.
+- **Project folder.** At the workspace root (it holds `projects/` and `dryforge/`), do not work there:
+  ask which company project this is, or create one (`projects/<name>/`, `git init`, an initial
+  commit). Never add a remote or push; company material stays on the machine.
+- **Existing material expected.** migration converts a project that already has material —
+  onboarding documents, wiki or workspace exports, org charts, earlier plans, proposals, reports,
+  meeting notes. Ask the user to put it in the project folder (or give the paths). With no material
+  at all, there is nothing to migrate — direct the user to `ready` (which designs the project's first
+  cycle and lets `go` create the harness from scratch).
 - **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
   commit** (later `go` needs a HEAD for worktrees). If git is not installed, stop and say so.
 - **git posture — migration writes files, it does not commit.** migration creates the harness files,
@@ -88,31 +99,36 @@ migration is an independent piece of work, and a fresh session keeps the task-le
   commit the harness is the user's choice. (This differs from `ready`, which never touches
   `.gitignore`: migration may not be immediately followed by `go`, so it sets up the ignore itself.)
 
-## Phase 1 — SCAN (build the technical map)
+## Phase 1 — SCAN (build the project map)
 
-Read the project inline (file reads, shell, search — no subagent dispatch). Start with the cheapest map and
-stop once you can ground ELICIT's questions; deep-read only where you must.
+Read the material inline (file reads, shell, search — no subagent dispatch). Start with the cheapest map
+and stop once you can ground ELICIT's questions; deep-read only where you must. Every piece of material
+is **reference, not authority** — it may be stale, partial, or written for a different reader.
 
 Cover:
-- **Directory structure** → identify the tech stack and the module/service boundaries.
-- **Code patterns** → conventions, naming, test structure, build system.
-- **Existing docs** (CLAUDE.md, README, docs/, AGENTS.md, ...) → list them and **demote to reference
-  material** (not authority — they may be stale or wrong).
-- **External dependencies** → auth, data storage, cache, external APIs.
-- **git history** → activity scope, the major change patterns.
+- **The company and its service** → what the service is, its entities, rules, metrics and how they
+  are defined, the terms used.
+- **The organization** → roles, teams, the reporting line, who appears to approve what (to be
+  confirmed — titles are not decisions).
+- **Earlier documents** → their kinds, readers, tone, structure, recurring series, the figures they
+  already committed to.
+- **Sensitivity** → classification notices, confidentiality clauses, personal data, what the
+  material marks as not for sharing.
+- **Existing entry files** (CLAUDE.md, AGENTS.md, README) → list them and demote to reference.
 
-Result: a **manifest** of the project — every module/entity, pattern, security surface, external
-dependency, and gap. This is the **ledger** ELICIT works from (`references/migration-elicit.md`): each
+Result: a **manifest** of the project — every entity, person or role, recurring reader, document
+series, convention, sensitive item, and gap. This is the **ledger** ELICIT works from (`references/migration-elicit.md`): each
 item must close as `confirmed` / `asked-answered` / `N/A — reason`, so coverage is *observable*, not
 asserted.
 
-## Phase 2 — ELICIT (collect what code can't reveal) — `references/migration-elicit.md`
+## Phase 2 — ELICIT (collect what the material can't reveal) — `references/migration-elicit.md`
 
 **Force-load `references/migration-elicit.md`.** Using the SCAN map, ask the user for the
-information code alone cannot extract — project-wide (not task-focused). The guiding frame:
-*self-infer first, ask deeply only where being wrong is dangerous* (business model, domain
-invariants, security policy must be user-confirmed even when code-inferable; technical WHY and
-conventions need only a light confirm when the code answers them).
+information the material alone cannot give — project-wide (not task-focused). The guiding frame:
+*self-infer first, ask deeply only where being wrong is dangerous* (who decides what, what may go to
+whom, the business rules the documents will state, and the user's own role must be user-confirmed
+even when the material suggests them; conventions need only a light confirm when earlier documents
+show them).
 
 **Classification policy.** Ask whether the company has its own document classification scheme. If
 it does, it overrides the default (`references/classification.md`) and is recorded in `security.md`;
@@ -132,11 +148,12 @@ what to improve — then present the review to the user, explain it, and get app
    in harness-format).
 3. Create `docs/` and every file in it (harness-format spec).
 4. Create CLAUDE.md / AGENTS.md (identical content).
-5. Create a series AGENTS.md per document series identified in SCAN.
+5. Create a series AGENTS.md per document series identified in SCAN (if any), and the `outputs/`
+   folder.
 6. Record the current state in `docs/tracking/status.md` (done vs. remaining, against full scope).
 
-Explore sources fully before writing; verify each file against the code both ways (omission /
-hallucination) as you go — this self-check is separate from Phase 4.
+Explore sources fully before writing; verify each file against the material and the dialogue both
+ways (omission / hallucination) as you go — this self-check is separate from Phase 4.
 
 **Write every file silently** — do not announce each file or section as you go ("Now the docs...",
 "이제 모듈 AGENTS.md를...", "Now the entry point"); the UI already shows each write. This multi-file
@@ -147,7 +164,7 @@ writing sequence is where narration leaks most — emit nothing between writes.
 **Force-load `references/harness-review.md`** (the rubric) and **dispatch a fresh general-purpose subagent
 that did NOT author the harness** to verify it independently. Use a **general-purpose** agent with full
 read/inspect tools (not a plan-only or search-only agent type) so it can cross-check every claim against
-the actual code; give it the harness files + the rubric + **the user's language** (so it judges native
+the actual material; give it the harness files + the rubric + **the user's language** (so it judges native
 fidelity) + **the Phase-2 ledger with every disposition, inline in the dispatch prompt** (the ledger
 is session state — the subagent cannot see it any other way, and the shared rubric does not carry
 it), **read-only**, returning a **structured list** (no raw dump). It checks the four dimensions: content (substantive
