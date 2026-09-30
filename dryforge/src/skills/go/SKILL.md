@@ -180,10 +180,10 @@ A task whose declared work targets are **state/external only** (no file diff) is
 sequentially, **never dispatched into a parallel worktree** — the file-diff merge-gate cannot verify
 it and worktree isolation buys it nothing (`orchestration.md`, Wave scheduling). Then, per wave:
 
-**Skeleton (inline, before dispatch).** The document skeleton — the output folder, one file per
-part, the classification header and recipients, the title block, the heading outline — is the
-orchestrator's job, not a task. On the base, create it inline from the spec so writers start inside a
-consistent frame. The skeleton is not in the Execution Graph. **Batch file
+**Skeleton (inline, before dispatch).** The document skeleton — the output folder, the assembled
+document's file name, `parts/_header.md` (classification marking, recipients, title block), one file
+per part, the heading outline — is the orchestrator's job, not a task. On the base, create it inline
+from the spec so writers start inside a consistent frame. No writer task writes the header. The skeleton is not in the Execution Graph. **Batch file
 writes** — the skeleton creates several independent files; write 4–5 per tool-call turn instead
 of one at a time. Each extra turn adds thinking overhead and an API round-trip. Exception: if the
 skeleton requires **investigation** (collecting many received files, rebuilding an existing
@@ -232,7 +232,8 @@ when a lightweight fix would take seconds.
    the merge-gate, so a deviation never lands on the base.
 4. **Land + verify** — confirm the commit on the base (`git log`, diff touches declared targets;
    no-file-diff: commit message + captured external evidence). RISKY worktree: merge-gate into the
-   base. Then run **regen barriers** and **deferred wiring** if applicable, committed on the base.
+   base. Then run **regen barriers**, then the **assembly step** (`orchestration.md`, "Assembly"),
+   committed on the base.
    No integration gate — the self-checks on the cumulative base are sufficient for a single-task
    wave. → next wave.
 
@@ -257,11 +258,12 @@ when a lightweight fix would take seconds.
    branch is strictly **ahead** of the base (`git rev-list base..task` non-empty) AND its diff is
    non-empty and touches declared targets — checked with three-dot diff (`git diff base...task`).
    The **merge commit message must satisfy the project's commit-msg hooks**. Then run **regen
-   barriers**, then **deferred wiring** (check-before-append, idempotent; conflicts → escalate) and
-   **commit wiring on the base**.
-6. **Integration gate** — run the verify set on the assembled result **after** the assembly step is
-   committed (the fact trace across all parts, the classification check, and the reader check on the
-   questions whose parts have landed); **green = every check passed, evidence captured**. This
+   barriers**, then the **assembly step** (`orchestration.md`, "Assembly") and **commit it on the
+   base**.
+6. **Integration gate** — run the fact trace across all landed parts and the classification check on
+   the assembled result **after** the assembly step is committed; **green = both passed, evidence
+   captured**. (The reader check runs once, at the completion gate, on the whole document — an
+   intermediate document has no first screen yet.) This
    catches cross-part interactions that no single writer could see (a figure stated two ways, a term
    defined twice, a summary promising what a section never says). Failure → analyze → fix-dispatch or escalate.
 7. **Clean up or recycle** task worktrees. If a later parallel wave exists, **recycle** pooled

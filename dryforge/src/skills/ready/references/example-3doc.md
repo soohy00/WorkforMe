@@ -31,15 +31,17 @@ for WHAT.
 `payment-failure.md`).
 
 **Execution shape.** One document; 5 parts; 3 waves. Wave 1: background + rules (parallel). Wave 2:
-states + flow visual (parallel), then the assembly step joins parts. Wave 3: the first screen
-(summary + open decisions), written last because it restates every part.
+states + flow visual (parallel). Wave 3: the first screen (summary + open decisions), written last
+because it restates every part. After every wave `go` regenerates `payment-failure.md` from
+`parts/_header.md` + all landed parts in number order, so the first screen (`00`) lands on top.
 
 **Hard gates** (not derivable from the material alone):
 - Classification: **Internal**. Recipients: the product designer, the frontend developer, the backend
   developer, the team lead. Marked at the top; no revenue figures (they would lift it to Confidential).
 - The document must **not** promise a refund policy — refunds are owned by the operations team and
   are out of scope.
-- The retry limit is **3** (settled with the team lead); never written as "a few" or "several".
+- The attempt limit is **3** — support after the 3rd failed attempt (settled with the team lead);
+  never written as "a few" or "several".
 - Verification: every reader-check question answered by an independent reader; every figure traced
   to the fact ledger.
 
@@ -63,18 +65,18 @@ owners).
 **Outcome.** The designer starts the failure screens on Monday without another meeting; the
 developers can estimate the work from the rules section.
 
-**Key message.** When a payment fails, the user retries up to three times on one screen, then is
-sent to support — and two decisions are still open, with owners and dates.
+**Key message.** When a payment fails, the user can try again on one screen; after the 3rd failed
+attempt they are sent to support — and two decisions are still open, with owners and dates.
 
 **Content**
 - Why: payment failures are the top reason for abandoned orders (F1) — the goal is to recover them
   without new support load.
 - Rules: a failure shows the retry screen with the provider's reason in plain words; after the
-  **3rd** failure (F2) the user sees the support screen; a card-limit failure never auto-retries.
+  **3rd failed attempt** (F2) the user sees the support screen; a card-limit failure never auto-retries.
 - States (each screen): retrying, failed with reason, failed three times, provider unreachable.
 - Out of scope: refunds (operations team); saved-card management.
-- Settled: the retry limit (3). Open: (a) whether the order is kept for 24 hours after the third
-  failure — owner: team lead, by 2026-10-09 (F3); (b) the support channel shown — owner: operations
+- Settled: the attempt limit (3). Open: (a) whether the order is kept for 24 hours (F4) after the
+  3rd failed attempt — owner: team lead, by 2026-10-09 (F3); (b) the support channel shown — owner: operations
   lead, by 2026-10-09.
 
 **Form.** Alignment document, Markdown, pasted into the team's workspace page; about two pages; plain,
@@ -90,14 +92,15 @@ for the primary reader).
 | id | fact | source | status |
 |---|---|---|---|
 | F1 | Payment failure is the top abandonment reason in September | Sept funnel review (shared by user) | sourced |
-| F2 | Retry limit 3 | team lead, per user in dialogue | user-stated |
+| F2 | Attempt limit 3 (support after the 3rd failed attempt) | team lead, per user in dialogue | user-stated |
 | F3 | Decision date 2026-10-09 | user, in dialogue | user-stated |
+| F4 | Proposed order hold 24 hours (an open decision, stated as a proposal) | user, in dialogue | user-stated |
 
 ## Reader-check questions
 | id | question | expected answer (gist) | answered in |
 |---|---|---|---|
 | Q1 | After a failed payment, what does the user see next? | the retry screen with the reason | rules, V1 |
-| Q2 | When does the user get sent to support? | after the 3rd failure | rules, V1 |
+| Q2 | When does the user get sent to support? | after the 3rd failed attempt | rules, V1 |
 | Q3 | Which failure never auto-retries? | card limit | rules |
 | Q4 | What states must each screen handle? | retrying, failed with reason, failed 3×, provider unreachable | V2 |
 | Q5 | What is still undecided, who decides, by when? | order hold (team lead), support channel (ops lead), by 10-09 | first screen |
@@ -121,13 +124,15 @@ caption.
 **T4 — state table (V2).** Content contract: each screen × each state, one line of what the user sees.
 File target: `parts/04-states.md`. Verify: Q4.
 
-**T5 — first screen.** Content contract: classification header, key message, the two open decisions
-with owners and dates (F3), scope note. File target: `parts/00-first-screen.md`. Verify: Q5–Q6; F3
+**T5 — first screen.** Content contract: key message, the two open decisions with owners and dates
+(F3, F4), scope note. (The classification header is in `parts/_header.md`, written by `go`'s skeleton
+step — not by this part.) File target: `parts/00-first-screen.md`. Verify: Q5–Q6; F3
 traced; key message matches the spec word for word in meaning.
 
-**Assembly (single deferred writer — NOT a graph task).** Join `parts/` in number order into
-`payment-failure.md`. This runs as the **orchestrator's** per-wave assembly step, so it is
-deliberately **absent from the Execution Graph below** — shared-write assembly is a prose step, never
+**Assembly (single deferred writer — NOT a graph task).** After every wave, regenerate
+`payment-failure.md` from `parts/_header.md` followed by `parts/` in number order (overwrite, never
+append). This runs as the **orchestrator's** per-wave assembly step, so it is deliberately **absent
+from the Execution Graph below** — shared-write assembly is a prose step, never
 a `depends`-bearing node (see `dependency-calc.md`, "shared-write (prose hint, not graph)").
 
 **Reader's path (for humans).** The designer reads the open decisions first, then the rules, then

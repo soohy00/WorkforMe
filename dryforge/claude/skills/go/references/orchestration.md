@@ -15,9 +15,9 @@ are direct cost.
 Before the first wave, write a compact verification plan in the orchestrator's working notes:
 
 - the verify set and its purpose (fact trace, classification check, reader check, any named sign-off)
-- which reader-check questions each part owns (so an intermediate gate can check only the landed ones)
-- which checks are cheap per-wave gates (fact trace, classification check) and which are reserved for
-  the completion gate (the full reader check by a fresh reader) unless risk demands earlier use
+- which reader-check questions each part owns (the writers' self-check)
+- the per-wave gates (fact trace, classification check) and the completion-gate-only check (the full
+  reader check by a fresh reader, on the whole document, once its first screen exists)
 - what the fact trace covers (every figure, date, proper name, quotation) and how an `unconfirmed`
   fact must appear in the text
 
@@ -233,8 +233,7 @@ bounded — do not loop re-dispatching past the ladder.
 4. **Regen barriers** — run barriers whose `after` is now satisfied. Commit regenerated output if a
    later task depends on it. Recovery: if a barrier exits non-zero, capture command + exit + stderr,
    analyze whether a prior merge broke a precondition; if it would overwrite merged files, escalate.
-5. **Deferred wiring** — if applicable, the single writer appends shared registrations directly
-   (no parallel siblings to collide). Commit on the base.
+5. **Assembly** — regenerate the assembled document (see "Assembly" below). Commit on the base.
 6. **No integration gate.** The self-checks ran on the cumulative base. → next wave.
 
 ### Parallel wave (multiple tasks)
@@ -247,22 +246,31 @@ bounded — do not loop re-dispatching past the ladder.
    reach this path — they were handled on the base; see Wave scheduling.) Merge commit must satisfy hooks.
    Recovery: inspect hook output, verify branch state, retry with discovered convention; else escalate.
 3. **Regen barriers** — same as sequential. Commit if downstream depends on it.
-4. **Deferred wiring** — the single writer appends all registrations, **idempotently**
-   (check-before-append; conflicts → escalate). **Commit on the base** — uncommitted wiring is
-   silently lost to later worktrees and the final merge.
-5. **Integration gate** — run the verify set on the assembled base: the fact trace across all landed
-   parts, the classification check, and the reader check (`reader-check-prompt.md`) on the questions
-   whose parts have landed; **green = every check passed, evidence captured** (trace table, answers,
-   comparison). This catches cross-part interactions. Failure → fix-dispatch or escalate. **Record
+4. **Assembly** — regenerate the assembled document (see "Assembly" below). **Commit on the base** —
+   an uncommitted assembly is silently lost to later worktrees and the final merge.
+5. **Integration gate** — run the fact trace across all landed parts and the classification check on
+   the assembled base; **green = both passed, evidence captured** (trace table, marking check). The
+   reader check is reserved for the completion gate. This catches cross-part interactions. Failure → fix-dispatch or escalate. **Record
    the base tip SHA after the gate passes** (e.g. `GATE_SHA=$(git rev-parse HEAD)`) — the completion
    gate compares against it to avoid redundant re-runs (see SKILL.md, Completion gate). **Run
-   independent checks in parallel** (the reader subagent while the orchestrator runs the fact trace)
-   — capture each result separately so failure attribution is clear.
+   independent checks in parallel** — capture each result separately so failure attribution is
+   clear.
 6. **Clean up or recycle** task worktrees — if a later parallel wave exists, **recycle** pooled
    worktrees (reset to the new base tip — Dispatch constraints, worktree pool) instead of removing;
    batch-remove all worktrees only after the last parallel wave. When removing: only after asserting
    ancestor (`git merge-base --is-ancestor`); safe remove (no `--force`); remove share-symlinks
    first. Delete merged task branches. Failed tasks' worktrees preserved for diagnosis. → next wave.
+
+### Assembly (after every wave, before any gate)
+
+The assembled document is the one shared file parallel writers never touch; the orchestrator is its
+single writer. After each wave's merges and regen barriers, **regenerate it from scratch**: overwrite
+the file (the name the skeleton fixed) with `parts/_header.md` followed by every landed
+`parts/NN-*.md` in number order. **Never append** — appending puts a part written late (the first
+screen) at the bottom and duplicates parts on a re-run. Regeneration is idempotent: running it twice
+yields the same file. Commit on the base. It is not a graph task. (Upstream's "deferred wiring" —
+appending registrations to a shared file — applies only to another shared file the plan names, such
+as a glossary index; conflicts there → escalate.)
 
 ### Advancing waves
 

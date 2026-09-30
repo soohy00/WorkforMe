@@ -134,8 +134,9 @@ regen_barriers:
   wave's execution mode, but that is a consumer-side use; the producer just derives the tier.) Derive
   it per task (see
   `references/dependency-calc.md`): RISKY if the part carries figures, commitments, a request, a
-  decision, classification-sensitive content, or is the first screen; NONE if it is metadata or pure
-  assembly with no new claim; otherwise MECHANICAL. This is a derivation heuristic
+  decision, classification-sensitive content, or is the first screen; NONE if it is metadata with no new
+  claim; otherwise MECHANICAL. (Assembly is never a task — `go` regenerates the assembled document
+  after every wave.) This is a derivation heuristic
   judged per task, not a fixed checklist. If a producer omits it, the task is unclassified: go leans
   toward stronger verification, and the implementer still judges test ceremony at build time — no
   break.

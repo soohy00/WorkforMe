@@ -30,8 +30,8 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
   owned questions and confirm each is **unanswerable** from the empty part (RED); write the part;
   then, for each question, quote the sentence that answers it (GREEN), and build the fact-trace
   table. MECHANICAL → a confirming fact trace and one pass over the owned questions, no RED
-  ceremony. NONE → appropriate evidence (the assembly joins every part in order, the headings
-  render), no question ceremony. If the tier looks wrong for what you find, return
+  ceremony. NONE → appropriate evidence (the metadata matches the spec — e.g. the revision
+  table), no question ceremony. If the tier looks wrong for what you find, return
   `DONE_WITH_CONCERNS` and say so — do not silently upgrade or skip. If the producer omitted the tier,
   judge risk yourself. The floor is *captured-evidence verification*, not ceremony — **but a figure
   left untraced or an owned question left unanswerable is still needs-fix**. (Your own answers are
@@ -56,7 +56,7 @@ answer: <owned reader-check questions>.
 File yours to write: <parts/NN-name.md>.  Do NOT touch: <assembled document, shared glossary>.
 This part is RISK=<tier>: RISKY → question-first (confirm each owned question is unanswerable from the
 empty part → write → quote the answering sentence per question) + fact trace; MECHANICAL →
-confirming fact trace + one pass over the owned questions; NONE → assembly evidence. Show an
+confirming fact trace + one pass over the owned questions; NONE → metadata evidence. Show an
 `unconfirmed` fact as unconfirmed in the text. If the tier looks wrong, return DONE_WITH_CONCERNS.
 When done: commit, then return ONLY the structured summary. Do not inline the text.
 ```

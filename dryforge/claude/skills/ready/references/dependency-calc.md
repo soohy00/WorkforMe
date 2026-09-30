@@ -59,8 +59,8 @@ Derivation heuristic (a **floor, not a checklist** — judged per task):
 
 - **RISKY** if the part carries figures, commitments, a request or decision, classification-sensitive
   content, rules and edge cases a builder will follow, or is the first screen.
-- **NONE** if the part is metadata or pure assembly with no new claim (a revision table, joining
-  finished parts).
+- **NONE** if the part is metadata with no new claim (a revision table, a distribution list already
+  fixed by the spec). Assembly itself is never a task — `go` does it after every wave.
 - **MECHANICAL** otherwise (explanation or background that restates settled, sourced content).
 
 This sizes the writer's per-part verification ceremony — it never changes whether a part is

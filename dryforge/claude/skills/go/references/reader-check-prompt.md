@@ -3,7 +3,8 @@
 A document passes when **a reader who never saw the dialogue or the 3-doc** reaches the answers the
 spec expects. The writer cannot run this check on their own work: the writer fills every gap from
 memory (A=A). So the reader check is always a **fresh subagent**, dispatched by the orchestrator at
-the integration gate (affected questions) and at the completion gate (all questions).
+the completion gate on the whole assembled document (all questions), and again after a fix that
+touches the first screen or the key message.
 
 > You are in a fresh session with no live user conversation — do **not** ask the user directly.
 > Return your structured result; the orchestrator relays anything that needs the user.
@@ -11,7 +12,8 @@ the integration gate (affected questions) and at the completion gate (all questi
 ## What the reader is given — and what it is not
 
 - **Given:** the assembled document (path), the reader's role from the spec and the harness
-  (`audiences.md` entry: what they know, what they worry about, what they decide), and the
+  (`audiences.md` entry: what they know, what they worry about, what they decide; first cycle — the
+  harness does not exist yet, so from the spec's reader model only), and the
   **reader-check questions — the questions only**.
 - **Not given:** the expected answers, the 3-doc, the dialogue, the writer's summary. An expected
   answer in the prompt turns a reading test into a matching exercise; the reader then finds what it
