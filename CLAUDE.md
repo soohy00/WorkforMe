@@ -18,6 +18,8 @@
 문서(HTML·PDF)는 `brand/document.css`를 쓴다. **문서 종류별 섹션 순서와 부품은 `brand/layouts/README.md`를 따른다**
 (상사·대표 보고, 제안서, 협업 정렬 문서, 투자사 보고, 회의 자료, 운영 문서 — 견본은 `brand/samples/`).
 PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html> <출력.pdf> [미리보기.png]`
+HTML 한 파일 만들기: `python3 brand/tools/bundle.py <입력.html> <출력.html>` (스타일과 쓴 글자만 담은 글꼴을 파일 안에 넣음).
+문서를 줄 때는 PDF와 HTML 한 파일을 함께 만든다.
 
 - **종이**: A4, 여백 18mm(아래 20mm), 쪽 번호는 오른쪽 아래. 등급은 쪽마다 오른쪽 위(문서마다 `@page`에 적음).
 - **글꼴**: Paperlogy 하나로 한글·영문·숫자를 쓴다(코드만 Geist Mono). 본문은 화면 15px, 인쇄 10.5pt,

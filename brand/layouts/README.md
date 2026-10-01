@@ -39,8 +39,13 @@
 - **절차(`ol.steps`)**: 단계 제목에 "무엇 — 누가, 언제까지"를 넣어요. 끝난 단계는 `li.done`.
 - **완료 기준(`ul.checklist`)**: 한 줄에 하나, "~하면 ~됨"처럼 맞았는지 판단할 수 있게 써요. 끝난 것은 `li.done`.
 
-## PDF 만들기
+## PDF와 HTML 한 파일 만들기
 
 ```bash
 NODE_PATH=$(npm root -g) node brand/tools/render.js <문서.html> <문서.pdf> [미리보기.png]
+python3 brand/tools/bundle.py <문서.html> <문서-한파일.html>
 ```
+
+- `render.js`: PDF를 만들어요. 글꼴이 PDF 안에 들어가요. Playwright(Chromium)가 필요해요.
+- `bundle.py`: 다른 파일 없이 열리는 HTML 한 파일을 만들어요. CSS를 안에 넣고, 글꼴은 문서에 쓴 글자만 잘라 넣어요
+  (2쪽 보고서가 약 400KB). fontTools가 필요해요(`pip install fonttools`).
