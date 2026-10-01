@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.7-docs.8 (2026-10-01)
+
+- Removed the `message` skill: the user's "푸른 스타일" was meant as a source for report writing, not
+  as a message converter
+- `writing-style.md` adapts it for reports: a habit → report-form table (배경, 목적, 결정 사항,
+  향후 계획, 잠정 표시), the document register (개조식 facts, 합니다체 requests), what never appears in
+  a document ("!", "~", emoticons, chat openers, thanks or apologies), and a notes → report example
+
 ## v1.3.7-docs.7 (2026-10-01)
 
 - `message`: a draft with no recipient tag is no longer read as [동료]; the skill asks first, with
