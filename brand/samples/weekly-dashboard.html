@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[주간 운영 지표] 9월 4주 (9/21–9/27)</title>
+<link rel="stylesheet" href="../document.css">
+<link rel="stylesheet" href="../viz/viz.css">
+<style>
+  @page { @top-right { content: "사내한정"; font-family: "Paperlogy", sans-serif; font-size: 8pt; color: #007a5c; } }
+</style>
+</head>
+<body>
+<!-- 견본: 시험용 가상 회사(다온랩)의 문서예요. 숫자와 사람은 모두 가상이에요. -->
+<article class="doc">
+
+  <div class="marking">
+    <span class="badge internal">사내한정</span>
+    <span>받는 사람: 박서연 프로덕트팀장</span>
+  </div>
+
+  <h1>[주간 운영 지표] 9월 4주</h1>
+  <p class="meta">작성: 기획 인턴 · 2026-09-28(월) · 기준 기간: 9/21(월)–9/27(일) · 고객사 6곳</p>
+
+  <div class="lead">
+    <span class="lead-label">보고 요지</span>
+    <ul>
+      <li>예약은 2,184건으로 지난주보다 6% 늘었으나, 노쇼 비율은 <strong>11.2%로 목표(8%)보다 3.2%p 높음</strong>.</li>
+      <li>노쇼의 62%가 고객사 B·C 2곳에서 발생해, <strong>두 곳에 체크인 알림 시범 적용</strong>을 건의드립니다.</li>
+      <li><strong>10/2(금)까지</strong> 검토 후 결정 부탁드립니다.</li>
+    </ul>
+  </div>
+
+  <h2>1. 핵심 지표</h2>
+  <div class="stats cols-4">
+    <div class="stat">
+      <span class="label">예약 수</span>
+      <span class="value">2,184<span class="unit">건</span></span>
+      <span class="delta good">▲ 6% <span class="vs">지난주 2,061건</span></span>
+      <svg class="spark" data-values="1810,1876,1902,1950,1988,2032,2061,2184"></svg>
+      <span class="def">기간 안에 시작한 예약, 취소 제외</span>
+    </div>
+    <div class="stat">
+      <span class="label">노쇼 비율</span>
+      <span class="value">11.2<span class="unit">%</span></span>
+      <span class="delta bad">▲ 0.8%p <span class="vs">지난주 10.4% · 목표 8%</span></span>
+      <svg class="spark" data-values="8.9,9.4,9.1,9.8,10.1,10.6,10.4,11.2"></svg>
+      <span class="def">체크인 없이 끝난 예약 ÷ 예약 수</span>
+    </div>
+    <div class="stat">
+      <span class="label">회의실 문의</span>
+      <span class="value">31<span class="unit">건</span></span>
+      <span class="delta good">▼ 4건 <span class="vs">지난주 35건</span></span>
+      <svg class="spark" data-values="41,38,36,39,35,33,35,31"></svg>
+      <span class="def">고객센터 접수 기준, 회의실 관련만</span>
+    </div>
+    <div class="stat">
+      <span class="label">회의실 가동률</span>
+      <span class="value">64<span class="unit">%</span></span>
+      <span class="delta good">▲ 2%p <span class="vs">지난주 62%</span></span>
+      <svg class="spark" data-values="57,58,59,60,61,61,62,64"></svg>
+      <span class="def">실제 사용 시간 ÷ 운영 시간(평일 9–18시)</span>
+    </div>
+  </div>
+  <p class="fineprint">작은 선 그래프는 최근 8주(8/3 주–9/21 주) 추이이고, 초록 점이 이번 주예요. 숫자는 모두 견본용 가상 수치예요.</p>
+
+  <h2>2. 노쇼 비율 추이</h2>
+  <figure class="viz" data-chart="line">
+    <figcaption><span class="viz-title">주별 노쇼 비율</span><span class="viz-sub">최근 8주 · 단위 % · 주 시작일 기준</span></figcaption>
+    <script type="application/json">
+      {"x": ["8/3", "8/10", "8/17", "8/24", "8/31", "9/7", "9/14", "9/21"],
+       "xLabel": "주 시작일",
+       "series": [{"name": "노쇼 비율", "values": [8.9, 9.4, 9.1, 9.8, 10.1, 10.6, 10.4, 11.2], "slot": 1}],
+       "unit": "%", "target": {"value": 8, "label": "목표 8%"}, "height": 170,
+       "note": "정의: 체크인 없이 끝난 예약 ÷ 예약 수(취소 제외), 고객사 6곳 합계. 출처: 예약 로그(가상)."}
+    </script>
+  </figure>
+
+  <div class="viz-grid">
+    <figure class="viz" data-chart="bar">
+      <figcaption><span class="viz-title">요일별 예약 수</span><span class="viz-sub">9/21(월)–9/27(일) · 단위 건</span></figcaption>
+      <script type="application/json">
+        {"x": ["월", "화", "수", "목", "금", "토", "일"], "xLabel": "요일",
+         "series": [{"name": "예약 수", "values": [412, 438, 451, 425, 368, 52, 38], "slot": 1}],
+         "unit": "건", "height": 170}
+      </script>
+    </figure>
+    <figure class="viz" data-chart="hbar">
+      <figcaption><span class="viz-title">고객사별 노쇼 건수</span><span class="viz-sub">이번 주 · 단위 건 · B·C가 62%</span></figcaption>
+      <script type="application/json">
+        {"x": ["고객사 B", "고객사 C", "고객사 A", "고객사 D", "고객사 E", "고객사 F"], "xLabel": "고객사",
+         "series": [{"name": "노쇼 건수", "values": [88, 64, 31, 27, 19, 16], "slot": 1}],
+         "unit": "건", "emphasis": ["고객사 B", "고객사 C"]}
+      </script>
+    </figure>
+  </div>
+
+  <h2>3. 문의 유형</h2>
+  <figure class="viz" data-chart="stacked">
+    <figcaption><span class="viz-title">회의실 문의 유형 비율</span><span class="viz-sub">최근 4주 · 주별 100%</span></figcaption>
+    <script type="application/json">
+      {"x": ["8/31 주 (35건)", "9/7 주 (33건)", "9/14 주 (35건)", "9/21 주 (31건)"], "xLabel": "주",
+       "series": [
+         {"name": "빈 방인데 예약됨", "values": [14, 13, 15, 15], "slot": 1},
+         {"name": "알림 미수신", "values": [9, 8, 9, 6], "slot": 2},
+         {"name": "기타", "values": [12, 12, 11, 10], "slot": "muted"}],
+       "unit": "건", "percent": true,
+       "note": "\"빈 방인데 예약됨\"은 노쇼로 잠긴 회의실에 대한 문의예요. 이번 주 31건 중 15건(48%)."}
+    </script>
+  </figure>
+
+  <h2>4. 건의</h2>
+  <div class="proposal">
+    <span class="decision">고객사 B·C 2곳에 체크인 알림(예약 시작 10분 후)을 10/5(월)부터 2주간 시범 적용하고자 합니다.</span>
+    <ol>
+      <li>노쇼 245건 중 152건(62%)이 두 곳에서 발생해, 두 곳만 적용해도 효과를 확인할 수 있습니다.</li>
+      <li>알림은 기존 푸시 기능을 써서 개발이 거의 필요 없습니다(최민재 리드 확인).</li>
+    </ol>
+    <p class="fineprint" style="margin-top:8px">알림이 많다는 불만이 생기면 고객사 관리자가 끌 수 있게 하고, 불만 건수를 매주 보고드리겠습니다.</p>
+  </div>
+
+  <h2>5. 향후 계획</h2>
+  <table>
+    <colgroup><col style="width:17%"><col><col style="width:22%"></colgroup>
+    <thead><tr><th>일정</th><th>할 일</th><th>담당</th></tr></thead>
+    <tbody>
+      <tr><td>10/2(금)</td><td>시범 적용 여부 결정</td><td>박서연 팀장</td></tr>
+      <tr><td>10/5(월)</td><td>승인 시: 고객사 B·C 알림 적용, 고객사 관리자 안내</td><td>최민재 리드 · 기획 인턴</td></tr>
+      <tr><td>10/19(월)</td><td>2주 결과 보고(노쇼 비율, 불만 건수)</td><td>기획 인턴</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6. 확인 요청 사항</h2>
+  <ol>
+    <li>고객사 B·C 관리자에게 시범 적용을 먼저 알릴지 확인 부탁드립니다. 알린다면 안내 문안은 제가 먼저 준비하겠습니다.</li>
+  </ol>
+
+  <h2>관련 문서</h2>
+  <ul class="related">
+    <li>노쇼 회의실 자동 반환 제안서 — 같은 문제의 다른 해결 방법<span class="path">노션 &gt; 프로덕트팀 &gt; 노쇼 회의실 자동 반환</span></li>
+    <li>9월 3주 주간 운영 지표 — 지난주 수치<span class="path">[경로: ?]</span></li>
+  </ul>
+
+  <p class="doc-foot">이 문서는 시험용 가상 회사(다온랩)의 견본이에요. 숫자와 사람은 모두 가상이에요.</p>
+</article>
+<script src="../viz/charts.js"></script>
+</body>
+</html>

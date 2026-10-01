@@ -1,0 +1,99 @@
+/*
+ * WorkforMe charts — use with ../document.css and charts.js.
+ * Palette validated with the dataviz six checks on the document surface (#ffffff, light):
+ *   adjacent CVD ΔE 10.7 (target 8), normal-vision ΔE 28.2 (floor 15); slots 1–3 also pass all-pairs.
+ *   Slots 1, 4, 6 sit below 3:1 on white → every chart keeps direct labels and a table view.
+ * Slot 1 is the brand accent. A company rebrand changes --viz-1 only, then re-runs the validator.
+ * Documents are print-first and light-only, like document.css.
+ */
+:root {
+  --viz-1: var(--accent, #00b48a);  /* brand mint */
+  --viz-2: #eb6834;  /* orange  */
+  --viz-3: #2a78d6;  /* blue    */
+  --viz-4: #eda100;  /* yellow  */
+  --viz-5: #008300;  /* green   */
+  --viz-6: #e87ba4;  /* magenta */
+  --viz-7: #4a3aa7;  /* violet  */
+  --viz-8: #e34948;  /* red     */
+  --viz-muted: #b4b4b4;          /* de-emphasis series and "기타" */
+  --viz-neg: #e34948;            /* diverging: below the baseline */
+  --viz-pos: #2a78d6;            /* diverging: above the baseline */
+  --viz-grid: var(--hairline, #e5e5e5);
+  --viz-axis: var(--hairline-strong, #d4d4d4);
+  --viz-surface: var(--canvas, #ffffff);
+}
+
+/* ── Figure ─────────────────────────────────────────────────────────────── */
+figure.viz {
+  position: relative;
+  margin: var(--s4) 0 var(--s5);
+  padding: var(--s4) var(--s4) var(--s3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--viz-surface);
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+figure.viz > script { display: none; }
+figure.viz figcaption { margin-bottom: var(--s3); }
+.viz-title { display: block; font-weight: 600; color: var(--ink); }
+.viz-sub { display: block; margin-top: 2px; font-size: 0.8em; color: var(--steel); }
+.viz-note { margin: var(--s2) 0 0; font-size: 0.75em; color: var(--steel); line-height: 1.5; }
+figure.viz svg.plot { display: block; width: 100%; height: auto; overflow: visible; }
+figure.viz svg text { font-family: inherit; }
+
+/* Legend: mirrors the mark (line key for lines, square for bars) */
+.viz-legend { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin: 0 0 var(--s2); padding: 0; list-style: none; font-size: 0.8em; color: var(--slate); }
+.viz-legend li { display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 0; }
+.viz-legend .key { display: inline-block; flex: none; }
+.viz-legend .key.line { width: 14px; height: 2px; border-radius: 1px; }
+.viz-legend .key.box { width: 10px; height: 10px; border-radius: 2px; }
+
+/* Tooltip: value leads, series name follows; line keys, not boxes */
+.viz-tip {
+  position: absolute; z-index: 2; pointer-events: none;
+  min-width: 8em; padding: var(--s2) var(--s3);
+  background: var(--canvas); border: 1px solid var(--hairline-strong); border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 0.78em; line-height: 1.5; color: var(--slate);
+  opacity: 0; transition: opacity 120ms ease;
+}
+.viz-tip.on { opacity: 1; }
+.viz-tip .t-head { display: block; margin-bottom: 2px; color: var(--steel); }
+.viz-tip .t-row { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.viz-tip .t-row b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.viz-tip .t-key { width: 10px; height: 2px; border-radius: 1px; flex: none; }
+
+/* Marks respond to hover and keyboard focus */
+figure.viz .hit { cursor: default; outline: none; }
+figure.viz .hit:hover .mark, figure.viz .hit:focus .mark { opacity: 0.8; }
+figure.viz svg.plot:focus { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+
+/* Table view: the accessible twin of every chart */
+details.viz-table { margin-top: var(--s2); font-size: 0.85em; }
+details.viz-table summary { cursor: pointer; color: var(--steel); font-size: 0.9em; }
+details.viz-table table { margin: var(--s2) 0 0; }
+details.viz-table td.num, details.viz-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Keep a heading, its one-line intro, and the chart on one page */
+.keep { page-break-inside: avoid; break-inside: avoid; }
+
+/* Two charts side by side */
+.viz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
+.viz-grid > figure.viz { margin: 0; }
+
+/* ── Stat tiles (extends .stats/.stat in document.css) ─────────────────── */
+.stat svg.spark { display: block; width: 100%; height: 28px; margin-top: var(--s2); overflow: visible; }
+.stat .value { font-variant-numeric: proportional-nums; }
+.stats.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.stats.cols-3 { grid-template-columns: repeat(3, 1fr); }
+/* Delta colour follows whether the change is good, not its direction */
+.stat .delta.good { color: var(--accent-text); }
+.stat .delta.bad  { color: var(--error-text); }
+
+@media print {
+  details.viz-table:not(.print) { display: none; }
+  details.viz-table.print summary { display: none; }
+  .viz-tip { display: none; }
+}
+@media (max-width: 640px) { .viz-grid, .stats.cols-4, .stats.cols-3 { grid-template-columns: 1fr 1fr; } }

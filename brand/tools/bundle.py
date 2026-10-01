@@ -4,8 +4,8 @@
 Usage: python3 brand/tools/bundle.py <input.html> <output.html>
 Needs fontTools (`pip install fonttools`).
 
-Every local <link rel="stylesheet"> is inlined. Every local font in that CSS is cut down to the
-characters the document uses and embedded as a data URI, so the file stays small (about 400 KB for
+Every local <link rel="stylesheet"> and <script src> (charts.js) is inlined. Every local font in that
+CSS is cut down to the characters the document and its scripts use and embedded as a data URI, so the file stays small (about 400 KB for
 a two-page report) and opens anywhere with the same look as the PDF.
 """
 import base64
@@ -22,6 +22,7 @@ from fontTools.ttLib import TTFont
 
 LINK = re.compile(r'<link\b[^>]*\brel="stylesheet"[^>]*>', re.I)
 HREF = re.compile(r'\bhref="([^"]+)"', re.I)
+SCRIPT = re.compile(r'<script\b[^>]*\bsrc="([^"]+)"[^>]*>\s*</script>', re.I)
 FONT_URL = re.compile(r'url\("?([^")]+\.(?:ttf|otf|woff2?))"?\)', re.I)
 
 
@@ -65,6 +66,10 @@ def main():
             sys.exit(f"stylesheet not found: {path}")
         sheets.append((tag, path, path.read_text(encoding="utf-8")))
     text = html.unescape(src) + "".join(css for _, _, css in sheets) + string.printable
+    for m in SCRIPT.finditer(src):  # labels a script draws, such as "표로 보기"
+        path = local_path(m.group(1), src_path.parent)
+        if path is not None and path.is_file():
+            text += path.read_text(encoding="utf-8")
 
     out = src
     for tag, path, css in sheets:
@@ -78,8 +83,20 @@ def main():
 
         out = out.replace(tag, "<style>\n" + FONT_URL.sub(embed, css) + "\n</style>", 1)
 
+    scripts = 0
+    for m in list(SCRIPT.finditer(out)):
+        path = local_path(m.group(1), src_path.parent)
+        if path is None:
+            continue
+        if not path.is_file():
+            sys.exit(f"script not found: {path}")
+        code = path.read_text(encoding="utf-8").replace("</script", "<\\/script")
+        out = out.replace(m.group(0), "<script>\n" + code + "\n</script>", 1)
+        scripts += 1
+
     Path(sys.argv[2]).write_text(out, encoding="utf-8")
-    print(f"wrote {sys.argv[2]} ({len(out.encode('utf-8')) // 1024} KB, {len(sheets)} stylesheet(s) inlined)")
+    print(f"wrote {sys.argv[2]} ({len(out.encode('utf-8')) // 1024} KB, "
+          f"{len(sheets)} stylesheet(s) and {scripts} script(s) inlined)")
 
 
 if __name__ == "__main__":

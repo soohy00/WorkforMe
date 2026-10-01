@@ -1,7 +1,7 @@
 # 문서 종류별 레이아웃
 
 문서 종류마다 **순서(섹션)**와 **쓰는 부품**을 정해 둔 표예요. 종류는 dryforge-docs의
-`doc-types.md`와 같아요. 시각화 문서는 디자인 시스템이 정해진 뒤에 따로 만들어요.
+`doc-types.md`와 같아요. 시각화 문서(차트 중심)는 `brand/viz/README.md`를 따라요.
 
 모든 문서의 공통 틀:
 
@@ -21,6 +21,7 @@
 | 협업 정렬 문서 (디자이너·개발자) | `samples/alignment.html` | 한 줄 요약 → 왜 하나요 → 정해진 것·열린 것·정할 것(담당·기한) → 범위(지금/지금 아님) → 화면 상태 → 완료 기준 → 질문 창구 | `.pill.settled/open/decide`, `.cols`, `ul.checklist`, `.callout.info` |
 | 투자사 보고 | `samples/investor-update.html` | **표지** → 요약 → 핵심 숫자(지난 기간·목표 대비, 정의) → 지난번 약속과 결과 → 잘 안 된 것과 대응 → 다음 목표 → 부탁 | `.cover`, `.stats` + `.stat`(`.delta`, `.bar`, `.def`), `.pill.settled/missed/open`, `.callout.warn` |
 | 회의 자료 (사전 자료) | `samples/meeting-preread.html` | 일시·진행 → 이 회의가 끝나면(결정/확인) → 이미 정해진 것 → 안건(시간, 끝나는 모양) → 결정할 안건 비교 → 회의 뒤 할 일(빈 표) | `dl.kv`, `table.agenda`(`.ends`), `table.compare` |
+| 시각화 문서 (주간 지표, 대시보드) | `samples/weekly-dashboard.html` | 보고 요지 → 핵심 지표(숫자 카드) → 추이·분해(차트) → 건의 → 향후 계획 → 확인 요청 사항 → 관련 문서 | `.stats.cols-4` + `svg.spark`, `figure.viz`(line, bar, hbar, stacked, diverge), `.viz-grid`, `.proposal` |
 | 운영 문서 (정책·절차·회고) | `samples/operations.html` | 시행일·담당·범위 → 한 줄 요약 → 절차 → 누가 무엇을 → 예외와 승인자 → 개정 이력 | `dl.kv`, `ol.steps`, `.callout.danger`(예외), 개정 이력 표 |
 
 ## 부품을 쓰는 규칙
