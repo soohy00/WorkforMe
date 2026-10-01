@@ -48,6 +48,18 @@ normal case:
 | Investors, advisors, partners (outside, under a confidentiality agreement) | Confidential |
 | Customers, the public | Public |
 
+**When the reading is unclear, ask — with options and a recommendation.** The level is unclear when
+the content sits between two levels, when the company's scheme does not say, or when someone other
+than the user (a manager, a security owner) decides the level. Then never settle it silently, and
+never just take the higher level without saying so: present 2–3 options, each with what it means for
+the content and the recipients, and recommend one with its reason. One option may be a **provisional
+level** — the level the document carries until the person who decides confirms it:
+
+- marked as the level followed by "(잠정)" in the user's language (e.g. `사내한정(잠정)`);
+- treated as that level for every rule below;
+- the document asks the deciding person to confirm it (one line among its questions), and the user is
+  told who must confirm before the document goes further than that person.
+
 When a named recipient **may not receive** the level the content requires (an outside recipient and
 Confidential revenue figures), **never lower the level to fit the recipient**. Either the content is
 removed or generalized until a level the recipient may receive fits it ("revenue grew" instead of the
