@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.3.7-docs.9 (2026-10-01)
+
+Fixes from an end-to-end ready → go run with the writing guide:
+- `writing-style.md`: one verb for the ask (승인 when the reader decides, never mixed with 검토); a next
+  step for each outcome (approved, other option, held, no reply); the author's commitments in 합니다체;
+  table cells without 님; dated table only for 3+ dated events; a new section on which rule wins
+  (company rules → the user's recorded choice → this guide; an earlier document is not a rule); notes that
+  hand the decision back are explained once, then a recorded user choice is followed
+- Reviewer and writer prompts carry the same rules; a choice the spec records as the user's is not a finding
+- `ready` checks the `main` branch name in ORIENT instead of interrupting `go`
+- `go` step 9: an independent harness check before the final review; `harness-format.md`: never call
+  the author by a word the project uses as a domain term (e.g. 사용자)
+
 ## v1.3.7-docs.8 (2026-10-01)
 
 - Removed the `message` skill: the user's "푸른 스타일" was meant as a source for report writing, not

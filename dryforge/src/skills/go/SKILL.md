@@ -149,7 +149,7 @@ counts as **evidence** changes:
   initial commit** (an empty repo has no HEAD, so no worktree/branch can be created). If git is not
   installed, stop and say so.
 - **Base determination.** The main branch is always named **`main`**. If the repository has no
-  `main` (an older git created `master`): with a single branch, offer to rename it
+  `main` (an older git created `master`, and the user declined the rename in `ready`): with a single branch, offer to rename it
   (`git branch -m <name> main`) and wait for the user's yes — if the user says no, stop and say that
   `go` needs a `main` branch; with several branches, stop and ask which one to rename to `main`.
   Never pick another branch as main. Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
@@ -342,10 +342,19 @@ count — no writing judgment is left for an independent writer.
    **Write every file silently** — do not announce each file or section as you go ("Now the docs...",
    "이제 모듈 노트를...", "Now the module roadmap note in `X`"); the UI already shows each write. This
    multi-file writing sequence is the last place narration leaks — emit nothing between writes.
+   **Harness check before the final review.** The harness is the one thing in `go` written by the
+   orchestrator itself, so it gets its own independent check before step 10: dispatch one **fresh**
+   subagent with `references/harness-review.md` (all four dimensions — dimension 4 against the
+   dialogue text, verbatim, and the finished document) over this cycle's harness diff. Fix its blocking
+   findings, triage its advisories once, then go to step 10 — no re-run unless a fix was blocking, and
+   then only dimensions 3–4 on the touched files. A reason in a decision record that the user did not
+   give is the typical finding: write "이유는 밝히지 않음" instead.
 
 10. **Final review** — one subagent checks the **full diff on the base** for spec conformance + writing
     quality, **and the harness** (when created/updated this cycle) against `references/harness-review.md`
-    (`reviewer-prompt.md`, four lenses). **Clear = zero blocking findings, recorded.**
+    (`reviewer-prompt.md`, four lenses). The harness already passed its own check in step 9, so a
+    blocking harness finding here is an execution failure to name in the user gate. **Clear = zero
+    blocking findings, recorded.**
 
 11. **Fix if needed** — lightweight fix path for trivial advisories (MUST triage); fix-dispatch
     substantive findings. Fixes may touch **the document or the harness**. Re-run per `harness-lifecycle.md`:
