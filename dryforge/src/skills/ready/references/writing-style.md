@@ -19,9 +19,17 @@ ask for approval**. Handing the decision back as a statement about the reader re
 responsibility — or as a challenge.
 
 - A decision request carries the author's **건의** (proposal) with its reason, and asks for approval:
-  "A안으로 진행하고자 하오니 검토 부탁드립니다." Options are still compared fairly *before* it.
-- The author also says **what they will do next** after each outcome:
-  "승인해 주시면 10/8(목)까지 QA 일정을 확정해 다시 보고드리겠습니다."
+  "A안으로 진행하고자 하오니 승인 부탁드립니다." Options are still compared fairly *before* it.
+- **One verb for the ask.** When the reader decides, the ask is **승인** everywhere — 보고 요지, 건의,
+  향후 계획 ("승인해 주시면 …"). "검토 부탁드립니다" asks only for an opinion or a read-through, never
+  for a decision. Do not write "검토 부탁드립니다" in one place and "승인해 주시면" in another for the
+  same ask: the reader cannot tell what they must do by the deadline.
+- The author also says **what they will do next after each outcome**, one line each in 향후 계획:
+  - approved: "승인해 주시면 10/8(목)까지 QA 일정을 확정해 다시 보고드리겠습니다."
+  - a different option chosen: "B안으로 정하시면 그 안으로 10/8(목)까지 다시 보고드리겠습니다."
+  - not approved or held: what the author does then, or "보류하시면 [언제] 다시 여쭙겠습니다."
+  - no reply by the deadline: "10/7(수)까지 답이 없으시면 [언제] 다시 여쭙겠습니다."
+  A report that asks for no decision states only the next step.
 - An open question goes to the reader as a **확인 요청**, politely, with the author's view only when
   that view is on the record: "안내 변경을 대표님께서 승인하시는 사항인지 확인 부탁드립니다."
 - **Banned** (blocking in review): statements that assign the decision or the work to the reader or to
@@ -29,6 +37,10 @@ responsibility — or as a challenge.
   "제 담당이 아님"; commands to the reader ("~할 것", "~하시오"); a decision request that ends with
   no author position. (Meeting material may present options without a proposal only when the user
   said the meeting decides it together; it then says so: "회의에서 함께 정하고자 합니다.")
+- **When the user's notes hand the decision back** ("결정은 팀장님이 하실 것"): do not write it. Explain
+  once why a 건의 is expected and ask which option to propose (recommendation included). If the user
+  still wants no proposal after that, follow the user and record it as the user's choice in the spec
+  (see section 7) — the reviewer does not block a recorded choice.
 
 ## 2. Upward report structure (두괄식)
 
@@ -39,10 +51,11 @@ report frame unless the company has its own (the harness `standards.md` wins):
 2. **보고 요지** — 2–3 lines: the situation in one line, the author's 건의 in one line, the request
    and its deadline in one line. A reader who stops here can act.
 3. **배경** — why this came up, tied to where it was raised (meeting, document, request).
-4. **현황** — what happened, in date order; a dated table (일자 · 내용 · 출처) when there are 3+ dates.
+4. **현황** — what happened, in date order; a dated table (일자 · 내용 · 출처) when there are 3+ dated
+   events (things that happened on a day — not measurement periods such as "8/3 주 8.9%").
 5. **검토** — the options side by side, fairly (equal columns, no option highlighted).
 6. **건의** — the author's option, its reason in 1–2 lines, and the risk the author will handle.
-7. **향후 계획** — what happens after approval, with dates and owners.
+7. **향후 계획** — what the author does after each outcome (section 1), with dates and owners.
 8. **확인 요청 사항** — the open questions, numbered, each one line.
 9. **관련 문서** — the meeting notes, earlier documents, and files this connects to, by location
    ("드라이브 > 프로덕트 > 주간회의 > 2026-09-26 회의록"); an unknown location is `[경로: ?]`.
@@ -65,9 +78,12 @@ report frame unless the company has its own (the harness `standards.md` wins):
 Documents are written for the reader above the author, whoever receives them first — documents get
 forwarded.
 
-- **Facts, status, plans** in 개조식 noun endings: "~지연", "~예정", "~필요", "~완료", "~함".
-- **Requests and the 건의** in 합니다체: "~부탁드립니다", "~하고자 합니다", "검토 부탁드립니다".
-- People by title + 님 in sentences ("박서연 팀장님"); by name and title in owner columns.
+- **Facts and status** in 개조식 noun endings: "~지연", "~예정", "~필요", "~완료", "~함".
+- **Requests, the 건의, and the author's own commitments** in 합니다체: "~승인 부탁드립니다",
+  "~하고자 합니다", "~보고드리겠습니다", "~확인하겠습니다". A line in 향후 계획 that the author promises
+  is a commitment (합니다체); a schedule table row is a noun phrase ("QA 일정 확정").
+- People by title + 님 in sentences ("박서연 팀장님"). In table cells and owner columns: name and title,
+  no 님 ("최민재 리드").
 - **Never in a document**: "!", "~" as a tone mark, emoticons (":)", "=)"), "~용/~당", chat openers
   ("~인데요,", "~해주셨을텐데요."), thanks or apologies as sentences, "~하심" lists about the reader.
 
@@ -112,3 +128,18 @@ Example (rough notes → report lines):
 - Invent a fact, number, date, name, reason, or location — leave `[ ? ]` and list what must be filled.
 - Copy the notes' typos or slips (",,", repeated words).
 - Pad: a report line says one thing; drop words that carry no fact, request, or reason.
+
+## 7. When rules disagree — which wins
+
+1. **The company's written rules** (the project `CLAUDE.md` and `docs/`: `standards.md`, `audiences.md`,
+   `security.md`) win over this guide for register, report frame, terms, length, and classification.
+   Ownership (section 1) is content, not form: keep the 건의 and the one-verb ask in the company's
+   register (e.g. "승인 부탁드림" where the company writes everything in 개조식).
+2. **The user's explicit choice for this document** wins over this guide's defaults — the dated table,
+   section order, length, register split, a proposal (section 1). Record it in the spec's thinking-base
+   with the user's words; writers and reviewers follow the record and do not block it.
+3. **An earlier document in the project is not a rule.** If it differs from this guide (for example it
+   ends "결정은 팀장님이 하심"), write the new document by this guide and tell the user once when the
+   earlier one goes to the same reader. Do not copy its form as a precedent.
+4. **Nothing above allows inventing** a fact, reason, date, or name (section 6).
+

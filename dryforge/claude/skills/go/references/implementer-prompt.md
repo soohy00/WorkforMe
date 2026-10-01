@@ -27,8 +27,10 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
   classification level and what it forbids, the project rules that apply to this part (quoted), and
   what the document must never say or promise.
 - **Writing rules** — the parts of `writing-style.md` this part needs, quoted inline: the register for
-  its reader, the ownership rule and its banned phrases (no decision handed back to the reader), and
-  the readability rules (one idea per line, cause → effect, where each fact connects).
+  its reader, the ownership rule and its banned phrases (no decision handed back to the reader; one verb
+  for the ask — 승인 when the reader decides; a next step for each outcome), the readability rules (one
+  idea per line, cause → effect, where each fact connects), and any user choice the spec records over
+  these defaults (section 7).
 - **Verify-first, right-sized** — drive the work against the part's **real verification gate**: the
   reader-check questions it owns and the fact trace of every figure, date, name, and quotation it
   uses. **Consume the producer-set tier — don't re-derive "is this risky?" from scratch.** This task

@@ -413,6 +413,10 @@ as adding new content.
   *what should be*, the user decides) and write the single reconciled fact. If it can't be resolved
   from a source, record it in `findings.md` (with the conflict and why) or escalate — never leave
   two statements that can't both be true.
+- **Call people what the project calls them.** The person you work for is the author of the documents
+  (in Korean, "작성자", or the role the harness uses, e.g. "기획 인턴"). Never name them with a word the
+  project uses as a domain term — if "사용자" means the service's users, the author is never "사용자"
+  in the harness, even though the skill calls them "the user".
 - **Filling files is not the goal.** The goal is the next agent working this project without going
   off the rails. A sentence that doesn't serve that goal is not written, however accurate.
 
