@@ -59,10 +59,14 @@ HTML·PDF 템플릿과 브랜드는 나중에 더해요.
 
 ```bash
 mkdir projects/<회사-프로젝트> && cd projects/<회사-프로젝트>
-git init && git commit --allow-empty -m "start"
+git init && echo "material/raw/" > .gitignore
+git add .gitignore && git commit -m "start"
 ```
 
 그 폴더에서 Claude Code를 열고 `/migration`(자료가 있을 때) 또는 `/ready <필요한 문서>`로 시작해요.
+
+**회사 업무용 기기에서 쓸 때**(설치, 정보 주기, 소각)는 [COMPANY-DEVICE.md](COMPANY-DEVICE.md)를 보세요.
+회사를 떠날 때는 `bash scripts/dispose-project.sh <회사-프로젝트>`로 그 프로젝트를 기기에서 지워요.
 
 ## 저장소 구조
 
@@ -73,6 +77,8 @@ WorkforMe/
 ├── NOTICE                      ← 원본 저작권·라이선스 표시
 ├── .claude-plugin/             ← 마켓플레이스 (workforme → dryforge/claude)
 ├── .github/workflows/          ← dryforge 검사를 PR마다 실행
+├── COMPANY-DEVICE.md           ← 회사 기기에서 쓰기: 설치부터 소각까지
+├── scripts/dispose-project.sh  ← 회사 프로젝트 소각 스크립트
 ├── projects/                   ← 회사 프로젝트 (내 PC에만, README만 올라감)
 └── dryforge/                   ← dryforge 원본 + 변경
     ├── src/skills/             ← 스킬 원본 (여기를 고침)

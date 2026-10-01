@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Check shell scripts
-        run: shellcheck build/build.sh
+        run: shellcheck build/build.sh ../scripts/*.sh
 
       - name: Verify build and manifests
         run: python3 ci/verify.py
