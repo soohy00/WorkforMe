@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.7-docs.7 (2026-10-01)
+
+- `message`: a draft with no recipient tag is no longer read as [동료]; the skill asks first, with
+  the three options and a recommendation from the draft's hints
+
 ## v1.3.7-docs.6 (2026-10-01)
 
 - Added the shared `writing-style.md` (ready, go): the author owns a position and asks for approval,

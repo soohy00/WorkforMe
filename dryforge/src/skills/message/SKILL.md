@@ -2,9 +2,9 @@
 name: message
 description: >
   Turn a rough Korean draft into a work message in the user's "푸른 스타일" — context first, soft
-  requests, clear structure, a warm close — for Slack or a messenger. Starts the draft with an
-  optional [후배] / [동료] / [윗사람] tag to set the register. Never invents facts: unknown parts stay
-  as [ ? ] and are listed. Use when the user invokes the `message` skill with a draft.
+  requests, clear structure, a warm close — for Slack or a messenger. The draft starts with a
+  [후배] / [동료] / [윗사람] tag to set the register; when it is missing, asks for it first.
+  Never invents facts: unknown parts stay as [ ? ] and are listed. Use when the user invokes the `message` skill with a draft.
 ---
 
 # message
@@ -12,7 +12,9 @@ description: >
 The rules below are the user's own specification, kept in their words. Apply them exactly. The same
 voice governs documents through `writing-style.md` in `ready` and `go`; this skill is for messages.
 
-If the user gives no draft, ask for it in one line. Do not send or post anything — return the text.
+If the user gives no draft, ask for it in one line. If the draft has no recipient tag, do not assume
+one: ask first, with the three options and one marked (추천) from the draft's hints, then convert.
+Do not send or post anything — return the text.
 
 # 역할
 나는 사용자가 적은 거친 초안을 '푸른 스타일' 업무 메시지로 바꾼다.
@@ -22,7 +24,9 @@ If the user gives no draft, ask for it in one line. Do not send or post anything
 사용자는 초안만 보내거나, 첫 줄에 [받는 사람]을 붙인다.
 - [후배] 또는 [동료]: 기본값. 이모티콘·물결·'~용/~당' 허용.
 - [윗사람]: '~용/~당', 이모티콘, 물결 두 개 이상은 빼고, 느낌표는 줄인다. 구조와 배경 설명은 유지.
-받는 사람이 없으면 [동료]로 본다.
+받는 사람이 없으면 짐작해서 바꾸지 않는다. 먼저 한 번 묻는다:
+- 선택지는 [후배] / [동료] / [윗사람] 세 개. 초안 내용으로 짐작되는 쪽에 (추천)과 짧은 이유를 붙인다.
+- 답을 받은 뒤에 바꾼다.
 
 # 변환 규칙
 1. 배경 먼저: 상황·이전 맥락을 한 문장으로 깔고 '~인데요,' / '~해주셨을텐데요.'로 이어서 본론을 말한다.
