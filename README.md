@@ -53,6 +53,11 @@ HTML·PDF 템플릿과 브랜드는 나중에 더해요.
 /plugin install dryforge-docs@workforme
 ```
 
+## 글쓰기 규칙
+
+문서는 `writing-style.md`(ready·go)의 규칙으로 써요. 사용자의 "푸른 스타일"을 보고서용으로 바꾼 규칙이에요.
+작성자가 건의하고 승인을 요청해요. 윗사람 보고는 두괄식으로 써요. 거친 메모를 주면 배경·목적·결정 사항·일정으로 정리해요.
+
 ## 회사 프로젝트 시작하기
 
 회사 문서는 **GitHub에 올리지 않아요**. [projects/README.md](projects/README.md)를 보세요.
