@@ -20,6 +20,7 @@
 PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html> <출력.pdf> [미리보기.png]`
 HTML 한 파일 만들기: `python3 brand/tools/bundle.py <입력.html> <출력.html>` (스타일과 쓴 글자만 담은 글꼴을 파일 안에 넣음).
 문서를 줄 때는 PDF와 HTML 한 파일을 함께 만든다.
+차트가 들어가는 문서는 `brand/viz/`(viz.css, charts.js)를 쓰고 `brand/viz/README.md`의 규칙(형태 먼저, 검사한 색 순서, 축 하나, 표 보기, 정의와 출처)을 따른다.
 노션 템플릿은 `brand/notion/`(종류별 Markdown 6개, 데이터베이스 칸, 색 대응, 넣는 방법)을 따른다.
 노션 연결로 만들 때는 `python3 brand/tools/notion_md.py <템플릿.md>`로 노션 블록 형식으로 바꿔서 쓴다.
 
