@@ -140,7 +140,10 @@ counts as **evidence** changes:
     unfinished work.
   - **`.dryforge/` as untracked files** is the expected handoff state from the producer — do not
     treat it as a dirty tree. Anything else untracked or modified is foreign work → stop and report
-    (received material belongs in `material/`, committed — ask the user to commit it).
+    (received material follows `references/material-intake.md`: shareable files and data cards
+    committed in `material/`, raw data in the git-ignored `material/raw/` — ask the user to move or
+    commit it). A file in `material/raw/` that git does **not** ignore → stop: raw data must never be
+    committed; fix the `.gitignore` first.
   - **You own the `.dryforge/` git mechanics.** On the base, add `.dryforge/` to `.gitignore` and
     commit. For existing projects this stays on the feature branch (never on main); for greenfield
     it is on main (acceptable — main has no meaningful history to protect). If a prior run left

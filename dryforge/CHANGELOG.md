@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.7-docs.4 (2026-10-01)
+
+- Added the shared `material-intake.md` (ready, go, migration): shareable documents in `material/`,
+  raw datasets in the git-ignored `material/raw/` with a committed data card (source, as-of,
+  definitions, classification, masking, figures used), spoken facts as user-stated with as-of,
+  where seen, and what is counted
+- New projects get a `.gitignore` holding `material/raw/`; go stops if a raw file is not ignored
+- Fact-ledger sources point at the data card, never at the raw file alone
+
 ## v1.3.7-docs.3 (2026-10-01)
 
 - Decision records state only reasons on the record; when the user gave none they say so, and an

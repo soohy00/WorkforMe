@@ -115,7 +115,7 @@ where the input came from. The 3-doc contract is in `references/output-format.md
 - **Project folder.** Work happens inside **one company project folder**. If the current directory is
   the workspace root (it holds `projects/` and `dryforge/`), do not work there: list the folders in
   `projects/` and ask which project this is for, or offer to create a new one (`projects/<name>/`,
-  `git init`, an initial commit). A project repository stays **local** — never add a remote or push
+  `git init`, a `.gitignore` holding `material/raw/`, an initial commit). A project repository stays **local** — never add a remote or push
   on your own; company material must not leave the machine unless the user sets that up.
 - **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
   commit** (an empty repo has no HEAD, so go could not create a worktree later). If git is not
@@ -135,7 +135,7 @@ stage sequence is identical for first and delta.
 ```
 Core principles  inline (subagents only at intent-completeness + 3-doc-gate) · understand-not-guess ·
                  stack/language-agnostic · conflict→ELICIT · floor not ceiling · user-language native
-ORIENT           absorb input + ground material/harness · branch on status.json (no refs)
+ORIENT           absorb input + ground material/harness · branch on status.json · material-intake.md
 DECOMPOSE        decompose.md · grounds-gate.md
 ELICIT           elicitation.md · doc-types.md · classification.md · gap-analysis.md ·
                  intent-review.md · grounds-gate.md
@@ -185,9 +185,13 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
      as go's clobber guard).
 4. **Ground the material (inline, optional).** If the project already holds material, read the
    *cheapest map first* — the project entry file, the file list, earlier documents of the same kind
-   in `outputs/`, the received files the input points at. Received files belong in the project's
-   `material/` folder, committed to the local repository (`go` treats other untracked files as
-   foreign work); if the user attaches files elsewhere, suggest moving them there and committing. **Stop broad reading the moment the
+   in `outputs/`, the data cards, the received files the input points at. Where received information
+   is kept follows `references/material-intake.md` (load it when anything arrives): a shareable
+   document in `material/`, committed; a **raw dataset** in the git-ignored `material/raw/` with a
+   **data card** committed in `material/`; a **spoken** fact only in the fact ledger (user-stated,
+   with its as-of, where seen, and what is counted). If the user attaches files elsewhere, suggest
+   moving them there (`go` treats other untracked files as foreign work). The user may give no
+   documents at all — information then comes by speech and raw data, and ELICIT asks for the rest. **Stop broad reading the moment the
    completion bar is met** (inline ≠ "read everything" — suppress flooding). Deep-read only what this
    document must stay consistent with (numbers, names, commitments already sent), one representative
    earlier document for tone and structure, and the project's rules. New project → minimal or skip.
