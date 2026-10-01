@@ -28,12 +28,14 @@ checks cannot see.
 **Lenses 3–4: harness** (all four dimensions of `harness-review.md`, not only content/format) —
 apply only when the harness was created
 or updated this cycle. Do **not** inline harness criteria here; apply the four dimensions in
-`references/harness-review.md` (provided with your dispatch) — content (substantive density + quality
+`references/harness-review.md` (provided with your dispatch, as its path or its text) — content (substantive density + quality
 principles), format (self-containment, altitude, no references), completeness (required files
 present), and source-cross-check (omission vs. hallucination, future-scope content exempt). Using the
 shared `harness-review.md` keeps a single source of truth — `migration` verifies against the same
 criteria. Your dispatch states the user's language; flag a harness not written natively in it.
-Harness findings carry the same blocking/advisory split as document findings.
+Harness findings carry the same blocking/advisory split as document findings. The user's decisions
+made during the run reach you **verbatim** (question, options, answer); judge a recorded reason
+against those words, not against a summary of them.
 
 ## No fixed checklist — derive the rubric
 

@@ -17,8 +17,10 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
   (command exit / render / API or state response), not necessarily a file diff — the
   captured-evidence floor still holds.
 - **Spec section** — the spec content this part realizes, **quoted inline in this prompt**: the
-  reader and their situation, the claims and requests of this part, the **fact-ledger rows** it may
-  use, and the **reader-check questions it owns** (the task worktree has no `.dryforge/` files to read
+  reader and their situation, the claims and requests of this part, the **whole fact ledger** with
+  the rows this part must use marked (not a hand-picked subset — a subset drops facts the part needs
+  as context, such as a decision date, and makes the writer flag facts other parts rightly use), and
+  the **reader-check questions it owns** (the task worktree has no `.dryforge/` files to read
   — `.dryforge/` is gitignored). Write to the spec, not just to the task line ("correct" = matches the
   spec).
 - **Hard gates** — the relevant non-negotiable constraints from the handoff, always including the
@@ -53,7 +55,7 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
 Write <task id / the part's job> in the worktree at <ABS PATH> (branch <name>).
 First: `git rev-parse --show-toplevel` must equal <ABS PATH> — if not, stop and report.
 Reader: <role and situation>.  Content to deliver: <spec slice>.  Hard gates: <classification +
-must-not-say>.  Facts you may use (and no others): <fact-ledger rows>.  Questions this part must
+must-not-say>.  Facts you may use (and no others): <the whole fact ledger, this part's rows marked>.  Questions this part must
 answer: <owned reader-check questions>.
 File yours to write: <parts/NN-name.md>.  Do NOT touch: <assembled document, shared glossary>.
 This part is RISK=<tier>: RISKY → question-first (confirm each owned question is not yet answered by

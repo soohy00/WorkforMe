@@ -81,15 +81,16 @@ harness or in a delivered document.
 ## Dimension 4 — against the source (omission vs hallucination)
 
 Cross-check the harness against its sources — the project's material, the finished documents in
-`outputs/`, and the decisions the user confirmed (passed in by the orchestrator) — **both
-directions**:
+`outputs/`, and the decisions the user confirmed (passed in by the orchestrator **verbatim** — the
+question as asked, the options shown, and the user's answer in their own words; never a summary) —
+**both directions**:
 
 - **Omission** — an intent / constraint / decision that the material **cannot show on its own** (who
   decides, what may go to whom, what a reader needs) was settled with the user but is missing from the
   docs. This is the real omission. *Facts the material already shows being absent is not an
   omission* — by the non-derivability principle, the harness deliberately omits them.
 - **Hallucination** — the docs assert something no source supports (a person, a rule, a metric, a
-  reader preference nobody stated). Flag it — **except** content that legitimately derives from
+  reader preference nobody stated, a reason for a decision the user did not give). Flag it — **except** content that legitimately derives from
   **future scope**: status.md's "remaining" items and other forward-looking content sourced from the
   Foundation/design. Distinguish "the doc describes a planned future state" (correct) from "the doc
   describes a present state the sources contradict" (a real hallucination).
@@ -101,7 +102,8 @@ Each finding is one of:
   cross-reference to inline, an altitude violation to move) → fix it directly.
 - **Needs user intent** (a gap only the user can fill — a domain rule, a policy decision, a
   rationale not on the record) → do not invent it; raise it to the user (migration: ask in the user
-  gate; go: surface as a blocking finding the orchestrator escalates).
+  gate; go: surface as a blocking finding the orchestrator escalates). A decision record that says
+  "no reason given" is not hollow — never ask for that gap to be filled by inference.
 
 In `go`'s final review, harness findings carry the same blocking/advisory split as document findings.
 
