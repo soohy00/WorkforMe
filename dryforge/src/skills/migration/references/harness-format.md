@@ -426,7 +426,9 @@ as adding new content.
   loads (the register split, no 님 in table cells, one verb for the ask, the report frame) are not
   copied into `docs/`. `standards.md` holds only rules the company or the user set for this project,
   each with its source; if the company's own guide states one of them, record it with the company as
-  the source.
+  the source. A one-time exception to a company rule (a decision record) says what this document did,
+  which company rule it set aside, and the user's words — it does not restate the writing guide's rule
+  as a project rule.
 - **Filling files is not the goal.** The goal is the next agent working this project without going
   off the rails. A sentence that doesn't serve that goal is not written, however accurate.
 

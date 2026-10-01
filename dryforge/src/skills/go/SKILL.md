@@ -350,7 +350,8 @@ count — no writing judgment is left for an independent writer.
    dialogue text, verbatim, and the finished document) over this cycle's harness diff. Fix its blocking
    findings and triage its advisories once. **Every fix that adds or rewrites harness text** — blocking
    or advisory, a one-line lightweight edit included — gets the **harness re-check**
-   (`harness-lifecycle.md`, "Harness re-check") before step 10; a fix that only deletes text does not.
+   (`harness-lifecycle.md`, "Harness re-check") before step 10; a fix that deletes only whole sentences
+   or items does not (a deletion inside a sentence — a source tag, a pointer like "위와" — does).
    The typical findings: a reason in a decision record that the user did not give (write "이유는 밝히지
    않음" instead), and a thought, plan, or words put on a person with no quote behind them ("작성자
    생각", "팀장 의견") — quote the dialogue or material, or delete it (`harness-format.md`, "Words
@@ -368,21 +369,23 @@ count — no writing judgment is left for an independent writer.
     included) → the harness re-check; both → both.
     **Bounded:** each advisory is triaged **once**. A re-run judges blocking findings; the advisories it
     raises are triaged without another re-run (document: lightweight fix or accepted with a reason;
-    harness: accepted with a reason or fixed by deleting text — `harness-lifecycle.md`). Only a fix
+    harness: accepted with a reason or fixed by deleting a whole sentence or item — `harness-lifecycle.md`). Only a fix
     to a blocking finding starts a new round, **at most two rounds** after the final review — still
     blocking after that → stop and ask the user with options. A
     finding about a material/harness mismatch **outside this cycle's change scope** is not fixed here — record
     it in `docs/tracking/findings.md` and defer (scope-limited delta). A wording defect in a harness file
     outside the scope goes to `.dryforge/deferred.md` instead (`harness-lifecycle.md`).
 
-12. **User gate.** **Brand files first.** When the workspace has brand tools (a `brand/tools/publish.py`
-    in a folder above the project root), make the files the reader gets:
+12. **User gate.** **Brand files first.** When the workspace has brand tools (walk up from the project
+    root to the first folder that holds `brand/tools/publish.py`), make the files the reader gets:
     `python3 <brand>/tools/publish.py outputs/<doc>/<name>.md <temp>/preview.png` writes `<name>.pdf`
     (A4, brand fonts) and `<name>.html` (one file, styles and fonts inside) next to the Markdown. Look
     at the preview before presenting — the marking line and badge, the first-screen box, tables, no
     cut-off or overlapping text. A layout fault is the tool's, not the document's: name it at the gate
     and do not reword the checked document to work around it (a text change after the final review
-    re-runs the checks, step 11). Never hand-edit the HTML. Commit the two files with the document. The
+    re-runs the checks, step 11). Never hand-edit the HTML. If the PDF runs well past the spec's
+    length, do not cut text now either: name the page count at the gate with options (keep it and tell
+    the reader, or shorten it — which re-runs the checks). Commit the two files with the document. The
     Markdown stays the source: after any later edit, run it again. No brand tools → Markdown only; say
     so once.
     Present for approval: where the document is (the `.md`, and the `.pdf` and `.html` when made), its key message and request in one

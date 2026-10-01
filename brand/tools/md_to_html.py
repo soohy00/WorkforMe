@@ -12,7 +12,8 @@ No Markdown library is needed. It reads the shape the writing guide produces:
   - "## 관련 문서"                               → ul.related; a `[경로: ?]` or `노션 > …` code span → .path
   - nested "-" and "1." lists, pipe tables, **bold**, `code`, [links](url), paragraphs, "---"
 A table whose first header cell is empty or "구분" is a side-by-side comparison (table.compare: equal
-columns, no option stands out). A column whose cells are all numbers is right-aligned (.num).
+columns, no option stands out). A column whose cells are all numbers, or that the writer marked "---:",
+is right-aligned (.num). A long 건의 box may continue on the next page instead of leaving a gap.
 The stylesheet link is written relative to the output file, so keep the output inside the workspace
 (or bundle it with bundle.py, which inlines everything).
 """
@@ -33,6 +34,7 @@ LEVELS = {  # label → (badge class, page-corner colour from document.css)
 MARKING = re.compile(r"^(공개|사내한정|대외비|극비)(\s*\(잠정\))?\s*(?:·\s*(.*))?$")
 LEAD = {"보고 요지", "요약", "한 줄 요약", "승인 요청", "이 회의가 끝나면", "핵심 요약"}
 PROPOSAL = {"건의"}
+LONG_PROPOSAL = 400  # characters; a longer 건의 box may break across pages instead of jumping whole
 RELATED = {"관련 문서", "관련 회의록·문서", "관련 자료"}
 DATE_HEAD = {"일자", "일정", "날짜", "기한"}
 NUM = re.compile(r"^[+\-−▲▼]?\s*\d[\d,]*(\.\d+)?\s*(%p|%|건|명|곳|개|원|만 원|억 원|시간|분|일|주)?$")
@@ -106,6 +108,7 @@ def split_row(line):
 
 def parse_table(lines, i):
     head = split_row(lines[i])
+    align = split_row(lines[i + 1])  # "---:" marks a column the writer right-aligned
     i += 2  # header + separator
     rows = []
     while i < len(lines) and lines[i].strip().startswith("|"):
@@ -114,7 +117,9 @@ def parse_table(lines, i):
     n = len(head)
     rows = [r + [""] * (n - len(r)) for r in rows]
     compare = head[0] in ("", "구분")
-    num = [j > 0 and all(NUM.match(r[j]) for r in rows if r[j]) and any(r[j] for r in rows) for j in range(n)]
+    num = [j > 0 and ((j < len(align) and align[j].endswith(":") and not align[j].startswith(":"))
+                      or (all(NUM.match(r[j]) for r in rows if r[j]) and any(r[j] for r in rows)))
+           for j in range(n)]
     out = ['<table class="compare">' if compare else "<table>"]
     if compare:
         out.append('<colgroup><col class="label">' + "<col>" * (n - 1) + "</colgroup>")
@@ -237,7 +242,9 @@ def convert(md, css_href):
         if key in LEAD:
             out.append(f'<div class="lead"><span class="lead-label">{inline(name)}</span>{body(sec)}</div>')
         elif key in PROPOSAL:
-            out.append(f'<h2>{inline(name)}</h2><div class="proposal">{body(sec)}</div>')
+            inner = body(sec)
+            cls = "proposal long" if len(re.sub(r"<[^>]+>", "", inner)) > LONG_PROPOSAL else "proposal"
+            out.append(f'<h2>{inline(name)}</h2><div class="{cls}">{inner}</div>')
         elif key in RELATED:
             out.append(f"<h2>{inline(name)}</h2>{related(sec)}")
         elif name is None:

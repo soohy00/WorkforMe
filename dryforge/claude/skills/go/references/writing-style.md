@@ -29,7 +29,8 @@ responsibility — or as a challenge.
   - a different option chosen: "B안으로 정하시면 그 안으로 10/8(목)까지 다시 보고드리겠습니다."
   - not approved or held: what the author does then, or "보류하시면 [언제] 다시 여쭙겠습니다."
   - no reply by the deadline: "10/7(수)까지 답이 없으시면 [언제] 다시 여쭙겠습니다."
-  A report that asks for no decision states only the next step.
+  With two or more asks, the reader can approve one and hold another: cover each ask being held on
+  its own. A report that asks for no decision states only the next step.
 - An open question goes to the reader as a **확인 요청**, politely, with the author's view only when
   that view is on the record: "안내 변경을 대표님께서 승인하시는 사항인지 확인 부탁드립니다."
 - **Banned** (blocking in review): statements that assign the decision or the work to the reader or to
