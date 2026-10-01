@@ -179,8 +179,12 @@ topic ends far from the document it set out to write. Hold the line:
   if not, park it.
 - **Park, don't chase.** Off-purpose topics (another document, later work, general project knowledge,
   a detail the reader will not act on) go on a **parked list**, one line each — never asked now. The
-  parked list is shown once at the USER GATE, so nothing is lost; project knowledge on it can reach
-  the harness in a later cycle.
+  parked list is written into the handoff and shown once at the USER GATE, so nothing is lost; a
+  later cycle can take a parked topic up.
+- **First cycle: the foundation is on purpose.** In a first cycle, the foundation design's questions
+  (the floors of `project-scoping.md`, `project-design-domain.md`, `project-design-technical.md`) are
+  on purpose by definition — they are what makes this and every later document possible. Park
+  general project knowledge only beyond those floors, or in a delta cycle.
 - **When the user moves to a new topic**, acknowledge it in one line, park it, and return to the
   purpose. If the user wants the new topic **in this document**, that changes the purpose: restate
   the purpose line and confirm it before asking further.
@@ -203,8 +207,9 @@ A generated candidate is not yet a question. Throw only what survives:
    your key message?". **Every question carries a recommendation, a question about a fact
    included**: recommend the answer the material or the user model supports best, and keep the open
    option — the user corrects a fact by writing their own answer there. Where nothing supports any
-   answer, say so in the recommended option ("자료에 없음 — 직접 적어 주세요") rather than inventing
-   one; a fact the user did not confirm never enters the ledger as user-stated.
+   answer, do not invent one: ask that fact in plain text and say so in the user's language (e.g.
+   "자료에 없음 — 직접 적어 주세요"), or, in a structured prompt, make the open option itself the
+   recommended one. A fact the user did not confirm never enters the ledger as user-stated.
 3. **Right-sized rhythm.** Highest-leverage first; batch a few related questions when it serves the
    user (platform limit: at most 4 questions / 4 options per structured prompt). Don't pad with
    low-value questions to look thorough — but "don't pad" bans *trivia*, it **never** excuses skipping a

@@ -209,7 +209,8 @@ empty.
 - **Quality floor**: every level states who may receive it and what it forbids; every sensitive item
   names its level; states what is *explicitly not allowed* (a public link for an Internal document,
   a revenue figure to an external recipient); not "handle sensitive data carefully" — this project's
-  own rules.
+  own rules. A rule about the document's content or marking is decidable by reading the document and
+  names its source (the company's policy, the user) — `go`'s rule check runs it.
 
 ### standards.md — rules
 - **Purpose**: what breaks when violated. The project's hard gates for writing and delivery.

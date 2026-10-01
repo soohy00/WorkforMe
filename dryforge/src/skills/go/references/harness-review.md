@@ -17,7 +17,7 @@ cross-cutting quality bar:
   that file's altitude, and clears that file's quality floor (e.g. business-rules: every rule
   verifiable, every metric defined with a source; security: every level states who may receive it and
   what it forbids; stakeholders: every decision type has one owner; standards: every rule has a
-  violation criterion).
+  violation criterion decidable by reading the document, and its source).
 - **Five principles** — non-derivability (nothing the material already reveals), work-changing (would
   change the next agent's work), density (every sentence carries a fact), project-specificity (no
   universal truths), consequence-of-absence (removing it would break something).

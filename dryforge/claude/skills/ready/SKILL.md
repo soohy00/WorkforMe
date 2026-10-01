@@ -204,8 +204,8 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
    name, and quotation in the document traced to a source in the spec's fact ledger; (c) the
    **classification check** — the document carries the level and recipients the spec sets and holds
    nothing above that level; (d) the **rule check** — every document rule the project records
-   (company rules in the harness `security.md` and `standards.md`, the series `AGENTS.md`) that
-   applies is met. A rule the user's intent contradicts is a conflict for ELICIT — the user decides
+   (company rules in the harness `security.md` and `standards.md`, the series `AGENTS.md`; in a first
+   cycle, the rules settled in the Foundation's working decisions) that applies is met. A rule the user's intent contradicts is a conflict for ELICIT — the user decides
    the rule or a one-time exception; never write the spec around it silently. If the project adds its own evidence (a manager's sign-off, a legal
    read), record it in SPEC as named human-approval evidence the **user** obtains after `go` — never
    left implicit (`go` never sends the document).

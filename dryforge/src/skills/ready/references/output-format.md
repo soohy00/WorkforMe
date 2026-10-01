@@ -28,8 +28,11 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
 - **Hard gates**: non-negotiable constraints the executing agent cannot derive from the material
   alone (things the document must never say or promise, fixed dates and wording) —
   always including the classification requirements of the spec's level (`classification.md`, "Hard
-  gates") and every project document rule that applies to this document, quoted from the harness
-  (`go`'s rule check checks each one); an exception the user granted is stated next to its rule.
+  gates") and every project document rule that applies to this document, quoted from the harness —
+  or, in a first cycle, from the Foundation's working decisions (`go`'s rule check checks each one);
+  an exception the user granted is stated next to its rule.
+- The **parked list** from ELICIT (`elicitation.md`, "Stay on purpose"): topics deliberately not
+  asked, one line each — it stays with the archived handoff, so later cycles can take them up.
 - Intent decided while authoring but not captured in spec/plan.
 - **First cycle only (no project harness yet):** the handoff **carries** a **Project Foundation**
   section — the project-wide foundation (business and stakeholder model, working decisions, future scope) that
@@ -40,7 +43,8 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
   taken over the project-context role).
 
 ### spec — what to write (ground truth)
-Must convey: the **classification level and named recipients** (`classification.md`); the **readers**
+Must convey: the **classification level and named recipients** (`classification.md`; a provisional
+level is marked as such, with who confirms it); the **readers**
 (the one primary reader, the others, and per reader what they know · worry about · decide); the
 **outcome** (the one action after reading, by when, and what counts as success); the **key message**
 in one sentence; the **content** — each claim with its evidence (fact-ledger ids), what is committed

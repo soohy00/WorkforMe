@@ -57,8 +57,9 @@ level** — the level the document carries until the person who decides confirms
 
 - marked as the level followed by "(잠정)" in the user's language (e.g. `사내한정(잠정)`);
 - treated as that level for every rule below;
-- the document asks the deciding person to confirm it (one line among its questions), and the user is
-  told who must confirm before the document goes further than that person.
+- the confirmation request is one of the document's requests or open items, addressed to the deciding
+  person; the spec records the provisional level and who confirms it, and the user is told who must
+  confirm before the document goes further than that person.
 
 When a named recipient **may not receive** the level the content requires (an outside recipient and
 Confidential revenue figures), **never lower the level to fit the recipient**. Either the content is

@@ -9,6 +9,9 @@
 - The main branch is always `main`; new repositories use `git init -b main`
 - go adds a rule check to the verify set: every recorded company rule is checked against the
   document, and a rule/spec conflict is asked before writing
+- Independent review fixes: rule-check results (pass, fail, not applicable, exception, undecidable —
+  user), first-cycle rule sources, the rule check in bounded re-checks and at the user gate, and the
+  foundation questions kept on purpose in a first cycle
 
 ## v1.3.7-docs.4 (2026-10-01)
 

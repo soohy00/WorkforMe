@@ -24,7 +24,8 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
   — `.dryforge/` is gitignored). Write to the spec, not just to the task line ("correct" = matches the
   spec).
 - **Hard gates** — the relevant non-negotiable constraints from the handoff, always including the
-  classification level and what it forbids, and what the document must never say or promise.
+  classification level and what it forbids, the project rules that apply to this part (quoted), and
+  what the document must never say or promise.
 - **Verify-first, right-sized** — drive the work against the part's **real verification gate**: the
   reader-check questions it owns and the fact trace of every figure, date, name, and quotation it
   uses. **Consume the producer-set tier — don't re-derive "is this risky?" from scratch.** This task
@@ -55,7 +56,7 @@ and **wording you adapt** (the example below is one phrasing, not a fixed script
 Write <task id / the part's job> in the worktree at <ABS PATH> (branch <name>).
 First: `git rev-parse --show-toplevel` must equal <ABS PATH> — if not, stop and report.
 Reader: <role and situation>.  Content to deliver: <spec slice>.  Hard gates: <classification +
-must-not-say>.  Facts you may use (and no others): <the whole fact ledger, this part's rows marked>.  Questions this part must
+project rules for this part + must-not-say>.  Facts you may use (and no others): <the whole fact ledger, this part's rows marked>.  Questions this part must
 answer: <owned reader-check questions>.
 File yours to write: <parts/NN-name.md>.  Do NOT touch: <assembled document, shared glossary>.
 This part is RISK=<tier>: RISKY → question-first (confirm each owned question is not yet answered by
