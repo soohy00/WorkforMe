@@ -163,6 +163,30 @@ press the high-stakes slots harder. The accounting is **ephemeral working memory
 exit scan and feeds the independent backstop, then evaporates; it is **never** written into the spec
 as provenance tags (`output-format.md`).
 
+## Stay on purpose — only the questions this document needs
+
+ELICIT asks to finish **one** document. Answers open new topics; a dialogue that follows each new
+topic ends far from the document it set out to write. Hold the line:
+
+- **The purpose line.** Once the reader and the outcome are known, hold one line: *"This document gets
+  [primary reader] to [the one action] by [when]."* It is working memory, not a spec field.
+- **Every question passes the purpose test.** Ask only what changes **what this document says, or how
+  it is shaped for that reader**. "Useful to know" is not enough. This is checked on top of the
+  enumerate ≠ ask order above, not instead of it — a load-bearing slot is never dropped by it.
+- **Follow-ups are tested against the purpose line, not against the last answer.** An answer may open
+  new slots; each one passes the same test. When a chain of follow-ups has moved two steps away from
+  the slot it started from, stop and check that the next answer would still change this document —
+  if not, park it.
+- **Park, don't chase.** Off-purpose topics (another document, later work, general project knowledge,
+  a detail the reader will not act on) go on a **parked list**, one line each — never asked now. The
+  parked list is shown once at the USER GATE, so nothing is lost; project knowledge on it can reach
+  the harness in a later cycle.
+- **When the user moves to a new topic**, acknowledge it in one line, park it, and return to the
+  purpose. If the user wants the new topic **in this document**, that changes the purpose: restate
+  the purpose line and confirm it before asking further.
+- **Open a follow-up round with the purpose line** (one sentence), so the user sees why the next
+  questions are asked.
+
 ## Ask well — so the user can actually answer
 
 A generated candidate is not yet a question. Throw only what survives:
@@ -176,7 +200,11 @@ A generated candidate is not yet a question. Throw only what survives:
    A concrete proposal is faster to answer than a blank slate. (This is *how you present*, not a
    license to default — the user still decides.) For content, a proposed key message the user edits
    ("Shall the key message be 'the pilot cut support time by 30% in three months'?") beats "what is
-   your key message?".
+   your key message?". **Every question carries a recommendation, a question about a fact
+   included**: recommend the answer the material or the user model supports best, and keep the open
+   option — the user corrects a fact by writing their own answer there. Where nothing supports any
+   answer, say so in the recommended option ("자료에 없음 — 직접 적어 주세요") rather than inventing
+   one; a fact the user did not confirm never enters the ledger as user-stated.
 3. **Right-sized rhythm.** Highest-leverage first; batch a few related questions when it serves the
    user (platform limit: at most 4 questions / 4 options per structured prompt). Don't pad with
    low-value questions to look thorough — but "don't pad" bans *trivia*, it **never** excuses skipping a

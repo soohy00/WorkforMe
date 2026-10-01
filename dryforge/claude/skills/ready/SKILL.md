@@ -247,7 +247,9 @@ invent); **form → PRESENT** (kind, structure, visuals, channel — the agent k
 trade-offs + recommendation, grounded in the extracted content; the user decides — never silent).
 Build and maintain a **model of the user** (goal / values / constraints / domain facts) and a **model
 of each reader**, and test each load-bearing decision against them: grounded → realize; model-silent →
-that *is* the gap, close it.
+that *is* the gap, close it. **Ask only what this document needs** (`elicitation.md`, "Stay on
+purpose"): every question, follow-ups included, must change what this document says or how it is
+shaped for its reader; off-purpose topics are parked, not chased.
 
 **Classification is settled in ELICIT, never defaulted silently** (`classification.md`). Recommend
 the level from the most sensitive content and from the recipients, and let the user decide. The
@@ -381,7 +383,8 @@ fixes only the stage it belongs to, then re-runs the gate; a surviving blocker �
 ## USER GATE — the one human checkpoint
 
 Present the completed, verified 3-doc to the user: *"Review this and confirm. If it's right, proceed;
-if not, tell me and I'll fix."* On approval, tell the user to **invoke the `go` skill in this
+if not, tell me and I'll fix."* Show the **parked list** from ELICIT (`elicitation.md`, "Stay on
+purpose") once, one line per topic, so the user can take any of them up later. On approval, tell the user to **invoke the `go` skill in this
 session** to execute. Autonomy is executing an **approved** spec, not setting intent — one gate, at
 the end (outside ELICIT's dialogue and the intent-completeness loopback, the only mid-run exception
 is the REVIEW(A) reopen). Produce → run is one session — the design
