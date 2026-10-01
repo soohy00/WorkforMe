@@ -20,6 +20,8 @@
 PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html> <출력.pdf> [미리보기.png]`
 HTML 한 파일 만들기: `python3 brand/tools/bundle.py <입력.html> <출력.html>` (스타일과 쓴 글자만 담은 글꼴을 파일 안에 넣음).
 문서를 줄 때는 PDF와 HTML 한 파일을 함께 만든다.
+노션 템플릿은 `brand/notion/`(종류별 Markdown 6개, 데이터베이스 칸, 색 대응, 넣는 방법)을 따른다.
+노션 연결로 만들 때는 `python3 brand/tools/notion_md.py <템플릿.md>`로 노션 블록 형식으로 바꿔서 쓴다.
 
 - **종이**: A4, 여백 18mm(아래 20mm), 쪽 번호는 오른쪽 아래. 등급은 쪽마다 오른쪽 위(문서마다 `@page`에 적음).
 - **글꼴**: Paperlogy 하나로 한글·영문·숫자를 쓴다(코드만 Geist Mono). 본문은 화면 15px, 인쇄 10.5pt,
