@@ -163,7 +163,8 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
    existing repo with no `main` (an older git made `master`) and a single branch → ask once, with the
    rename as the recommendation, whether to rename it (`git branch -m <name> main`; history is kept),
    and rename on yes; several branches → ask which one becomes `main`. On a no, say once that `go`
-   will need `main`; `ready` itself continues.
+   will need `main`; `ready` itself continues. This is a setup question, not an ELICIT question: ask
+   it in its own prompt before ELICIT starts; it does not use ELICIT's question budget (≤4 per prompt).
 2. **Absorb the input lightly — capture its *character* only.** Parse the argument tokens: resolve to
    files where they are paths, read as prose otherwise, accept a mix. Empty / "use the skill" → ask
    what document they need first (that answer becomes the input; git from step 1 already

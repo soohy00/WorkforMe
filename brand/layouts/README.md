@@ -50,3 +50,19 @@ python3 brand/tools/bundle.py <문서.html> <문서-한파일.html>
 - `render.js`: PDF를 만들어요. 글꼴이 PDF 안에 들어가요. Playwright(Chromium)가 필요해요.
 - `bundle.py`: 다른 파일 없이 열리는 HTML 한 파일을 만들어요. CSS를 안에 넣고, 글꼴은 문서에 쓴 글자만 잘라 넣어요
   (2쪽 보고서가 약 400KB). fontTools가 필요해요(`pip install fonttools`).
+
+### Markdown 보고서에서 바로 만들기
+
+`ready`·`go`가 쓴 Markdown 보고서는 명령 하나로 PDF와 HTML 한 파일이 돼요. `go`는 사용자 확인 전에 이 명령을 스스로 돌려요.
+
+```bash
+python3 brand/tools/publish.py <문서.md> [미리보기.png]   # 문서.md 옆에 문서.pdf, 문서.html
+python3 brand/tools/md_to_html.py <문서.md> <문서.html>     # HTML만 (document.css에 연결)
+```
+
+- 첫 줄 "사내한정(잠정) · 받는 사람: …" → 등급 배지 줄. 등급은 쪽마다 오른쪽 위에도 찍혀요.
+- 제목 끝 "(초안)" → 초안 배지. 제목 바로 아래 "작성: …" → 작성 정보 줄.
+- `## 보고 요지`(요약, 한 줄 요약, 승인 요청, 이 회의가 끝나면) → 첫 화면 상자(`.lead`).
+- `## 건의` → 건의 상자(`.proposal`). `## 관련 문서` → `ul.related`, 끝의 `` `[경로: ?]` ``는 경로 줄.
+- 첫 머리글 칸이 비었거나 "구분"인 표 → 비교 표(`.compare`, 칸 폭 같음). 숫자만 있는 칸 → 오른쪽 정렬.
+- 고칠 것은 Markdown에서 고치고 다시 돌려요. HTML을 손으로 고치지 않아요.

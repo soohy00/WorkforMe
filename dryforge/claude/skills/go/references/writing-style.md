@@ -135,6 +135,9 @@ Example (rough notes → report lines):
    `security.md`) win over this guide for register, report frame, terms, length, and classification.
    Ownership (section 1) is content, not form: keep the 건의 and the one-verb ask in the company's
    register (e.g. "승인 부탁드림" where the company writes everything in 개조식).
+   A decision record in `docs/tracking/decisions/` is not a company rule: it is the user's recorded
+   choice (item 2) for the documents and situation its consequences name. Where it does not say it
+   applies, this guide's default holds.
 2. **The user's explicit choice for this document** wins over this guide's defaults — the dated table,
    section order, length, register split, a proposal (section 1). Record it in the spec's thinking-base
    with the user's words; writers and reviewers follow the record and do not block it.

@@ -13,8 +13,9 @@ never hardcoded.
 **The deliverable is a document** (see `ready`'s SKILL.md). Its output lives at a project-root-relative folder,
 by default `outputs/<YYYY-MM-DD>-<slug>/` (a document in a recurring series:
 `outputs/<series>/<YYYY-MM-DD>-<slug>/`), as Markdown (the channel the spec names — a Notion page,
-an email, a shared screen — is where the Markdown goes; converting to other file formats is not part
-of this cycle).
+an email, a shared screen — is where the Markdown goes). The Markdown is the source. When the
+workspace has brand tools, `go` makes a brand PDF and a one-file HTML from it at the user gate (go
+SKILL.md step 12); that is not a part, and the plan does not schedule it.
 
 ## The three documents (handoff governs)
 

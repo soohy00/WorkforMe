@@ -417,6 +417,16 @@ as adding new content.
   (in Korean, "작성자", or the role the harness uses, e.g. "기획 인턴"). Never name them with a word the
   project uses as a domain term — if "사용자" means the service's users, the author is never "사용자"
   in the harness, even though the skill calls them "the user".
+- **Words belong to the person who said them.** A sentence that says what a person thinks, plans,
+  decided, asked, or said ("작성자 생각:", "팀장은 A안을 선호함", "다음 주 보완 예정") is written only
+  when the dialogue or the material holds it — quoted or closely paraphrased, with where it came
+  from. With no source, state the fact without a person, or leave it out. This holds for every edit,
+  a one-line fix included.
+- **Writing-guide rules are not project rules.** The general writing rules every writer already
+  loads (the register split, no 님 in table cells, one verb for the ask, the report frame) are not
+  copied into `docs/`. `standards.md` holds only rules the company or the user set for this project,
+  each with its source; if the company's own guide states one of them, record it with the company as
+  the source.
 - **Filling files is not the goal.** The goal is the next agent working this project without going
   off the rails. A sentence that doesn't serve that goal is not written, however accurate.
 
