@@ -15,7 +15,8 @@
 
 ## 문서용 규칙 (DESIGN.md보다 우선)
 
-문서(HTML·PDF)는 `brand/document.css`를 쓴다. 견본: `brand/samples/decision-request.html`.
+문서(HTML·PDF)는 `brand/document.css`를 쓴다. **문서 종류별 섹션 순서와 부품은 `brand/layouts/README.md`를 따른다**
+(상사·대표 보고, 제안서, 협업 정렬 문서, 투자사 보고, 회의 자료, 운영 문서 — 견본은 `brand/samples/`).
 PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html> <출력.pdf> [미리보기.png]`
 
 - **종이**: A4, 여백 18mm(아래 20mm), 쪽 번호는 오른쪽 아래. 등급은 쪽마다 오른쪽 위(문서마다 `@page`에 적음).
@@ -32,4 +33,6 @@ PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html
 - **등급 표시**: 맨 위 `.marking` 줄에 배지 — `public`(공개), `internal`(사내한정), `confidential`(대외비),
   `secret`(극비). 잠정이면 배지 글에 "(잠정)"을 붙인다.
 - **추천·의견**: 맨 끝에 꾸밈 없이 둔다(`.opinion`). 색 상자나 강조를 쓰지 않는다.
+- **제목 위치**: 제목만 쪽 끝에 남지 않게 한다(`h2`, `h3`는 다음 내용과 같은 쪽).
+- **숫자 카드**: 숫자마다 비교 기준, 목표, 정의(무엇을 셌나·언제·어디서)를 함께 쓴다. 정의 없는 숫자는 넣지 않는다.
 - **움직임**: 문서에는 쓰지 않는다.

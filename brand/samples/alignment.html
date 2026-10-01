@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공간 현황판 개선 — 디자인·개발 정렬 문서</title>
+<link rel="stylesheet" href="../document.css">
+<style>
+  @page { @top-right { content: "사내한정"; font-family: "Paperlogy", sans-serif; font-size: 8pt; color: #007a5c; } }
+</style>
+</head>
+<body>
+<!-- 견본: 시험용 가상 회사(다온랩)의 문서예요. 사람과 숫자는 모두 가상이에요. -->
+<article class="doc">
+
+  <div class="marking">
+    <span class="badge internal">사내한정</span>
+    <span>받는 사람: 정하은(디자인), 이준호·최민재(개발) · 참조: 박서연 팀장</span>
+  </div>
+
+  <h1>공간 현황판 개선 <span class="badge draft">정렬 문서</span></h1>
+  <p class="meta">작성: 기획 인턴 · 2026-10-01 · 버전 1 · 질문은 기획 인턴에게(작업 기간 내내)</p>
+
+  <div class="lead">
+    <span class="lead-label">한 줄 요약</span>
+    <ul>
+      <li>현황판에서 <strong>지금 빈 방</strong>을 한눈에 찾고, 그 자리에서 바로 예약하게 함.</li>
+      <li>정해진 것 4가지, 아직 열린 것 2가지(담당·기한 있음), 이번에 정할 것 1가지.</li>
+    </ul>
+  </div>
+
+  <h2>왜 하나요</h2>
+  <ul>
+    <li>사용자는 빈 방을 찾으려고 층별 목록을 하나씩 넘김. 고객사 문의의 주요 원인임.</li>
+    <li>목표: 빈 방 찾기부터 예약까지 화면 이동 없이 끝냄.</li>
+  </ul>
+
+  <h2>정해진 것 · 열린 것 · 정할 것</h2>
+  <table>
+    <colgroup><col style="width:14%"><col><col style="width:16%"><col style="width:13%"></colgroup>
+    <thead><tr><th>상태</th><th>내용</th><th>담당</th><th>기한</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill settled">정해짐</span></td><td>기본 보기는 "지금 빈 방" 필터를 켠 상태</td><td>박서연 팀장</td><td>—</td></tr>
+      <tr><td><span class="pill settled">정해짐</span></td><td>방 카드에서 바로 예약(30분 기본)</td><td>박서연 팀장</td><td>—</td></tr>
+      <tr><td><span class="pill settled">정해짐</span></td><td>층 지도 보기는 이번에 하지 않음</td><td>박서연 팀장</td><td>—</td></tr>
+      <tr><td><span class="pill settled">정해짐</span></td><td>10/20 출시에 포함</td><td>박서연 팀장</td><td>—</td></tr>
+      <tr><td><span class="pill open">열림</span></td><td>"곧 빔(15분 안)" 상태를 보여 줄지</td><td>정하은</td><td>10/8</td></tr>
+      <tr><td><span class="pill open">열림</span></td><td>새로 고침 주기(실시간 / 1분)</td><td>최민재</td><td>10/8</td></tr>
+      <tr><td><span class="pill decide">정할 것</span></td><td>권한 없는 방을 숨길지, 흐리게 보일지</td><td>박서연 팀장</td><td>10/10</td></tr>
+    </tbody>
+  </table>
+
+  <h2>범위</h2>
+  <div class="cols">
+    <div>
+      <h3>지금 함</h3>
+      <ul>
+        <li>"지금 빈 방" 필터와 정렬</li>
+        <li>방 카드에서 바로 예약</li>
+        <li>네 가지 화면 상태(아래 표)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>지금 하지 않음</h3>
+      <ul>
+        <li>층 지도 보기</li>
+        <li>좌석·공용 공간</li>
+        <li>노쇼 자동 반환(별도 제안)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>화면 상태</h2>
+  <table>
+    <colgroup><col style="width:20%"><col><col style="width:30%"></colgroup>
+    <thead><tr><th>상태</th><th>사용자가 보는 것</th><th>다음 행동</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">빈 방 없음</th><td>"지금 빈 방이 없어요" + 가장 빨리 비는 방 3개</td><td>그 방 예약 또는 알림 받기</td></tr>
+      <tr><th scope="row">불러오는 중</th><td>방 카드 자리에 회색 틀</td><td>—</td></tr>
+      <tr><th scope="row">불러오기 실패</th><td>"현황을 불러오지 못했어요" + 다시 시도</td><td>다시 시도</td></tr>
+      <tr><th scope="row">권한 없음</th><td>정할 것(위 표) 결과에 따름</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2>완료 기준</h2>
+  <ul class="checklist">
+    <li>필터를 켜면 지금 비어 있는 방만 보이고, 남은 시간이 짧은 순으로 정렬됨</li>
+    <li>방 카드에서 예약하면 화면 이동 없이 예약이 확정되고 카드가 "예약됨"으로 바뀜</li>
+    <li>네 가지 화면 상태가 모두 위 표대로 보임</li>
+    <li>다른 사용자가 먼저 예약한 방을 누르면 "방금 예약됐어요"가 보이고 목록이 새로 고쳐짐</li>
+  </ul>
+
+  <div class="callout info" role="note">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <div>
+      <span class="title">막히면 바로 물어 주세요</span>
+      <p>열린 것 2가지는 10/8까지 정해서 이 문서를 고칩니다. 그 전에 막히면 기획 인턴에게 바로 물어 주세요.</p>
+    </div>
+  </div>
+
+  <p class="doc-foot">이 문서는 시험용 가상 회사(다온랩)의 견본이에요. 사람과 숫자는 모두 가상이에요.</p>
+</article>
+</body>
+</html>

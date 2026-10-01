@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>노쇼 회의실 자동 반환 — 3개월 시범 운영 제안</title>
+<link rel="stylesheet" href="../document.css">
+<style>
+  @page { @top-right { content: "사내한정"; font-family: "Paperlogy", sans-serif; font-size: 8pt; color: #007a5c; } }
+  @page :first { @top-right { content: none; } @bottom-right { content: none; } }
+</style>
+</head>
+<body>
+<!-- 견본: 시험용 가상 회사(다온랩)의 문서예요. 숫자와 사람은 모두 가상이에요. -->
+<article class="doc">
+
+  <section class="cover">
+    <div class="marking">
+      <span class="badge internal">사내한정</span>
+      <span>받는 사람: 김도윤 대표 · 참조: 박서연 프로덕트팀장</span>
+    </div>
+    <span class="kicker">제안서</span>
+    <h1>노쇼 회의실 자동 반환<br>3개월 시범 운영 제안</h1>
+    <p class="subtitle">예약하고 오지 않은 회의실을 15분 뒤 자동으로 풀어, 다른 사용자가 바로 쓰게 합니다.</p>
+    <div class="cover-meta">
+      <dl class="kv">
+        <dt>요청</dt><dd>시범 운영 승인 (고객사 2곳, 2026-11 ~ 2027-01)</dd>
+        <dt>결정 기한</dt><dd>2026-10-14(수)</dd>
+        <dt>작성</dt><dd>기획 인턴 · 2026-10-01 · 버전 1</dd>
+      </dl>
+    </div>
+  </section>
+
+  <div class="lead">
+    <span class="lead-label">승인 요청</span>
+    <ul>
+      <li>고객사 2곳에서 노쇼 회의실 자동 반환을 <strong>3개월 시범 운영</strong>하도록 승인해 주시길 부탁드림.</li>
+      <li>드는 것: 개발 2명 × 3주. 외부 비용 없음.</li>
+      <li>결정 기한: <strong>10/14(수)</strong>. 이날까지 정해야 11월 첫 주에 시작할 수 있음.</li>
+    </ul>
+  </div>
+
+  <h2>문제와 지금 해야 하는 이유</h2>
+  <ul>
+    <li>예약 후 오지 않은 회의실이 그대로 잠겨, 다른 사용자가 빈 방을 못 씀.</li>
+    <li>9월 고객사 문의 중 "빈 방인데 예약됨"이 가장 많았음(가상 수치: 문의 120건 중 31건).</li>
+    <li>11월은 고객사 연말 회의가 몰리는 시기라, 효과를 보기 좋음.</li>
+  </ul>
+
+  <h2>제안하는 방법</h2>
+  <ol class="steps">
+    <li><span class="step-title">예약 시작 후 10분: 알림</span><span class="step-meta">예약한 사용자에게 "아직 쓰시나요?" 알림을 보냄.</span></li>
+    <li><span class="step-title">15분: 자동 반환</span><span class="step-meta">체크인이 없으면 예약을 풀고, 같은 시간 대기자에게 알림.</span></li>
+    <li><span class="step-title">고객사 관리자 설정</span><span class="step-meta">고객사마다 끄고 켤 수 있고, 시간(10~30분)을 바꿀 수 있음.</span></li>
+  </ol>
+
+  <h2>범위</h2>
+  <div class="cols">
+    <div>
+      <h3>이번에 함</h3>
+      <ul>
+        <li>회의실 예약의 자동 반환</li>
+        <li>알림(앱 푸시, 메일)</li>
+        <li>고객사 관리자 설정</li>
+      </ul>
+    </div>
+    <div>
+      <h3>이번에 하지 않음</h3>
+      <ul>
+        <li>좌석·공용 공간 예약</li>
+        <li>반복 예약의 자동 반환</li>
+        <li>노쇼 통계 화면</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>기대 효과 <span class="pill neutral">추정</span></h2>
+  <table>
+    <thead><tr><th>지표</th><th class="num">지금</th><th class="num">시범 목표</th><th>정의</th></tr></thead>
+    <tbody>
+      <tr><td>노쇼로 비는 회의실 시간</td><td class="num">주 38시간</td><td class="num">주 20시간 이하</td><td>예약 시간 중 체크인 없는 시간, 고객사 2곳 합계</td></tr>
+      <tr><td>"빈 방인데 예약됨" 문의</td><td class="num">월 31건</td><td class="num">월 15건 이하</td><td>고객센터 분류 기준</td></tr>
+    </tbody>
+  </table>
+  <p class="fineprint">숫자는 견본용 가상 수치예요. 목표는 추정이며, 시범 운영 결과로 다시 정합니다.</p>
+
+  <h2>비용·일정·사람</h2>
+  <table>
+    <thead><tr><th>항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">사람</th><td>개발 2명 × 3주, 디자인 1명 × 1주</td></tr>
+      <tr><th scope="row">외부 비용</th><td>없음(기존 알림 기능 사용)</td></tr>
+      <tr><th scope="row">일정</th><td>10/19 개발 시작 → 11/6 시범 시작 → 2027-01-29 결과 보고</td></tr>
+    </tbody>
+  </table>
+
+  <h2>위험과 대응</h2>
+  <div class="callout warn" role="note">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+    <div>
+      <span class="title">늦게 온 사용자의 예약이 풀릴 수 있음</span>
+      <p>알림을 먼저 보내고, 고객사가 시간을 30분까지 늘릴 수 있게 함. 시범 기간에 불만 건수를 매주 셈.</p>
+    </div>
+  </div>
+
+  <h2>다른 방법</h2>
+  <table class="compare">
+    <colgroup><col class="label"><col><col></colgroup>
+    <thead><tr><th scope="col">방법</th><th scope="col">좋은 점</th><th scope="col">아쉬운 점</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">아무것도 안 함</th><td>개발 비용 없음</td><td>문의가 계속 쌓이고, 연말에 더 늘 것으로 보임</td></tr>
+      <tr><th scope="row">수동 반환 버튼</th><td>개발이 1주로 짧음</td><td>사용자가 누르지 않으면 효과 없음</td></tr>
+      <tr><th scope="row">자동 반환(제안)</th><td>사용자 행동 없이 효과</td><td>개발 3주, 늦게 온 사용자 불만 위험</td></tr>
+    </tbody>
+  </table>
+
+  <p class="doc-foot">이 문서는 시험용 가상 회사(다온랩)의 견본이에요. 숫자와 사람은 모두 가상이에요.</p>
+</article>
+</body>
+</html>
