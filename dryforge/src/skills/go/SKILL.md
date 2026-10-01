@@ -36,8 +36,13 @@ counts as **evidence** changes:
   the spec's reader-check questions from the output alone (`references/reader-check-prompt.md`), and
   the orchestrator compares each answer with the expected answer; (3) the **classification check** —
   the marking and recipients are present and match the spec, and nothing above the level is in the
-  text. "Green" means all three passed with **captured evidence** (the trace table, the reader's
-  answers and the comparison, the marking) — never "looks fine".
+  text; (4) the **rule check** — every document rule the project records (company rules in the
+  harness `security.md` and `standards.md`, and the series `AGENTS.md`) is checked against the
+  output, one row per rule: the rule, whether it applies, pass or fail, and where in the document
+  (a quote or location) — a fail is blocking; a rule that cannot be decided by reading the document
+  is shown to the user at the user gate. The rule check runs wherever the classification check runs.
+  "Green" means all four passed with **captured evidence** (the trace table, the reader's answers
+  and the comparison, the marking, the rule table) — never "looks fine".
 
 ## Core principles (apply throughout)
 
@@ -51,6 +56,11 @@ counts as **evidence** changes:
   `references/reader-check-prompt.md` before the first gate). The
   document carries the spec's level and recipients at the top; content above that level is a
   blocking finding, never shipped; a recipient the level does not allow → stop and ask.
+- **Company rules are a hard gate too.** Before the skeleton, read the document rules the project
+  records (harness `security.md`, `standards.md`, the series `AGENTS.md`) and compare them with the
+  spec. A rule the spec contradicts → stop and ask the user which holds — the rule, or a one-time
+  exception the user decides and the harness records — **before** writing anything. A rule added
+  after `ready` ran applies to this run too. Every applicable rule is checked by the rule check.
 - **escalate-don't-guess.** Architecture mismatch, suspected spec violation, ambiguous task,
   unresolvable conflict → stop and **ask the user**; never guess. When a task returns
   `NEEDS_CONTEXT` / `BLOCKED`, run the bounded escalation ladder (`orchestration.md` — re-dispatch
@@ -148,8 +158,8 @@ counts as **evidence** changes:
     commit. For existing projects this stays on the feature branch (never on main); for greenfield
     it is on main (acceptable — main has no meaningful history to protect). If a prior run left
     `.dryforge/` *tracked*, run `git rm -r --cached .dryforge/` first.
-- **Verify set** — the fact trace and the classification check (every integration gate and the
-  completion gate) and the reader check (the completion gate). Fix it before the first wave. A named
+- **Verify set** — the fact trace, the classification check, and the rule check (every integration
+  gate and the completion gate) and the reader check (the completion gate). Fix it before the first wave. A named
   human sign-off the spec records is **not** something `go` can obtain — `go` never sends the
   document; report it as **pending** at the user gate, and the user obtains it after the run.
 - Read **handoff first** (it governs: document roles, hard gates, execution shape), then spec and
@@ -270,9 +280,9 @@ count — no writing judgment is left for an independent writer.
    The **merge commit message must satisfy the project's commit-msg hooks**. Then run **regen
    barriers**, then the **assembly step** (`orchestration.md`, "Assembly") and **commit it on the
    base**.
-6. **Integration gate** — run the fact trace across all landed parts and the classification check on
-   the assembled result **after** the assembly step is committed; **green = both passed, evidence
-   captured**. (The reader check runs once, at the completion gate, on the whole document — an
+6. **Integration gate** — run the fact trace across all landed parts, and the classification check and
+   the rule check on the assembled result **after** the assembly step is committed; **green = all
+   passed, evidence captured**. (The reader check runs once, at the completion gate, on the whole document — an
    intermediate document has no first screen yet.) This
    catches cross-part interactions that no single writer could see (a figure stated two ways, a term
    defined twice, a summary promising what a section never says). Failure → analyze → fix-dispatch or escalate.
@@ -366,7 +376,7 @@ Done only when ALL hold — on **evidence**, not assertion:
   recorded** (at the final review or by the user) — a flagged concern is never silently carried into
   "done".
 - a **final full check** — the **whole** verify set on the assembled document: the fact trace over
-  every figure, date, name, and quotation; the classification check; and the **reader check on all
+  every figure, date, name, and quotation; the classification check; the rule check; and the **reader check on all
   reader-check questions** by a fresh independent reader (`reader-check-prompt.md`), each answer
   compared with the expected answer — **with the trace table, the answers, and the comparison
   captured and shown** (not "looks right"). **Why re-run everything when each wave already

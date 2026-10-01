@@ -28,7 +28,8 @@ Must convey (structure is the agent's to design — 3 hard gates or 30):
 - **Hard gates**: non-negotiable constraints the executing agent cannot derive from the material
   alone (things the document must never say or promise, fixed dates and wording) —
   always including the classification requirements of the spec's level (`classification.md`, "Hard
-  gates").
+  gates") and every project document rule that applies to this document, quoted from the harness
+  (`go`'s rule check checks each one); an exception the user granted is stated next to its rule.
 - Intent decided while authoring but not captured in spec/plan.
 - **First cycle only (no project harness yet):** the handoff **carries** a **Project Foundation**
   section — the project-wide foundation (business and stakeholder model, working decisions, future scope) that
