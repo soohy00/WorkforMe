@@ -54,7 +54,7 @@ git remote set-url --push origin no-push
 ```bash
 cd ~/work/WorkforMe
 mkdir projects/acme && cd projects/acme
-git init && echo "material/raw/" > .gitignore
+git init -b main && echo "material/raw/" > .gitignore
 git add .gitignore && git commit -m "start"
 ```
 

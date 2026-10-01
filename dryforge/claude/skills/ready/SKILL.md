@@ -117,9 +117,9 @@ where the input came from. The 3-doc contract is in `references/output-format.md
 - **Project folder.** Work happens inside **one company project folder**. If the current directory is
   the workspace root (it holds `projects/` and `dryforge/`), do not work there: list the folders in
   `projects/` and ask which project this is for, or offer to create a new one (`projects/<name>/`,
-  `git init`, a `.gitignore` holding `material/raw/`, an initial commit). A project repository stays **local** — never add a remote or push
+  `git init -b main`, a `.gitignore` holding `material/raw/`, an initial commit). A project repository stays **local** — never add a remote or push
   on your own; company material must not leave the machine unless the user sets that up.
-- **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
+- **git required.** If the project is not a git repo, offer to run `git init -b main` **and make an initial
   commit** (an empty repo has no HEAD, so go could not create a worktree later). If git is not
   installed, stop and say so. This holds for both new and existing projects — whether documents
   already exist is *not* the deciding factor.
@@ -158,7 +158,7 @@ Take the input raw, decide first-vs-delta, and read material/harness inline to l
 stages stand on. **No judgment or resolution here** — classification is DECOMPOSE's, conflict
 questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusion.
 
-1. **Check git.** Not a repo → offer `git init` + an initial commit. git not installed → stop and say
+1. **Check git.** Not a repo → offer `git init -b main` + an initial commit. git not installed → stop and say
    so. Greenfield or existing, git is required.
 2. **Absorb the input lightly — capture its *character* only.** Parse the argument tokens: resolve to
    files where they are paths, read as prose otherwise, accept a mix. Empty / "use the skill" → ask
@@ -203,7 +203,10 @@ questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusio
    an independent reader who never saw the dialogue; (b) the **fact trace** — every figure, date,
    name, and quotation in the document traced to a source in the spec's fact ledger; (c) the
    **classification check** — the document carries the level and recipients the spec sets and holds
-   nothing above that level. If the project adds its own evidence (a manager's sign-off, a legal
+   nothing above that level; (d) the **rule check** — every document rule the project records
+   (company rules in the harness `security.md` and `standards.md`, the series `AGENTS.md`; in a first
+   cycle, the rules settled in the Foundation's working decisions) that applies is met. A rule the user's intent contradicts is a conflict for ELICIT — the user decides
+   the rule or a one-time exception; never write the spec around it silently. If the project adds its own evidence (a manager's sign-off, a legal
    read), record it in SPEC as named human-approval evidence the **user** obtains after `go` — never
    left implicit (`go` never sends the document).
 
@@ -247,7 +250,9 @@ invent); **form → PRESENT** (kind, structure, visuals, channel — the agent k
 trade-offs + recommendation, grounded in the extracted content; the user decides — never silent).
 Build and maintain a **model of the user** (goal / values / constraints / domain facts) and a **model
 of each reader**, and test each load-bearing decision against them: grounded → realize; model-silent →
-that *is* the gap, close it.
+that *is* the gap, close it. **Ask only what this document needs** (`elicitation.md`, "Stay on
+purpose"): every question, follow-ups included, must change what this document says or how it is
+shaped for its reader; off-purpose topics are parked, not chased.
 
 **Classification is settled in ELICIT, never defaulted silently** (`classification.md`). Recommend
 the level from the most sensitive content and from the recipients, and let the user decide. The
@@ -381,7 +386,8 @@ fixes only the stage it belongs to, then re-runs the gate; a surviving blocker �
 ## USER GATE — the one human checkpoint
 
 Present the completed, verified 3-doc to the user: *"Review this and confirm. If it's right, proceed;
-if not, tell me and I'll fix."* On approval, tell the user to **invoke the `go` skill in this
+if not, tell me and I'll fix."* Show the **parked list** from ELICIT (`elicitation.md`, "Stay on
+purpose") once, one line per topic, so the user can take any of them up later. On approval, tell the user to **invoke the `go` skill in this
 session** to execute. Autonomy is executing an **approved** spec, not setting intent — one gate, at
 the end (outside ELICIT's dialogue and the intent-completeness loopback, the only mid-run exception
 is the REVIEW(A) reopen). Produce → run is one session — the design

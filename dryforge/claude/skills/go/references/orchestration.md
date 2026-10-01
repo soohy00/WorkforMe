@@ -14,9 +14,10 @@ are direct cost.
 
 Before the first wave, write a compact verification plan in the orchestrator's working notes:
 
-- the verify set and its purpose (fact trace, classification check, reader check, any named sign-off)
+- the verify set and its purpose (fact trace, classification check, rule check, reader check, any
+  named sign-off), and the list of project rules that apply to this document
 - which reader-check questions each part owns (the writers' self-check)
-- the per-wave gates (fact trace, classification check) and the completion-gate-only check (the full
+- the per-wave gates (fact trace, classification check, rule check) and the completion-gate-only check (the full
   reader check by a fresh reader, on the whole document, once its first screen exists)
 - what the fact trace covers (every figure, date, proper name, quotation) and how an `unconfirmed`
   fact must appear in the text
@@ -236,8 +237,9 @@ bounded — do not loop re-dispatching past the ladder.
 3. **Regen barriers** — same as sequential. Commit if downstream depends on it.
 4. **Assembly** — regenerate the assembled document (see "Assembly" below). **Commit on the base** —
    an uncommitted assembly is silently lost to later worktrees and the final merge.
-5. **Integration gate** — run the fact trace across all landed parts and the classification check on
-   the assembled base; **green = both passed, evidence captured** (trace table, marking check). The
+5. **Integration gate** — run the fact trace across all landed parts, and the classification check and
+   the rule check on the assembled base; **green = all passed, evidence captured** (trace table,
+   marking check, rule table). The
    reader check is reserved for the completion gate. This catches cross-part interactions. Failure → fix-dispatch or escalate. **Record
    the base tip SHA after the gate passes** (e.g. `GATE_SHA=$(git rev-parse HEAD)`) — the completion
    gate compares against it to avoid redundant re-runs (see SKILL.md, Completion gate). **Run

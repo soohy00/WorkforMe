@@ -34,6 +34,8 @@ Dispatch a fresh subagent that did **not author** the intent. Give it:
   dialogue verbatim into the dispatch prompt** (or point it at a recorded transcript); never a
   paraphrase/summary, which silently breaks the evidence base the disposition audit judges against.
   It may also read the **project material** (grounds reality).
+- **The purpose line and the parked list** (`elicitation.md`, "Stay on purpose"). A parked topic is
+  not a slot unless it changes what this document says or how it is shaped for its reader.
 - **Read-only**, returning a **structured list** (no raw dump).
 - **The mandate — audit the decision surface** (`elicitation.md`). Two audits:
   1. **Disposition audit** — for each slot marked `grounded` or `deferred-tunable`, is that defensible

@@ -209,7 +209,8 @@ empty.
 - **Quality floor**: every level states who may receive it and what it forbids; every sensitive item
   names its level; states what is *explicitly not allowed* (a public link for an Internal document,
   a revenue figure to an external recipient); not "handle sensitive data carefully" — this project's
-  own rules.
+  own rules. A rule about the document's content or marking is decidable by reading the document and
+  names its source (the company's policy, the user) — `go`'s rule check runs it.
 
 ### standards.md — rules
 - **Purpose**: what breaks when violated. The project's hard gates for writing and delivery.
@@ -218,7 +219,7 @@ empty.
   rules (every figure, date, name, quotation traceable; an unconfirmed fact is shown as unconfirmed);
   terminology rules (the official terms and the forbidden ones); number, date, currency, and name
   formats; file naming and output layout; versioning and status marking (draft / in review / final);
-  the verification a document must pass before it is sent (reader check, fact trace, classification,
+  the verification a document must pass before it is sent (reader check, fact trace, classification, rule check,
   any named sign-off).
 - **Exclude**: traps and practical knowledge (→ working-notes); domain rules (→ business-rules);
   what a particular reader likes (→ audiences).
@@ -226,8 +227,10 @@ empty.
   be nice if...") are not rules.
 - **Not a standards rule: the current cycle's scope-freeze.** "Don't write document X yet" is a
   *status* (→ status.md's "remaining"), not a permanent MUST/MUST-NOT.
-- **Quality floor**: every rule has a clear violation criterion; record only rules actually in force;
-  add a reason only when the rule is surprising. Not "write clearly" — "every figure shows its period
+- **Quality floor**: every rule has a clear violation criterion — decidable by reading the document
+  (pass or fail), because `go`'s rule check runs every recorded rule that applies; record only rules
+  actually in force, each with its source (the company's guide, the user); add a reason only when the
+  rule is surprising. A company rule the user adds later is recorded the same way. Not "write clearly" — "every figure shows its period
   and source; a figure without both is not sent."
 
 ### working-notes.md — knowledge

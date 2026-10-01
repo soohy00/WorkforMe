@@ -77,7 +77,7 @@ other:
    trivial, or text the user dictated word for word → edit directly on the base; otherwise
    fix-dispatch.
 5. **Re-check - bounded.**
-   - After a fix, re-run the fact trace and the classification check, then the reader check on the
+   - After a fix, re-run the fact trace, the classification check, and the rule check, then the reader check on the
      **affected questions only**. Re-run all questions only when the key message, the request, or a
      claim on the first screen changed — not for a wording-only edit, and not for a change to the
      marking line (that re-checks only the question about classification and recipients).

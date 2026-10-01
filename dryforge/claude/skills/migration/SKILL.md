@@ -85,7 +85,7 @@ migration is an independent piece of work, and a fresh session keeps the task-le
 - Invocation: the user invokes the `migration` skill, optionally with paths to material — migration
   reads the **current project folder** and the material given.
 - **Project folder.** At the workspace root (it holds `projects/` and `dryforge/`), do not work there:
-  ask which company project this is, or create one (`projects/<name>/`, `git init`, a `.gitignore`
+  ask which company project this is, or create one (`projects/<name>/`, `git init -b main`, a `.gitignore`
   holding `material/raw/`, an initial commit). Never add a remote or push; company material stays on the machine.
 - **Existing material expected.** migration converts a project that already has material —
   onboarding documents, wiki or workspace exports, org charts, earlier plans, proposals, reports,
@@ -94,7 +94,7 @@ migration is an independent piece of work, and a fresh session keeps the task-le
   committed in `material/` (later `go` runs treat other untracked files as foreign work). With no
   material at all (the user will only speak or give raw data later), there is nothing to migrate — direct the user to `ready` (which designs the project's first
   cycle and lets `go` create the harness from scratch).
-- **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
+- **git required.** If the project is not a git repo, offer to run `git init -b main` **and make an initial
   commit** (later `go` needs a HEAD for worktrees). If git is not installed, stop and say so.
 - **git posture — migration writes files, it does not commit.** migration creates the harness files,
   backs up any existing entry file to `.dryforge/backup/`, adds `.dryforge/` to `.gitignore` (so the

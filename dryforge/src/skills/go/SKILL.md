@@ -3,7 +3,7 @@ name: go
 description: >
   Write the document approved in `ready`, as meant, and prove it with checks that actually ran —
   an independent reader answers the agreed questions, every figure is traced to its source, the
-  classification holds. Comes back to you if the work would change what you approved, keeps the
+  classification and the company's rules hold. Comes back to you if the work would change what you approved, keeps the
   project docs in step, and never merges on its own. Use when the user invokes the `go` skill after
   `ready`. Requires git.
 ---
@@ -36,8 +36,18 @@ counts as **evidence** changes:
   the spec's reader-check questions from the output alone (`references/reader-check-prompt.md`), and
   the orchestrator compares each answer with the expected answer; (3) the **classification check** —
   the marking and recipients are present and match the spec, and nothing above the level is in the
-  text. "Green" means all three passed with **captured evidence** (the trace table, the reader's
-  answers and the comparison, the marking) — never "looks fine".
+  text; (4) the **rule check** — every document rule the project records is checked against the
+  output. Sources: the harness `security.md` and `standards.md` and the series `AGENTS.md`; in a
+  first cycle (no harness yet), the handoff's Project Foundation working decisions and its hard
+  gates. In scope: rules about the document's text, marking, recipients, and format; a rule about
+  something else (where files are stored, backups, which tool may hold a level) is marked "not about
+  the document" and skipped. One row per rule: the rule, its source, and one result — **pass** (with
+  the quote or location), **fail** (blocking), **not applicable**, **exception** (a one-time exception
+  the user granted, with the date — not a fail), or **undecidable — user** (cannot be decided by
+  reading; shown at the user gate, not a fail). The rule check runs wherever the classification
+  check runs, and is green when it covered every recorded rule and no row is a fail.
+  "Green" means all four passed with **captured evidence** (the trace table, the reader's answers
+  and the comparison, the marking, the rule table) — never "looks fine".
 
 ## Core principles (apply throughout)
 
@@ -46,11 +56,19 @@ counts as **evidence** changes:
   drop, or reorder dependencies. (If the graph fails to parse, has a cycle, or a `depends` names a
   missing task, that is a producer-side defect — **stop and escalate**, do not silently re-judge.)
 - **Serve the spec.** "Correct" = matches the spec. On any spec/material/convention conflict, spec
-  wins; where plan conflicts with spec, follow the spec.
+  wins — except a recorded company rule: a spec that contradicts one goes to the user ("Company rules
+  are a hard gate too", below); where plan conflicts with spec, follow the spec.
 - **Classification is a hard gate** (`references/classification.md`, load it up front; load
   `references/reader-check-prompt.md` before the first gate). The
   document carries the spec's level and recipients at the top; content above that level is a
   blocking finding, never shipped; a recipient the level does not allow → stop and ask.
+- **Company rules are a hard gate too.** Before the skeleton, read the document rules the project
+  records (the rule check's sources, above) and compare them with the spec. A rule the spec
+  contradicts → stop and ask the user which holds — the rule, or a **one-time exception** — **before**
+  writing anything. An exception the user grants is written next to its rule in the spec and the
+  handoff (`orchestration.md`, "The user changes content mid-run") and recorded in the harness at
+  step 9 (`docs/tracking/decisions/`); an exception already stated in the handoff is not asked again.
+  A rule added after `ready` ran applies to this run too.
 - **escalate-don't-guess.** Architecture mismatch, suspected spec violation, ambiguous task,
   unresolvable conflict → stop and **ask the user**; never guess. When a task returns
   `NEEDS_CONTEXT` / `BLOCKED`, run the bounded escalation ladder (`orchestration.md` — re-dispatch
@@ -61,7 +79,7 @@ counts as **evidence** changes:
 - **Protect main; evidence over self-report.** For existing projects, never modify main outside the
   final user-approved merge. For a new project (base = main), main is the working base — modification
   is expected. Gates pass on captured evidence (the trace table, the reader's answers compared with
-  the expected answers, the marking check), not on an agent's "looks fine."
+  the expected answers, the marking check, the rule table), not on an agent's "looks fine."
 - **Floor, not ceiling.** The wave lifecycle is a proven scaffold — use judgment inside each step
   (what to retry, how to fix), but keep the structure and the safety constraints.
 - **Report results, not process.** User-facing text covers wave completion, blockers, and final
@@ -123,11 +141,14 @@ counts as **evidence** changes:
 - **Project folder.** Work only inside one company project folder (see `ready`). At the workspace
   root, ask which project. The project repository stays local: never add a remote or push unless the
   user set one up.
-- **git required** — worktree isolation depends on it. If not a repo, offer `git init` **and make an
+- **git required** — worktree isolation depends on it. If not a repo, offer `git init -b main` **and make an
   initial commit** (an empty repo has no HEAD, so no worktree/branch can be created). If git is not
   installed, stop and say so.
-- **Base determination.** Identify the project's main branch (docs / remote default / ask — do not
-  guess). Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
+- **Base determination.** The main branch is always named **`main`**. If the repository has no
+  `main` (an older git created `master`): with a single branch, offer to rename it
+  (`git branch -m <name> main`) and wait for the user's yes — if the user says no, stop and say that
+  `go` needs a `main` branch; with several branches, stop and ask which one to rename to `main`.
+  Never pick another branch as main. Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
   nothing unpushed) and the working tree has no modified/staged **tracked**
   files; if either fails, **stop and report**. Then classify:
   - **New project** (main has no finished documents — only an init commit, `.gitignore`, or
@@ -146,8 +167,8 @@ counts as **evidence** changes:
     commit. For existing projects this stays on the feature branch (never on main); for greenfield
     it is on main (acceptable — main has no meaningful history to protect). If a prior run left
     `.dryforge/` *tracked*, run `git rm -r --cached .dryforge/` first.
-- **Verify set** — the fact trace and the classification check (every integration gate and the
-  completion gate) and the reader check (the completion gate). Fix it before the first wave. A named
+- **Verify set** — the fact trace, the classification check, and the rule check (every integration
+  gate and the completion gate) and the reader check (the completion gate). Fix it before the first wave. A named
   human sign-off the spec records is **not** something `go` can obtain — `go` never sends the
   document; report it as **pending** at the user gate, and the user obtains it after the run.
 - Read **handoff first** (it governs: document roles, hard gates, execution shape), then spec and
@@ -185,6 +206,10 @@ producer; same working tree, nothing to copy). The orchestrator reads
 A task whose declared work targets are **state/external only** (no file diff) is handled on the base
 sequentially, **never dispatched into a parallel worktree** — the file-diff merge-gate cannot verify
 it and worktree isolation buys it nothing (`orchestration.md`, Wave scheduling). Then, per wave:
+
+**Rules before writing (inline, before the skeleton).** Compare the recorded document rules with the
+spec ("Company rules are a hard gate too", Core principles); ask the user on a contradiction before
+anything is written.
 
 **Skeleton (inline, before dispatch).** The document skeleton — the output folder, the assembled
 document's file name, `parts/_header.md` (classification marking, recipients, title block), one file
@@ -268,9 +293,9 @@ count — no writing judgment is left for an independent writer.
    The **merge commit message must satisfy the project's commit-msg hooks**. Then run **regen
    barriers**, then the **assembly step** (`orchestration.md`, "Assembly") and **commit it on the
    base**.
-6. **Integration gate** — run the fact trace across all landed parts and the classification check on
-   the assembled result **after** the assembly step is committed; **green = both passed, evidence
-   captured**. (The reader check runs once, at the completion gate, on the whole document — an
+6. **Integration gate** — run the fact trace across all landed parts, and the classification check and
+   the rule check on the assembled result **after** the assembly step is committed; **green = all
+   passed, evidence captured**. (The reader check runs once, at the completion gate, on the whole document — an
    intermediate document has no first screen yet.) This
    catches cross-part interactions that no single writer could see (a figure stated two ways, a term
    defined twice, a summary promising what a section never says). Failure → analyze → fix-dispatch or escalate.
@@ -293,8 +318,8 @@ count — no writing judgment is left for an independent writer.
    after it), the completion gate is satisfied by the prior gate's captured result — do not re-run.
    If any commit landed after the last gate, **or that gate was affected-only**, re-run the full verify set.
    After that full run, a **fix** (during the completion gate or after the final review) re-checks in
-   the bounded way (`reader-check-prompt.md`, "Re-check - bounded"): the fact trace and classification
-   check in full, the reader check on the affected questions only. A fix does not restart the full
+   the bounded way (`reader-check-prompt.md`, "Re-check - bounded"): the fact trace, the classification
+   check, and the rule check in full, the reader check on the affected questions only. A fix does not restart the full
    reader check.
 
 9. **Harness create / update** (`references/harness-lifecycle.md` + `references/harness-format.md`,
@@ -332,7 +357,9 @@ count — no writing judgment is left for an independent writer.
     line each, its classification and recipients, any `unconfirmed` fact still shown as unconfirmed
     (the user must fill or accept it before sending), what the reader check found, and **the reader's
     open questions** (the non-blocking reader-check items, `reader-check-prompt.md`) for the user to
-    add, change, or leave. Offer the
+    add, change, or leave; every rule-check row marked **undecidable — user** (the rule, its source,
+    the passage) for the user to decide; every one-time rule exception granted in this run; and a
+    provisional `(잠정)` level with who must confirm it. Offer the
     document itself (share the file with the user in this session if the platform allows). **First cycle:** also present the harness
     as a reconciliation against the decisions the user took part in — *"the [X] we agreed is
     recorded in the harness as [this]"* — **not** a raw document dump. **Later cycle:** include a
@@ -364,7 +391,7 @@ Done only when ALL hold — on **evidence**, not assertion:
   recorded** (at the final review or by the user) — a flagged concern is never silently carried into
   "done".
 - a **final full check** — the **whole** verify set on the assembled document: the fact trace over
-  every figure, date, name, and quotation; the classification check; and the **reader check on all
+  every figure, date, name, and quotation; the classification check; the rule check; and the **reader check on all
   reader-check questions** by a fresh independent reader (`reader-check-prompt.md`), each answer
   compared with the expected answer — **with the trace table, the answers, and the comparison
   captured and shown** (not "looks right"). **Why re-run everything when each wave already
@@ -388,7 +415,9 @@ Done only when ALL hold — on **evidence**, not assertion:
   fix the check (or the document), and re-run until it genuinely passes. **Never infer a pass from
   side-effects** ("the reader said it was clear", "no one objected") when the declared check did not
   itself succeed; a check you can't
-  evaluate is not evidence. (This is A=A self-judgment applied to the gate's own evidence — see header.)
+  evaluate is not evidence. (A rule-check row marked **undecidable — user** is not an unevaluable
+  check: the rule check ran over every rule, and that row's decision belongs to the user at the
+  user gate.) (This is A=A self-judgment applied to the gate's own evidence — see header.)
 - no residual escalation outstanding — every task that returned `NEEDS_CONTEXT` / `BLOCKED` was
   resolved through the bounded escalation ladder, and any escalation that **reached the user** was
   **synchronous** (the orchestrator pauses the run and waits for the user's

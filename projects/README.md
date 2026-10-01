@@ -27,7 +27,7 @@ projects/
 
 ```bash
 mkdir projects/<회사-프로젝트> && cd projects/<회사-프로젝트>
-git init && echo "material/raw/" > .gitignore
+git init -b main && echo "material/raw/" > .gitignore
 git add .gitignore && git commit -m "start"
 ```
 
