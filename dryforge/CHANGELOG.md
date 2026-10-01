@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.7-docs.3 (2026-10-01)
+
+- Decision records state only reasons on the record; when the user gave none they say so, and an
+  invented reason is a blocking hallucination
+- The user's answers reach later subagents verbatim (question, options, answer), never summarized
+- Writers receive the whole fact ledger with their rows marked, not a hand-picked subset
+
 ## v1.3.7-docs.2 (2026-09-30)
 
 - go: bounded re-checks. The reader check separates blocking findings (conflicting facts, unsourced

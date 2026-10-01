@@ -291,10 +291,14 @@ empty.
   situation have chosen differently?" — if so, it's a record (a document convention chosen over an
   alternative, a disclosure decision, a channel choice).
 - **Each decision**: context (why the decision was needed); decision (what was chosen); alternatives
-  (what was not chosen, and concretely why); consequences (the constraints this imposes on future
-  documents, including what it made impossible).
-- **Quality floor**: context states the concrete situation; alternatives give specific rejection
-  reasons; consequences include what is now impossible.
+  (what was not chosen, and why — the reason **as it stands on the record**); consequences (the
+  constraints this imposes on future documents, including what it made impossible).
+- **Quality floor**: context states the concrete situation; every reason is **on the record** — the
+  user's own words, the material, or the design's recorded reasoning; consequences include what is now
+  impossible. When the user chose without giving a reason, write that no reason was given (in the
+  user's language, e.g. "이유는 밝히지 않음") — **never supply one**. An honest "no reason given"
+  meets this floor; an invented reason, or a reader preference nobody stated, fails it (a
+  hallucination, blocking).
 
 ### tracking/findings.md — unresolved problems
 - **Criterion**: only problems not resolved on the spot — a figure two sources disagree on, a policy

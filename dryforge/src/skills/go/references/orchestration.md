@@ -332,6 +332,11 @@ the user's answer — it never silently hangs, fires-and-forgets, or proceeds on
 user; they return their escalation through their structured result, and the orchestrator relays it
 to the user synchronously.)
 
+**Pass the user's words, not a summary.** When a user's answer feeds a later subagent (a writer, a
+fix-dispatch, a reviewer), quote it verbatim — the question as asked, the options shown, the answer.
+A summary loses the reason the user accepted with an option, and a reviewer then flags that reason as
+invented.
+
 **The user changes content mid-run.** When the user's answer to an escalation changes what the
 document says (a line removed, a comparison dropped, a marking changed), update the spec first — and
 the plan and handoff where they carry it (a hard gate, the marking string) — and record the change
