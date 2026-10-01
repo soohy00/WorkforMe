@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.3.7-docs.10 (2026-10-01)
+
+Fixes from the ready → go retest:
+- Harness edits are re-checked: every fix that adds or rewrites harness text (advisory and lightweight
+  included) gets the harness re-check — one definition in `harness-lifecycle.md` (fresh reviewer,
+  dimensions 3–4, whole harness diff, the added lines checked against the dialogue). Re-check advisories
+  are accepted or fixed by deletion only, so the loop stays bounded
+- `harness-format.md`: words, thoughts, and plans are put on a person only with a quote from the
+  dialogue or material; writing-guide rules (register, no 님 in table cells) are not copied into `docs/`
+- An out-of-scope wording defect in the harness goes to `.dryforge/deferred.md`, not `findings.md`;
+  the next cycle that touches the file fixes it
+- `go` step 12 makes the reader's files first: a brand PDF and a one-file HTML from the Markdown
+  (`brand/tools/publish.py`) when the workspace has brand tools
+- `writing-style.md` §7: a decision record is the user's recorded choice for what it names, not a
+  company rule; `ready` ORIENT: the branch question does not use ELICIT's question budget;
+  `reader-check-prompt.md`: a fix to a blocking item no question covers adds one targeted question
+
 ## v1.3.7-docs.9 (2026-10-01)
 
 Fixes from an end-to-end ready → go run with the writing guide:

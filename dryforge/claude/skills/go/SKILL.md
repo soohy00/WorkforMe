@@ -314,7 +314,7 @@ count — no writing judgment is left for an independent writer.
    Delete merged task branches (`git branch -d`). A failed task's worktree and branch are preserved
    for diagnosis. After the final batch-remove, also delete the now-empty `.dryforge/worktrees/`
    directory and any task temp dirs — `.dryforge/` should hold only the active 3-doc, `NNN/` archives,
-   `status.json`, and `backup/` (no litter). → next wave.
+   `status.json`, `backup/`, and `deferred.md` when it has lines (no litter). → next wave.
 
 **After all waves:**
 
@@ -339,7 +339,9 @@ count — no writing judgment is left for an independent writer.
      regenerate the 3-doc via `ready`** (`harness-lifecycle.md`, fail-fast precondition). Back up +
      critically rework any existing CLAUDE.md / AGENTS.md with user approval.
    - **Delta** (marker present): update only the changed-scope `docs/` (read all current docs first;
-     escalate an in-scope conflict; new series → new AGENTS.md + navigation-tree update).
+     escalate an in-scope conflict; new series → new AGENTS.md + navigation-tree update). If
+     `.dryforge/deferred.md` lists a wording defect in a file this cycle touches, fix it now and remove
+     its line (`harness-lifecycle.md`, "Out-of-scope review finding").
    See `harness-lifecycle.md` for the marker rule and the clobber safety guard.
    **Write every file silently** — do not announce each file or section as you go ("Now the docs...",
    "이제 모듈 노트를...", "Now the module roadmap note in `X`"); the UI already shows each write. This
@@ -348,9 +350,13 @@ count — no writing judgment is left for an independent writer.
    orchestrator itself, so it gets its own independent check before step 10: dispatch one **fresh**
    subagent with `references/harness-review.md` (all four dimensions — dimension 4 against the
    dialogue text, verbatim, and the finished document) over this cycle's harness diff. Fix its blocking
-   findings, triage its advisories once, then go to step 10 — no re-run unless a fix was blocking, and
-   then only dimensions 3–4 on the touched files. A reason in a decision record that the user did not
-   give is the typical finding: write "이유는 밝히지 않음" instead.
+   findings and triage its advisories once. **Every fix that adds or rewrites harness text** — blocking
+   or advisory, a one-line lightweight edit included — gets the **harness re-check**
+   (`harness-lifecycle.md`, "Harness re-check") before step 10; a fix that only deletes text does not.
+   The typical findings: a reason in a decision record that the user did not give (write "이유는 밝히지
+   않음" instead), and a thought, plan, or words put on a person with no quote behind them ("작성자
+   생각", "팀장 의견") — quote the dialogue or material, or delete it (`harness-format.md`, "Words
+   belong to the person who said them").
 
 10. **Final review** — one subagent checks the **full diff on the base** for spec conformance + writing
     quality, **and the harness** (when created/updated this cycle) against `references/harness-review.md`
@@ -360,15 +366,28 @@ count — no writing judgment is left for an independent writer.
 
 11. **Fix if needed** — lightweight fix path for trivial advisories (MUST triage); fix-dispatch
     substantive findings. Fixes may touch **the document or the harness**. Re-run per `harness-lifecycle.md`:
-    document changed → re-run completion gate; harness changed → re-run harness review; both → both.
+    document changed → re-run completion gate; harness text added or rewritten (any fix, advisory
+    included) → the harness re-check; both → both.
     **Bounded:** each advisory is triaged **once**. A re-run judges blocking findings; the advisories it
-    raises are triaged (lightweight fix or accepted with a reason) without another re-run. Only a fix
+    raises are triaged without another re-run (document: lightweight fix or accepted with a reason;
+    harness: accepted with a reason or fixed by deleting text — `harness-lifecycle.md`). Only a fix
     to a blocking finding starts a new round, **at most two rounds** after the final review — still
     blocking after that → stop and ask the user with options. A
     finding about a material/harness mismatch **outside this cycle's change scope** is not fixed here — record
-    it in `docs/tracking/findings.md` and defer (scope-limited delta).
+    it in `docs/tracking/findings.md` and defer (scope-limited delta). A wording defect in a harness file
+    outside the scope goes to `.dryforge/deferred.md` instead (`harness-lifecycle.md`).
 
-12. **User gate.** Present for approval: where the document is, its key message and request in one
+12. **User gate.** **Brand files first.** When the workspace has brand tools (a `brand/tools/publish.py`
+    in a folder above the project root), make the files the reader gets:
+    `python3 <brand>/tools/publish.py outputs/<doc>/<name>.md <temp>/preview.png` writes `<name>.pdf`
+    (A4, brand fonts) and `<name>.html` (one file, styles and fonts inside) next to the Markdown. Look
+    at the preview before presenting — the marking line and badge, the first-screen box, tables, no
+    cut-off or overlapping text. A layout fault is the tool's, not the document's: name it at the gate
+    and do not reword the checked document to work around it (a text change after the final review
+    re-runs the checks, step 11). Never hand-edit the HTML. Commit the two files with the document. The
+    Markdown stays the source: after any later edit, run it again. No brand tools → Markdown only; say
+    so once.
+    Present for approval: where the document is (the `.md`, and the `.pdf` and `.html` when made), its key message and request in one
     line each, its classification and recipients, any `unconfirmed` fact still shown as unconfirmed
     (the user must fill or accept it before sending), what the reader check found, and **the reader's
     open questions** (the non-blocking reader-check items, `reader-check-prompt.md`) for the user to

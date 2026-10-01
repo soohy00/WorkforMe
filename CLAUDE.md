@@ -19,6 +19,7 @@
 (상사·대표 보고, 제안서, 협업 정렬 문서, 투자사 보고, 회의 자료, 운영 문서 — 견본은 `brand/samples/`).
 PDF 만들기: `NODE_PATH=$(npm root -g) node brand/tools/render.js <입력.html> <출력.pdf> [미리보기.png]`
 HTML 한 파일 만들기: `python3 brand/tools/bundle.py <입력.html> <출력.html>` (스타일과 쓴 글자만 담은 글꼴을 파일 안에 넣음).
+Markdown 보고서(ready·go 결과)는 `python3 brand/tools/publish.py <문서.md>` 하나로 옆에 PDF와 HTML 한 파일이 생긴다. go는 사용자 확인 전에 이것을 돌린다.
 문서를 줄 때는 PDF와 HTML 한 파일을 함께 만든다.
 차트가 들어가는 문서는 `brand/viz/`(viz.css, charts.js)를 쓰고 `brand/viz/README.md`의 규칙(형태 먼저, 검사한 색 순서, 축 하나, 표 보기, 정의와 출처)을 따른다.
 노션 템플릿은 `brand/notion/`(종류별 Markdown 6개, 데이터베이스 칸, 색 대응, 넣는 방법)을 따른다.

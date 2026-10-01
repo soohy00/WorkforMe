@@ -81,6 +81,10 @@ other:
      **affected questions only**. Re-run all questions only when the key message, the request, or a
      claim on the first screen changed — not for a wording-only edit, and not for a change to the
      marking line (that re-checks only the question about classification and recipients).
+   - A fix to a blocking item that no question covers (two places stating different dates, a figure
+     missing from the ledger) adds **one targeted question** for the re-check — "what is the <date /
+     figure / name> of X?" — with the fixed value as the expected answer. It counts as an affected
+     question; it is not added to the spec.
    - A re-check judges its questions and blocking items only. New non-blocking items join the open
      questions and never start another round.
    - **At most two re-checks** after the first full reader check. If a blocking item or a question

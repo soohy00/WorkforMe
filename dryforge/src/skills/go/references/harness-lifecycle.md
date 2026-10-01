@@ -95,14 +95,24 @@ no Foundation is produced.)
 If the final review triggers a fix:
 - **Document changed** → re-run the completion gate (the base SHA moved), with the reader check
   bounded as in `reader-check-prompt.md` (affected questions only).
-- **Harness changed** → re-run the harness review (lenses 3–4): a **fresh** reviewer over this
-  cycle's whole harness diff, given the list of fixes to verify.
+- **Harness text added or rewritten** → the harness re-check (below). Any fix counts — blocking or
+  advisory, a lightweight edit included. A fix that only deletes text needs no re-check.
 - **Both changed** → re-run both.
 
+## Harness re-check
+
+One definition, used after the step-9 harness check and after the final review: a **fresh**
+subagent with `harness-review.md` **dimensions 3–4** over this cycle's **whole harness diff**, given
+the list of fixes and the lines each one added or rewrote, and the dialogue text verbatim. Dimension
+4 checks every added or rewritten sentence against the dialogue and the material — a one-line edit by
+the orchestrator is the same self-written text the harness check exists for, so it is not exempt.
+An advisory the re-check raises is accepted with a reason or fixed by deleting text; a fix that would
+add text goes to the user gate instead (so the re-check never feeds itself).
+
 **Bounded.** A re-run judges blocking findings. The advisories it raises are triaged once
-(lightweight fix, or accepted with a reason) and do **not** start another re-run. Only a fix to a
-blocking finding starts a new round, at most two rounds after the final review; still blocking →
-stop and ask the user. A fresh reviewer almost always finds new advisories — they are recorded, not
+(a document advisory: lightweight fix or accepted with a reason; a harness advisory: as in "Harness
+re-check") and do **not** start another re-run. Only a fix to a blocking finding starts a new round,
+at most two rounds after the final review; still blocking → stop and ask the user. A fresh reviewer almost always finds new advisories — they are recorded, not
 a reason to loop.
 
 Do not approve/archive while a blocking finding is open.
@@ -113,6 +123,13 @@ If the final review surfaces a material/harness mismatch in a **harness region o
 change scope**, do **not** fix it this cycle — that would break scope-limited delta. Record it in
 `docs/tracking/findings.md` (with *why it can't be resolved now*) and leave it for a later cycle or
 manual handling.
+
+A **wording defect in the harness itself** outside the scope — an unsourced sentence, a word put on
+a person, the docs describing themselves, a writing-guide rule copied into `docs/` — is not a project
+problem, so it does **not** go into `findings.md` (the harness describes the project, never itself).
+Name it at the user gate and add one line to `.dryforge/deferred.md` (local workspace, not harness):
+the file, the sentence, and why it is a defect. The next cycle that touches that file fixes it and
+removes the line; the user can also have it fixed by hand at any time.
 
 ## Universality guard
 
