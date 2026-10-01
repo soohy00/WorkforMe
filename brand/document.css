@@ -430,6 +430,7 @@ table.agenda td .ends { display: block; margin-top: var(--s1); font-size: 0.9em;
   border-radius: var(--radius-md);
   page-break-inside: avoid;
 }
+.proposal.long { page-break-inside: auto; break-inside: auto; }  /* a long 건의 may continue on the next page */
 .proposal .decision { display: block; margin-bottom: var(--s2); font-weight: 700; color: var(--ink); font-size: 1.05em; }
 .proposal ol { margin-bottom: 0; }
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.3.7-docs.11 (2026-10-01)
+
+Fixes from the second ready → go retest:
+- Harness re-check: a deletion inside a sentence (a source tag, a qualifier, a pointer such as "위와")
+  is re-checked like a rewrite; only whole-sentence or whole-item deletions skip it. Both blocking
+  findings in the retest came from such deletions
+- An advisory a later review repeats after it was accepted with a reason keeps its recorded reason
+- A one-time exception to a company rule is recorded as what the document did, not as a restated
+  writing-guide rule; `deferred.md` is listed among what `.dryforge/` keeps
+- `writing-style.md` §1: with two or more asks, cover each ask being held on its own
+- `go` step 12: how to find the brand tools, and what to do when the PDF runs past the spec's length
+- `md_to_html.py`: columns marked "---:" are right-aligned; a long 건의 box may continue on the next page
+
 ## v1.3.7-docs.10 (2026-10-01)
 
 Fixes from the ready → go retest:

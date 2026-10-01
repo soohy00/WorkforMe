@@ -83,7 +83,7 @@ After the user approves (final user gate), **move** the active 3-doc into `.dryf
 `.dryforge/{handoff,spec,plan}.md` into the new `.dryforge/NNN/` (sequential number: highest existing
 + 1, e.g. `001`, `002`, ...) **and then delete them from the `.dryforge/` root.** Archiving is a *move,
 not a copy* — after it, the root holds **no active 3-doc** (only `NNN/` archives, `status.json`,
-`backup/`). This matters: if the root copies are left, the next cycle's producer finds a stale
+`backup/`, and `deferred.md` when it has lines). This matters: if the root copies are left, the next cycle's producer finds a stale
 previous-cycle 3-doc at the root and has to disambiguate + overwrite it; moving leaves a clean root so
 the next producer just writes a fresh 3-doc. Then write `.dryforge/status.json`
 (`{ "initialized": true }`) if not already present — the marker for the next cycle. (First cycle: the
@@ -96,7 +96,9 @@ If the final review triggers a fix:
 - **Document changed** → re-run the completion gate (the base SHA moved), with the reader check
   bounded as in `reader-check-prompt.md` (affected questions only).
 - **Harness text added or rewritten** → the harness re-check (below). Any fix counts — blocking or
-  advisory, a lightweight edit included. A fix that only deletes text needs no re-check.
+  advisory, a lightweight edit included. A fix that deletes only **whole sentences or whole items**
+  needs no re-check. A deletion **inside** a sentence — a source tag, a qualifier, a word that points
+  elsewhere ("위와", "이 방안") — changes what the rest says and is re-checked like a rewrite.
 - **Both changed** → re-run both.
 
 ## Harness re-check
@@ -106,14 +108,16 @@ subagent with `harness-review.md` **dimensions 3–4** over this cycle's **whole
 the list of fixes and the lines each one added or rewrote, and the dialogue text verbatim. Dimension
 4 checks every added or rewritten sentence against the dialogue and the material — a one-line edit by
 the orchestrator is the same self-written text the harness check exists for, so it is not exempt.
-An advisory the re-check raises is accepted with a reason or fixed by deleting text; a fix that would
-add text goes to the user gate instead (so the re-check never feeds itself).
+An advisory the re-check raises is accepted with a reason or fixed by deleting a whole sentence or
+item; a fix that would add or change text goes to the user gate instead (so the re-check never feeds
+itself).
 
 **Bounded.** A re-run judges blocking findings. The advisories it raises are triaged once
 (a document advisory: lightweight fix or accepted with a reason; a harness advisory: as in "Harness
 re-check") and do **not** start another re-run. Only a fix to a blocking finding starts a new round,
 at most two rounds after the final review; still blocking → stop and ask the user. A fresh reviewer almost always finds new advisories — they are recorded, not
-a reason to loop.
+a reason to loop. An advisory a later review raises **again** after it was accepted with a reason is not
+new: keep the recorded reason, unless the later review brings a fact the reason did not consider.
 
 Do not approve/archive while a blocking finding is open.
 
