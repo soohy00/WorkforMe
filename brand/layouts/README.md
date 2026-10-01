@@ -16,7 +16,7 @@
 
 | 종류 | 견본 | 섹션 순서 | 핵심 부품 |
 |---|---|---|---|
-| 상사·대표 보고 (결정 요청, 상황 보고) | `samples/decision-request.html` | 결정 요청 → 상황 → 두 안 비교 → 여쭐 것 → 작성자 의견 | `.lead`, `table.compare`, `.callout.note`, `.opinion` |
+| 상사·대표 보고 (결정 요청, 상황 보고) | `samples/decision-request.html` | 보고 요지 → 배경 → 현황과 영향(원인 → 결과 흐름, 일자·내용·출처 표) → 검토(두 안 비교) → 건의 → 향후 계획 → 확인 요청 사항 → 관련 문서 | `.lead`, `.flow`, `table.compare`, `.callout.note`, `.proposal`, `ul.related` |
 | 제안서 | `samples/proposal.html` | **표지** → 승인 요청 → 문제와 이유 → 방법 → 범위 → 기대 효과(추정 표시) → 비용·일정·사람 → 위험과 대응 → 다른 방법(아무것도 안 함 포함) | `.cover`, `dl.kv`, `ol.steps`, `.cols`, `.pill.neutral`(추정), `.callout.warn`, `table.compare` |
 | 협업 정렬 문서 (디자이너·개발자) | `samples/alignment.html` | 한 줄 요약 → 왜 하나요 → 정해진 것·열린 것·정할 것(담당·기한) → 범위(지금/지금 아님) → 화면 상태 → 완료 기준 → 질문 창구 | `.pill.settled/open/decide`, `.cols`, `ul.checklist`, `.callout.info` |
 | 투자사 보고 | `samples/investor-update.html` | **표지** → 요약 → 핵심 숫자(지난 기간·목표 대비, 정의) → 지난번 약속과 결과 → 잘 안 된 것과 대응 → 다음 목표 → 부탁 | `.cover`, `.stats` + `.stat`(`.delta`, `.bar`, `.def`), `.pill.settled/missed/open`, `.callout.warn` |
@@ -30,7 +30,11 @@
 - **상태(`.pill`)**: `settled` 정해짐 · `open` 열림 · `decide` 정할 것 · `missed` 미달 · `neutral` 추정·안내.
   열림·정할 것에는 담당과 기한을 같은 줄에 써요.
 - **비교 표(`table.compare`)**: 칸 폭을 같게 하고, 어느 한 안도 색·굵기로 돋보이게 하지 않아요.
-- **추천**: 결정 요청은 맨 끝 `.opinion`에만. 회의 자료처럼 추천이 없으면 "추천 없음"이라고 적어요.
+- **건의(`.proposal`)**: 결정 요청·제안에는 작성자가 고른 안과 이유, 위험 대응을 꼭 적어요.
+  "팀장님이 정하심"처럼 결정을 넘기는 말은 쓰지 않아요. 회의에서 함께 정하는 안건만 건의 없이 두고,
+  "회의에서 함께 정하고자 합니다"라고 적어요. 말투 규칙 전체는 `writing-style.md`에 있어요.
+- **흐름(`.flow`)**: 원인 → 결과 → 영향을 상자와 화살표로 보여 줘요. 원인 상자는 `.node.cause`.
+- **관련 문서(`ul.related`)**: 윗사람 보고와 제안의 맨 끝에 회의록·문서 이름과 위치(`.path`)를 적어요. 모르면 `[경로: ?]`.
 - **추정**: 추정한 숫자나 날짜에는 `.pill.neutral`로 "추정"을 붙이거나 글에 "(추정)"을 적어요.
 - **절차(`ol.steps`)**: 단계 제목에 "무엇 — 누가, 언제까지"를 넣어요. 끝난 단계는 `li.done`.
 - **완료 기준(`ul.checklist`)**: 한 줄에 하나, "~하면 ~됨"처럼 맞았는지 판단할 수 있게 써요. 끝난 것은 `li.done`.

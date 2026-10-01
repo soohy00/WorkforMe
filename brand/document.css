@@ -398,3 +398,42 @@ table.agenda td .ends { display: block; margin-top: var(--s1); font-size: 0.9em;
 
 /* ── Small print under a figure or table ────────────────────────────────── */
 .fineprint { font-size: 0.8em; color: var(--steel); }
+
+/* ── Cause → effect chain (writing-style.md: show how facts connect) ────── */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--s2);
+  margin: var(--s3) 0 var(--s4);
+  page-break-inside: avoid;
+}
+.flow > .node {
+  flex: 1 1 0;
+  min-width: 9em;
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--canvas);
+  font-size: 0.9em;
+  line-height: 1.55;
+}
+.flow > .node .k { display: block; font-size: 0.8em; font-weight: 600; color: var(--steel); }
+.flow > .node.cause { border-color: var(--warn-line); background: var(--warn-soft); }
+.flow > .arrow { flex: none; align-self: center; color: var(--steel); font-weight: 700; }
+
+/* ── The author's proposal (건의) — owned, stated plainly ───────────────── */
+.proposal {
+  margin: var(--s3) 0 var(--s4);
+  padding: var(--s4) var(--s5);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  page-break-inside: avoid;
+}
+.proposal .decision { display: block; margin-bottom: var(--s2); font-weight: 700; color: var(--ink); font-size: 1.05em; }
+.proposal ol { margin-bottom: 0; }
+
+/* ── Related documents ──────────────────────────────────────────────────── */
+ul.related { list-style: none; padding-left: 0; font-size: 0.9em; }
+ul.related > li { padding: var(--s1) 0; border-bottom: 1px solid var(--hairline); }
+ul.related .path { display: block; font-size: 0.85em; color: var(--steel); }
