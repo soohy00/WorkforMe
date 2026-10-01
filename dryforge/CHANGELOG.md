@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.7-docs.5 (2026-10-01)
+
+- ready asks only what the document needs: a purpose line, follow-ups checked against it, off-purpose
+  topics parked and shown at the user gate; every question carries a recommendation
+- Classification: an unclear level is asked with options and a recommendation; a provisional level
+  is marked "(잠정)" and confirmed by the person who decides
+- The main branch is always `main`; new repositories use `git init -b main`
+- go adds a rule check to the verify set: every recorded company rule is checked against the
+  document, and a rule/spec conflict is asked before writing
+
 ## v1.3.7-docs.4 (2026-10-01)
 
 - Added the shared `material-intake.md` (ready, go, migration): shareable documents in `material/`,

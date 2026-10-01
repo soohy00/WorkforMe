@@ -1,7 +1,7 @@
 {
   "name": "dryforge-docs",
   "description": "Intent to document: ready, then go. A Dryforge fork for IT planning and business-operations documents.",
-  "version": "1.3.7-docs.4",
+  "version": "1.3.7-docs.5",
   "license": "Apache-2.0",
   "keywords": ["documents", "planning", "proposal", "meeting", "report", "intent", "elicitation", "spec", "verification", "dryforge"],
   "author": { "name": "soohy00" },
