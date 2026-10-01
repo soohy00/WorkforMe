@@ -115,9 +115,9 @@ where the input came from. The 3-doc contract is in `references/output-format.md
 - **Project folder.** Work happens inside **one company project folder**. If the current directory is
   the workspace root (it holds `projects/` and `dryforge/`), do not work there: list the folders in
   `projects/` and ask which project this is for, or offer to create a new one (`projects/<name>/`,
-  `git init`, a `.gitignore` holding `material/raw/`, an initial commit). A project repository stays **local** — never add a remote or push
+  `git init -b main`, a `.gitignore` holding `material/raw/`, an initial commit). A project repository stays **local** — never add a remote or push
   on your own; company material must not leave the machine unless the user sets that up.
-- **git required.** If the project is not a git repo, offer to run `git init` **and make an initial
+- **git required.** If the project is not a git repo, offer to run `git init -b main` **and make an initial
   commit** (an empty repo has no HEAD, so go could not create a worktree later). If git is not
   installed, stop and say so. This holds for both new and existing projects — whether documents
   already exist is *not* the deciding factor.
@@ -156,7 +156,7 @@ Take the input raw, decide first-vs-delta, and read material/harness inline to l
 stages stand on. **No judgment or resolution here** — classification is DECOMPOSE's, conflict
 questions are ELICIT's. Everything ORIENT produces is *context*, not a conclusion.
 
-1. **Check git.** Not a repo → offer `git init` + an initial commit. git not installed → stop and say
+1. **Check git.** Not a repo → offer `git init -b main` + an initial commit. git not installed → stop and say
    so. Greenfield or existing, git is required.
 2. **Absorb the input lightly — capture its *character* only.** Parse the argument tokens: resolve to
    files where they are paths, read as prose otherwise, accept a mix. Empty / "use the skill" → ask

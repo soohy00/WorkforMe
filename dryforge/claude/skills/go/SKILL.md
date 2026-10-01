@@ -125,11 +125,13 @@ counts as **evidence** changes:
 - **Project folder.** Work only inside one company project folder (see `ready`). At the workspace
   root, ask which project. The project repository stays local: never add a remote or push unless the
   user set one up.
-- **git required** — worktree isolation depends on it. If not a repo, offer `git init` **and make an
+- **git required** — worktree isolation depends on it. If not a repo, offer `git init -b main` **and make an
   initial commit** (an empty repo has no HEAD, so no worktree/branch can be created). If git is not
   installed, stop and say so.
-- **Base determination.** Identify the project's main branch (docs / remote default / ask — do not
-  guess). Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
+- **Base determination.** The main branch is always named **`main`**. If the repository has no
+  `main` (an older git created `master`): with a single branch, offer to rename it
+  (`git branch -m <name> main`) and wait for the user's yes; with several, stop and ask. Never pick
+  another branch as main. Verify `main` has no unpushed commits (when it tracks a remote — a purely local repo has
   nothing unpushed) and the working tree has no modified/staged **tracked**
   files; if either fails, **stop and report**. Then classify:
   - **New project** (main has no finished documents — only an init commit, `.gitignore`, or

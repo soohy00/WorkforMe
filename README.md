@@ -59,7 +59,7 @@ HTML·PDF 템플릿과 브랜드는 나중에 더해요.
 
 ```bash
 mkdir projects/<회사-프로젝트> && cd projects/<회사-프로젝트>
-git init && echo "material/raw/" > .gitignore
+git init -b main && echo "material/raw/" > .gitignore
 git add .gitignore && git commit -m "start"
 ```
 
