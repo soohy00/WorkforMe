@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.7-docs.6 (2026-10-01)
+
+- Added the shared `writing-style.md` (ready, go): the author owns a position and asks for approval,
+  upward documents follow the Korean report frame (두괄식, 건의, 향후 계획, 관련 문서), readability
+  rules (cause → effect, where each fact connects), and register by reader; a decision handed back to
+  the reader is blocking in the final review
+- Added the `message` skill: turns a rough draft into a work message in the user's "푸른 스타일"
+
 ## v1.3.7-docs.5 (2026-10-01)
 
 - ready asks only what the document needs: a purpose line, follow-ups checked against it, off-purpose

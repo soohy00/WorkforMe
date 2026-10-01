@@ -27,7 +27,8 @@ both floors.
 - **Floor:** the request on the first screen (what, how much, by when); the problem and why now; the
   proposed approach; the expected effect (sourced figures only; an estimate is labeled as one, with
   its assumptions); scope — in and **out**; cost, time, and people as the approver weighs them; risks
-  and their handling; alternatives including doing nothing.
+  and their handling; alternatives including doing nothing; the author's 건의 and the next step after
+  approval (`writing-style.md`).
 - **Commonly silent:** how success will be measured; the decision deadline; who is accountable; for an
   external reader, why us.
 - **Visual candidates:** current vs proposed flow; timeline; cost breakdown; before/after figures;
@@ -65,7 +66,11 @@ Status report, issue escalation, decision request.
   does nothing).
 - **Floor:** the situation in one or two sentences; the impact (on dates, money, customers, people);
   what is needed from the reader and by when — or "no action needed, for your information"; the
-  options with a recommendation when a decision is asked; what has already been tried.
+  options compared fairly, then **the author's own proposal (건의) with its reason** when a decision
+  is asked — never the decision handed back to the reader (`writing-style.md`, "Ownership"); what the
+  author will do after each outcome (향후 계획); what has already been tried; the related meetings
+  and documents it connects to. Order: 보고 요지 first (두괄식, `writing-style.md`, "Upward report
+  structure").
 - **Commonly silent:** the deadline for the decision; what happens if no decision is made; who else
   already knows; whether the bad news is complete.
 - **Visual candidates:** timeline with the slip marked; options comparison; a small figure panel.

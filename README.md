@@ -53,6 +53,11 @@ HTML·PDF 템플릿과 브랜드는 나중에 더해요.
 /plugin install dryforge-docs@workforme
 ```
 
+## 메시지 다듬기
+
+`/message`(또는 `/dryforge-docs:message`)에 거친 초안을 주면 "푸른 스타일" 업무 메시지로 바꿔 줘요.
+첫 줄에 `[후배]`, `[동료]`, `[윗사람]`을 붙여 말투를 정해요. 모르는 칸은 `[ ? ]`로 남겨요.
+
 ## 회사 프로젝트 시작하기
 
 회사 문서는 **GitHub에 올리지 않아요**. [projects/README.md](projects/README.md)를 보세요.

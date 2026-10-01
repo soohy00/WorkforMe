@@ -64,6 +64,10 @@ counts as **evidence** changes:
   `references/reader-check-prompt.md` before the first gate). The
   document carries the spec's level and recipients at the top; content above that level is a
   blocking finding, never shipped; a recipient the level does not allow → stop and ask.
+- **Writing style** (`references/writing-style.md`, load before the first writer is dispatched): the
+  author owns a position and asks for approval, upward documents follow the report frame (두괄식), and
+  the register fits the reader. Writers get the rules inline; the final review blocks a decision handed
+  back to the reader.
 - **Company rules are a hard gate too.** Before the skeleton, read the document rules the project
   records (the rule check's sources, above) and compare them with the spec. A rule the spec
   contradicts → stop and ask the user which holds — the rule, or a **one-time exception** — **before**

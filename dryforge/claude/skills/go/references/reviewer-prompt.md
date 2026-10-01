@@ -20,7 +20,9 @@ does not make, content above the classification level (blocking), a fact not in 
 **Lens 2: writing quality.** Cross-part consistency (one term per thing, the same figure stated the
 same way, no two parts contradicting), seams where independently written parts meet (repetition, a
 missing transition, a summary that promises what a section never says), the reader's register (terms
-this reader knows or has explained; tone per the harness `audiences.md`), vague modifiers where a
+this reader knows or has explained; tone per the harness `audiences.md` and `writing-style.md` — the
+register, the upward report frame, cause → effect visible, related documents named; **a decision handed
+back to the reader or any banned phrase in `writing-style.md` "Ownership" is blocking**), vague modifiers where a
 number or criterion is needed, visuals that answer their stated question. The completion gate
 already proved the facts trace and the reader answers the questions — your scope is what those
 checks cannot see.

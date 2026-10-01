@@ -140,7 +140,7 @@ Core principles  inline (subagents only at intent-completeness + 3-doc-gate) · 
 ORIENT           absorb input + ground material/harness · branch on status.json · material-intake.md
 DECOMPOSE        decompose.md · grounds-gate.md
 ELICIT           elicitation.md · doc-types.md · classification.md · gap-analysis.md ·
-                 intent-review.md · grounds-gate.md
+                 intent-review.md · grounds-gate.md · writing-style.md
        [first]+  project-scoping.md · project-design-domain.md · project-design-technical.md ·
                  first-cycle-review.md · foundation-format.md
 intent-completeness  intent-completeness.md  ← independent guess-hunt → loop to user (subagent)
@@ -232,7 +232,9 @@ is written fresh from the dialogue, not from the input.
 ## ELICIT — realize the user's intent — `references/elicitation.md`
 
 Force-load `references/elicitation.md`, `references/doc-types.md`, `references/classification.md`,
-`references/gap-analysis.md`, `references/intent-review.md`, `references/grounds-gate.md`. **First cycle additionally:** `references/project-scoping.md`,
+`references/gap-analysis.md`, `references/intent-review.md`, `references/grounds-gate.md`,
+`references/writing-style.md` (the author owns a position and asks for approval; the upward report
+frame; register by reader — the spec's form follows it). **First cycle additionally:** `references/project-scoping.md`,
 `references/project-design-domain.md`, `references/project-design-technical.md`,
 `references/first-cycle-review.md`, `references/foundation-format.md`.
 
