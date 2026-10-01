@@ -12,7 +12,7 @@
 # Root marketplace manifests are committed repo files, not build outputs.
 #
 # Build-time guards:
-#   ① shared references byte-identical (5 pairs; the classification pairs are WorkforMe CH-07)
+#   ① shared references byte-identical (7 pairs; classification = WorkforMe CH-07, material-intake = CH-20)
 #   ② frontmatter injection post-verified (a silent perl no-op must not ship)
 #   ③ skill list discovered dynamically from src/skills/*/ (a 4th skill without
 #     its claude_tools mapping fails the build)
@@ -34,7 +34,9 @@ for pair in \
   "migration/references/harness-review.md:go/references/harness-review.md" \
   "ready/references/foundation-format.md:go/references/foundation-format.md" \
   "ready/references/classification.md:go/references/classification.md" \
-  "ready/references/classification.md:migration/references/classification.md"; do
+  "ready/references/classification.md:migration/references/classification.md" \
+  "ready/references/material-intake.md:go/references/material-intake.md" \
+  "ready/references/material-intake.md:migration/references/material-intake.md"; do
   a="$SRC/${pair%%:*}"; b="$SRC/${pair##*:}"
   if ! diff -q "$a" "$b" >/dev/null 2>&1; then
     echo "FAILED: shared reference drift: ${pair%%:*} != ${pair##*:}" >&2
@@ -42,7 +44,7 @@ for pair in \
     exit 1
   fi
 done
-echo "✓ shared references byte-identical (5 pairs)"
+echo "✓ shared references byte-identical (7 pairs)"
 
 # ── guard ③: skills discovered dynamically from src ─────────────────────────
 SKILLS=""

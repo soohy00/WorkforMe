@@ -65,7 +65,9 @@ document, one row each — `go` traces the finished document against it:
 | F3 | Competitor A monthly price | — | unconfirmed |
 ```
 
-`status` is exactly one of `sourced` / `user-stated` / `unconfirmed` (write the labels in the user's
+`source` is a committed file path (for raw data: its data card in `material/`, never the raw file
+alone — it may be deleted), or `user, in dialogue (YYYY-MM-DD)` for a spoken fact
+(`material-intake.md`). `status` is exactly one of `sourced` / `user-stated` / `unconfirmed` (write the labels in the user's
 language if the document is in it; keep the three meanings). An `unconfirmed` fact is shown in the
 document **marked as unconfirmed**, never smoothed into a confident statement — and the user was told
 about it in ELICIT. The ids (`F1`, and the `Q1` / `V1` / `T1` ids below) are working labels for the
