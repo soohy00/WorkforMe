@@ -1,0 +1,230 @@
+/*
+ * WorkforMe document style — A4 documents (HTML and PDF).
+ * Base: DESIGN.md (Mintlify). Adapted for print and Korean reading; see CLAUDE.md "문서용 규칙".
+ * Change a company's brand colour by overriding the --accent tokens only.
+ */
+
+/* ── Paperlogy (OFL 1.1) — one family for Korean, Latin, and digits ───────── */
+@font-face { font-family: "Paperlogy"; font-weight: 100; src: url("fonts/paperlogy/Paperlogy-1Thin.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 200; src: url("fonts/paperlogy/Paperlogy-2ExtraLight.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 300; src: url("fonts/paperlogy/Paperlogy-3Light.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 400; src: url("fonts/paperlogy/Paperlogy-4Regular.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 500; src: url("fonts/paperlogy/Paperlogy-5Medium.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 600; src: url("fonts/paperlogy/Paperlogy-6SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 700; src: url("fonts/paperlogy/Paperlogy-7Bold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 800; src: url("fonts/paperlogy/Paperlogy-8ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "Paperlogy"; font-weight: 900; src: url("fonts/paperlogy/Paperlogy-9Black.ttf") format("truetype"); }
+
+:root {
+  /* Neutrals — DESIGN.md ink / slate / steel / hairline / surface */
+  --ink: #0a0a0a;
+  --slate: #3a3a3c;
+  --steel: #5a5a5c;          /* smallest text colour allowed (6.9:1) */
+  --hairline: #e5e5e5;
+  --hairline-strong: #d4d4d4;
+  --surface: #f7f7f7;
+  --canvas: #ffffff;
+
+  /* Accent — the only brand colour. Swap these three for a company brand. */
+  --accent: #00b48a;         /* rules, bars, fills (not text: 2.7:1) */
+  --accent-text: #007a5c;    /* accent used as text (5.3:1) */
+  --accent-soft: #e8f8f3;    /* tinted background */
+
+  /* Semantic — text colours meet 4.5:1 on white */
+  --info-text: #2a5db0;   --info-soft: #eef3fb;   --info-line: #cddbf2;
+  --warn-text: #8a5a00;   --warn-soft: #fdf6e9;   --warn-line: #efdcb3;
+  --error-text: #b23b3b;  --error-soft: #fcefef;  --error-line: #f1cccc;
+
+  /* Type */
+  --font: "Paperlogy", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* Spacing — DESIGN.md 4px base */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+}
+
+/* ── Page ───────────────────────────────────────────────────────────────── */
+@page {
+  size: A4;
+  margin: 18mm 18mm 20mm 18mm;
+  @bottom-right { content: counter(page) " / " counter(pages); font-family: "Paperlogy", sans-serif; font-size: 8pt; color: #5a5a5c; }
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--surface); }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--slate);
+  word-break: keep-all;           /* Korean wraps between words, not inside them */
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+.doc {
+  max-width: 210mm;
+  margin: var(--s6) auto;
+  padding: 18mm;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+
+@media print {
+  html, body { background: none; }
+  body { font-size: 10.5pt; }
+  .doc { max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; }
+}
+
+/* ── Marking line (classification + recipients) ─────────────────────────── */
+.marking {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  padding-bottom: var(--s3);
+  margin-bottom: var(--s5);
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.8em;
+  color: var(--steel);
+}
+
+/* ── Headings ───────────────────────────────────────────────────────────── */
+h1, h2, h3 { color: var(--ink); line-height: 1.3; margin: 0; }
+
+h1 { font-size: 1.85em; font-weight: 700; letter-spacing: -0.02em; }
+h1 .badge { font-size: 0.42em; vertical-align: 0.35em; margin-left: 0.3em; letter-spacing: 0; }
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-top: var(--s6);
+  margin-bottom: var(--s3);
+  letter-spacing: -0.01em;
+}
+
+h3 { font-size: 1.05em; font-weight: 600; margin-top: var(--s5); margin-bottom: var(--s2); }
+
+.meta { margin-top: var(--s2); font-size: 0.85em; color: var(--steel); }
+
+p { margin: 0 0 var(--s3); }
+
+/* ── Lists ──────────────────────────────────────────────────────────────── */
+ul, ol { margin: 0 0 var(--s3); padding-left: 1.2em; }
+li { margin-bottom: var(--s1); padding-left: 0.2em; }
+li::marker { color: var(--accent); }
+ol > li::marker { color: var(--steel); font-weight: 600; }
+
+strong { color: var(--ink); font-weight: 600; }
+
+/* ── First screen: the key message and the request ──────────────────────── */
+.lead {
+  margin-top: var(--s5);
+  padding: var(--s4) var(--s5);
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--ink);
+}
+.lead ul { margin: 0; }
+.lead .lead-label {
+  display: block;
+  margin-bottom: var(--s2);
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent-text);
+}
+
+/* ── Tables ─────────────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--s2) 0 var(--s4);
+  font-size: 0.92em;
+  line-height: 1.6;
+  page-break-inside: avoid;
+}
+th, td {
+  padding: var(--s2) var(--s3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--hairline);
+}
+thead th {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+tbody th { font-weight: 600; color: var(--steel); white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Options compared side by side: equal columns, no column highlighted */
+table.compare { table-layout: fixed; }
+table.compare col.label { width: 16%; }
+
+/* ── Callouts ───────────────────────────────────────────────────────────── */
+.callout {
+  display: flex;
+  gap: var(--s3);
+  margin: var(--s3) 0 var(--s4);
+  padding: var(--s3) var(--s4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: 0.92em;
+  page-break-inside: avoid;
+}
+.callout .icon { flex: none; width: 1.1em; height: 1.1em; margin-top: 0.35em; }
+.callout .title { display: block; font-weight: 600; color: var(--ink); }
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.note    { background: var(--accent-soft); border-color: #c4ece0; }
+.callout.note .icon { color: var(--accent-text); }
+.callout.info    { background: var(--info-soft);  border-color: var(--info-line); }
+.callout.info .icon { color: var(--info-text); }
+.callout.warn    { background: var(--warn-soft);  border-color: var(--warn-line); }
+.callout.warn .icon { color: var(--warn-text); }
+.callout.danger  { background: var(--error-soft); border-color: var(--error-line); }
+.callout.danger .icon { color: var(--error-text); }
+
+/* ── Badges (classification and status) ─────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.15em 0.65em;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  font-size: 0.85em;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.badge.public       { color: var(--steel);      border-color: var(--hairline-strong); background: var(--canvas); }
+.badge.internal     { color: var(--accent-text); background: var(--accent-soft); border-color: #c4ece0; }
+.badge.confidential { color: var(--warn-text);  background: var(--warn-soft);  border-color: var(--warn-line); }
+.badge.secret       { color: var(--error-text); background: var(--error-soft); border-color: var(--error-line); }
+.badge.draft        { color: var(--steel);      background: var(--surface);    border-color: var(--hairline); }
+
+/* ── Opinion: kept plain on purpose, so the recommendation does not shout ── */
+.opinion { color: var(--slate); }
+
+/* ── Footer note ────────────────────────────────────────────────────────── */
+.doc-foot {
+  margin-top: var(--s6);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--hairline);
+  font-size: 0.8em;
+  color: var(--steel);
+}
+
+code { font-family: var(--font-mono); font-size: 0.88em; padding: 0.1em 0.35em; border-radius: 4px; background: var(--surface); }
