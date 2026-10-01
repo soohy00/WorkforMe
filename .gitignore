@@ -1,0 +1,4 @@
+# 회사 프로젝트 문서는 GitHub에 올리지 않는다 (CHANGES.md CH-04, 사용자 결정 U3).
+# projects/ 안에는 안내 파일만 올라가고, 각 회사 폴더는 내 PC의 로컬 git 저장소로만 둔다.
+projects/*
+!projects/README.md

@@ -1,0 +1,15 @@
+{
+  "name": "workforme",
+  "description": "Private marketplace for the WorkforMe fork of Dryforge.",
+  "owner": { "name": "soohy00" },
+  "plugins": [
+    {
+      "name": "dryforge-docs",
+      "description": "Intent to document: ready, then go.",
+      "author": { "name": "soohy00" },
+      "source": "./dryforge/claude",
+      "homepage": "https://github.com/soohy00/WorkforMe",
+      "keywords": ["documents", "planning", "proposal", "meeting", "report", "intent", "elicitation", "spec", "verification", "dryforge"]
+    }
+  ]
+}
